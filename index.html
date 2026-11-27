@@ -134,11 +134,20 @@
   .day-card h3 { font-size: 1.18rem; letter-spacing: -.01em; margin-bottom: 16px; color: var(--text); }
   .day-card ul { list-style: none; margin-bottom: 16px; }
   .day-card li {
-    padding: 10px 0 10px 26px; position: relative;
+    padding: 10px 0; position: relative;
     border-bottom: 1px dashed var(--border); font-size: 0.95rem; line-height: 1.65;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
   }
   .day-card li:last-child { border-bottom: none; }
   .day-card li::before { content: '📍'; position: absolute; left: 0; }
+  .day-card li { padding-left: 26px; }
+  .addr-btn {
+    display: inline-block; padding: 4px 12px;
+    background: var(--accent); color: #fff; text-decoration: none;
+    border-radius: 999px; font-size: 0.78rem; font-weight: 600; transition: 0.2s;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .addr-btn:hover { background: #1e665c; }
   .map-link {
     display: inline-block; margin-top: 10px; padding: 8px 16px;
     background: var(--accent); color: #fff; text-decoration: none;
@@ -336,10 +345,12 @@
   .live-calendar-wrapper::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #b94b3d; }
   .next-holiday-title { font-size: 1.4rem; color: var(--text); margin-bottom: 10px; font-weight: 700; }
   .next-holiday-date { font-size: 1.1rem; color: var(--gray); margin-bottom: 15px; }
+  .next-holiday-desc { color: var(--gray); font-size: .95rem; margin-bottom: 15px; max-width: 640px; }
   .countdown {
     font-size: 1.2rem; font-weight: 800; color: #9c4035;
     background: rgba(185,75,61,.1); display: inline-block; padding: 8px 20px; border-radius: 12px;
   }
+  .calendar-list-title { margin: 24px 0 20px; color: var(--text); }
   .holiday-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
   .holiday-item {
     background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
@@ -347,6 +358,7 @@
     gap: 12px; transition: 0.2s;
   }
   .holiday-item:hover { border-color: #c9a56d; transform: translateY(-2px); }
+  .holiday-item.holiday-today { border-color: #28a745; background: rgba(40,167,69,.06); }
   .holiday-info h4 { margin-bottom: 4px; color: var(--text); font-size: 1rem; }
   .holiday-info .ru-name { color: var(--accent); font-size: .9rem; margin-bottom: 4px; }
   .holiday-info .date { color: var(--text); font-size: 0.88rem; margin-bottom: 4px; font-weight: 600; }
@@ -355,8 +367,6 @@
     font-size: 0.75rem; padding: 4px 8px; border-radius: 10px;
     background: var(--border); color: var(--gray); white-space: nowrap;
   }
-  .calendar-sources { margin-top: 24px; font-size: .85rem; color: var(--gray); max-width: 760px; }
-  .calendar-sources a { color: var(--accent); }
 
   /* ===== ПОДВАЛ ===== */
   footer { background: #172b3a; color: #d3dde0; padding: 48px 5%; text-align: center; }
@@ -443,7 +453,7 @@
   <a href="#route" class="btn">Составить маршрут →</a>
 </header>
 
-<!-- ВИДЖЕТ ПОГОДЫ (оставляем) -->
+<!-- ВИДЖЕТ ПОГОДЫ -->
 <div id="weather-widget" style="text-align: center; margin: 20px auto; padding: 15px; background: rgba(26,26,46,0.9); color: white; border-radius: 16px; max-width: 390px; position: relative; z-index: 10; backdrop-filter: blur(5px); box-shadow: 0 12px 34px rgba(23,43,58,.18); border: 1px solid rgba(255,255,255,.14);">
   <span id="weather-text">Загрузка погоды...</span>
 </div>
@@ -451,7 +461,7 @@
 <!-- МАРШРУТ -->
 <section id="route" class="fade-in">
   <h2 class="section-title">Чебоксары за 7 дней</h2>
-  <p class="section-sub">Семь дней, чтобы познакомиться с городом. Нажмите на кнопку дня, чтобы перейти к его точкам на карте.</p>
+  <p class="section-sub">Семь дней, чтобы познакомиться с городом. У каждого места — кнопка с адресом, а под списком дня — переход к его точкам на карте.</p>
 
   <!-- АУДИОГИД -->
   <div class="audio-guide" id="audioGuide">
@@ -483,39 +493,33 @@
     </div>
   </div>
 
-  <!-- КНОПКА СКАЧАТЬ МАРШРУТ -->
-  <div style="margin-bottom: 24px;">
-    <button class="btn" onclick="downloadRoute()" style="background: var(--text); color: var(--bg);">📥 Скачать маршрут (текст)</button>
-    <a href="https://yandex.ru/maps/?rtext=~56.148692,47.242115~56.145791,47.252119~56.151736,47.253182" target="_blank" rel="noopener" class="btn" style="background: var(--accent); text-decoration: none; margin-left: 10px; display: inline-block;">🗺️ Маршрут в Яндекс.Картах</a>
-  </div>
-
  <div class="days">
   <div class="day-card" id="day-1">
     <h3>📅 День 1 — Знакомство с городом</h3>
     <ul>
-      <li>Прогулка по Чебоксарскому заливу</li>
-      <li>Фото у Монумента Матери-Покровительницы</li>
-      <li>Прогулка по Бульвару купца Ефремова</li>
+      <li>Прогулка по Чебоксарскому заливу <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Историческая набережная" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Фото у Монумента Матери-Покровительницы <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Историческая набережная, 14" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Прогулка по Бульвару купца Ефремова <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Бульвар купца Ефремова" target="_blank" rel="noopener">Адрес</a></li>
       <li>Обед в кафе на набережной</li>
-      <li>Вечерний световой мост</li>
+      <li>Вечерний световой мост <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Светомузыкальный фонтанный мост" target="_blank" rel="noopener">Адрес</a></li>
     </ul>
     <a href="#places-map" class="map-link" data-day="1">Показать на карте</a>
   </div>
   <div class="day-card" id="day-2">
     <h3>📅 День 2 — История и музеи</h3>
     <ul>
-      <li>Музей В. И. Чапаева</li>
-      <li>Чувашский национальный музей</li>
-      <li>Введенский собор (XVII век)</li>
+      <li>Музей В. И. Чапаева <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, проспект Ленина, 46А" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Чувашский национальный музей <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Красная площадь, 5/2" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Введенский собор (XVII век) <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, улица Константина Иванова, 21" target="_blank" rel="noopener">Адрес</a></li>
       <li>Обед в центре города</li>
-      <li>Прогулка по Красной площади</li>
+      <li>Прогулка по Красной площади <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Красная площадь" target="_blank" rel="noopener">Адрес</a></li>
     </ul>
     <a href="#places-map" class="map-link" data-day="2">Показать на карте</a>
   </div>
   <div class="day-card" id="day-3">
     <h3>📅 День 3 — Волга и набережная</h3>
     <ul>
-      <li>Прогулка по Московской набережной</li>
+      <li>Прогулка по Московской набережной <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Московская набережная" target="_blank" rel="noopener">Адрес</a></li>
       <li>Прокат велосипедов или самокатов</li>
       <li>Речная прогулка на кораблике (по погоде)</li>
       <li>Обед с видом на Волгу</li>
@@ -526,10 +530,10 @@
   <div class="day-card" id="day-4">
     <h3>📅 День 4 — Природа и парки</h3>
     <ul>
-      <li>Парк «Лакреевский лес» (белки, аттракционы)</li>
-      <li>Этнокомплекс «Амазония» (колесо обозрения)</li>
+      <li>Парк «Лакреевский лес» (белки, аттракционы) <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, улица Лесная, 1" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Этнокомплекс «Амазония» (колесо обозрения) <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, проспект Максима Горького, 2" target="_blank" rel="noopener">Адрес</a></li>
       <li>Обед в парке</li>
-      <li>Мемориальный парк Победы (панорама Волги)</li>
+      <li>Мемориальный парк Победы (панорама Волги) <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, улица Зои Яковлевой, 54В" target="_blank" rel="noopener">Адрес</a></li>
       <li>Вечерний отдых</li>
     </ul>
     <a href="#places-map" class="map-link" data-day="4">Показать на карте</a>
@@ -537,9 +541,9 @@
   <div class="day-card" id="day-5">
     <h3>📅 День 5 — Культура и искусство</h3>
     <ul>
-      <li>Чувашский художественный музей</li>
-      <li>Музей чувашской вышивки</li>
-      <li>Музей Михаила Сеспеля</li>
+      <li>Чувашский художественный музей <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, улица Калинина, 60" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Музей чувашской вышивки <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, улица Карла Маркса, 32" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Музей Михаила Сеспеля <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, улица Михаила Сеспеля, 8" target="_blank" rel="noopener">Адрес</a></li>
       <li>Обед в национальном кафе</li>
       <li>Прогулка по вечернему центру</li>
     </ul>
@@ -549,7 +553,7 @@
     <h3>📅 День 6 — Гастрономия и отдых</h3>
     <ul>
       <li>Дегустация блюд: шурпе, хуплу</li>
-      <li>Посещение Музея пива</li>
+      <li>Посещение Музея пива <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, бульвар купца Ефремова, 6А" target="_blank" rel="noopener">Адрес</a></li>
       <li>Обед в национальном ресторане</li>
       <li>Шоппинг (сувениры, вышивка)</li>
       <li>Спокойный вечер в центре</li>
@@ -560,7 +564,7 @@
     <h3>📅 День 7 — Заволжье и природа</h3>
     <ul>
       <li>Поездка в Заволжье (паром или мост)</li>
-      <li>Этнопарк «Сувар» (деревянные скульптуры)</li>
+      <li>Этнопарк «Сувар» (деревянные скульптуры) <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Заволжье, посёлок Сосновка" target="_blank" rel="noopener">Адрес</a></li>
       <li>Пикник на природе</li>
       <li>Возвращение в город</li>
       <li>Прощальный ужин</li>
@@ -657,6 +661,16 @@
   </div>
 </section>
 
+<!-- МОДАЛЬНОЕ ОКНО -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" type="button" aria-label="Закрыть окно">×</button>
+    <div class="big" id="modalBig"></div>
+    <h3 id="modalTitle"></h3>
+    <p id="modalDesc"></p>
+  </div>
+</div>
+
 <!-- КУЛЬТУРА -->
 <section id="culture" class="fade-in">
   <h2 class="section-title">Культура Чувашии</h2>
@@ -680,8 +694,8 @@
     <h3>🗣️ Полезные фразы на чувашском</h3>
     <div class="phrase"><span class="cv">Ыра кун!</span><span class="ru">Добрый день!</span></div>
     <div class="phrase"><span class="cv">Тавтапуҫ!</span><span class="ru">Спасибо!</span></div>
-    <div class="phrase"><span class="cv">Мӗнле пурăнатăр?</span><span class="ru">Как дела?</span></div>
-    <div class="phrase"><span class="cv">Сывă пул!</span><span class="ru">До свидания!</span></div>
+    <div class="phrase"><span class="cv">Мӗнле пурӑнатӑр?</span><span class="ru">Как дела?</span></div>
+    <div class="phrase"><span class="cv">Сывӑ пул!</span><span class="ru">До свидания!</span></div>
   </div>
 
   <div style="margin-top: 40px;">
@@ -781,16 +795,17 @@
 <!-- НАРОДНЫЙ КАЛЕНДАРЬ -->
 <section id="events" class="fade-in">
   <h2 class="section-title">Народный календарь Чувашии</h2>
-  <p class="section-sub">Традиционные праздники и обряды. Даты пересчитываются автоматически на каждый год.</p>
+  <p class="section-sub">Традиционные праздники и обряды. Даты пересчитываются автоматически на каждый год: у праздников, привязанных к Пасхе, даты точные; у сезонных обрядов — ориентировочные (помечены ≈), потому что в старину сроки определяла община.</p>
 
   <div class="live-calendar-wrapper">
-    <div class="next-holiday-title" id="next-holiday-name">Загрузка...</div>
-    <div class="next-holiday-date" id="next-holiday-date"></div>
-    <div class="countdown" id="next-holiday-countdown"></div>
+    <div class="next-holiday-title" id="nextHolidayName">Загрузка...</div>
+    <div class="next-holiday-date" id="nextHolidayDate"></div>
+    <div class="next-holiday-desc" id="nextHolidayDesc"></div>
+    <div class="countdown" id="nextHolidayCountdown"></div>
   </div>
 
-  <h3 style="margin-bottom: 20px; color: var(--text);">Все традиции года</h3>
-  <div class="holiday-list" id="holiday-list"></div>
+  <h3 class="calendar-list-title">Все праздники года</h3>
+  <div class="holiday-list" id="holidayList"></div>
 </section>
 
 <!-- О ГОРОДЕ / ФАКТЫ -->
@@ -886,7 +901,6 @@
   const savedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  // Если сохранённого выбора нет — используем системную тему
   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
     body.classList.add('dark-theme');
     themeToggle.textContent = '☀️';
@@ -905,70 +919,6 @@
     }
   });
 
-  // ===== СКАЧАТЬ МАРШРУТ =====
-  function downloadRoute() {
-    const routeText = `ПУТЕВОДИТЕЛЬ ПО ЧЕБОКСАРАМ (7 ДНЕЙ)
-
-День 1 — Знакомство с городом:
-- Прогулка по Чебоксарскому заливу
-- Фото у Монумента Матери-Покровительницы
-- Прогулка по Бульвару купца Ефремова
-- Обед в кафе на набережной
-- Вечерний световой мост
-
-День 2 — История и музеи:
-- Музей В. И. Чапаева
-- Чувашский национальный музей
-- Введенский собор (XVII век)
-- Обед в центре города
-- Прогулка по Красной площади
-
-День 3 — Волга и набережная:
-- Прогулка по Московской набережной
-- Прокат велосипедов или самокатов
-- Речная прогулка на кораблике (по погоде)
-- Обед с видом на Волгу
-- Закат на набережной
-
-День 4 — Природа и парки:
-- Парк «Лакреевский лес»
-- Этнокомплекс «Амазония»
-- Обед в парке
-- Мемориальный парк Победы
-- Вечерний отдых
-
-День 5 — Культура и искусство:
-- Чувашский художественный музей
-- Музей чувашской вышивки
-- Музей Михаила Сеспеля
-- Обед в национальном кафе
-- Прогулка по вечернему центру
-
-День 6 — Гастрономия и отдых:
-- Дегустация блюд: шурпе, хуплу
-- Посещение Музея пива
-- Обед в национальном ресторане
-- Шоппинг (сувениры, вышивка)
-- Спокойный вечер в центре
-
-День 7 — Заволжье и природа:
-- Поездка в Заволжье
-- Этнопарк «Сувар»
-- Пикник на природе
-- Возвращение в город
-- Прощальный ужин
-
-Сайт: https://mgenya269.github.io/cheboksary/`;
-
-    const blob = new Blob([routeText], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'cheboksary-route.txt';
-    a.click();
-    URL.revokeObjectURL(url);
-  }
-
   // ===== ПОДЕЛИТЬСЯ САЙТОМ =====
   function shareSite() {
     const shareData = {
@@ -980,7 +930,6 @@
     if (navigator.share) {
       navigator.share(shareData).catch(() => {});
     } else {
-      // Fallback: копируем ссылку
       navigator.clipboard.writeText(window.location.href).then(() => {
         alert('Ссылка скопирована в буфер обмена!');
       }).catch(() => {
@@ -1196,7 +1145,6 @@
       {name:'Монумент Матери-Покровительницы',lat:56.148692,lng:47.242115,day:1,address:'Историческая набережная, 14',description:'Главный монумент Чувашии: медная фигура Матери высотой 16 метров на 25-метровом постаменте.'},
       {name:'Набережная Чебоксарского залива',lat:56.147267,lng:47.245928,day:1,address:'Исторический центр',description:'Прогулочная зона вдоль залива с мостами, кафе и площадками.'},
       {name:'Бульвар купца Ефремова',lat:56.145791,lng:47.252119,day:1,address:'Бульвар купца Ефремова',description:'Пешеходный бульвар с купеческой застройкой XIX века.'},
-      {name:'Свято-Троицкий монастырь',lat:56.151736,lng:47.253182,day:1,address:'ул. Константина Иванова, 7',description:'Древнейшая обитель Чувашии, основана в 1566 году.'},
       {name:'Музей В. И. Чапаева',lat:56.116230,lng:47.257271,day:2,address:'проспект Ленина, 46А',description:'Филиал Чувашского национального музея, экспозиция о Чапаеве.'},
       {name:'Памятник В. И. Чапаеву',lat:56.114964,lng:47.258665,day:2,address:'сквер им. В. И. Чапаева',description:'Монументальная скульптура Чапаева на вздыбленном коне.'},
       {name:'Чувашский национальный музей',lat:56.145402,lng:47.252677,day:2,address:'Красная площадь, 5/2',description:'Главный музей республики.'},
@@ -1221,6 +1169,7 @@
       attributionControl: false
     });
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+    // Обязательная атрибуция по условиям OpenFreeMap — показывается мелкой плашкой в углу карты.
     map.addControl(new maplibregl.AttributionControl({
       compact: true,
       customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">© OpenFreeMap</a> · <a href="https://openmaptiles.org/" target="_blank" rel="noopener">© OpenMapTiles</a> · <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a>'
@@ -1293,42 +1242,46 @@
   });
 
   // ===== МОДАЛЬНОЕ ОКНО ГАЛЕРЕИ =====
+  // Защита: если модалки нет в разметке, остальной JavaScript не падает.
   const modal = document.getElementById('modal');
   const modalTitle = document.getElementById('modalTitle');
   const modalDesc = document.getElementById('modalDesc');
   const modalBig = document.getElementById('modalBig');
   const modalClose = document.getElementById('modalClose');
+  const canOpenModal = !!(modal && modalTitle && modalDesc && modalBig && modalClose);
   let lastGalleryItem = null;
 
-  function openGalleryModal(item) {
-    lastGalleryItem = item;
-    modalTitle.textContent = item.dataset.title || '';
-    modalDesc.textContent = item.dataset.desc || '';
-    const photoClass = Array.from(item.classList).find(name => /^g\d+$/.test(name));
-    modalBig.className = 'big ' + (photoClass || '');
-    modal.classList.add('open');
-    modalClose.focus();
-  }
+  if (canOpenModal) {
+    function openGalleryModal(item) {
+      lastGalleryItem = item;
+      modalTitle.textContent = item.dataset.title || '';
+      modalDesc.textContent = item.dataset.desc || '';
+      const photoClass = Array.from(item.classList).find(name => /^g\d+$/.test(name));
+      modalBig.className = 'big ' + (photoClass || '');
+      modal.classList.add('open');
+      modalClose.focus();
+    }
 
-  function closeGalleryModal() {
-    modal.classList.remove('open');
-    if (lastGalleryItem) lastGalleryItem.focus();
-  }
+    function closeGalleryModal() {
+      modal.classList.remove('open');
+      if (lastGalleryItem) lastGalleryItem.focus();
+    }
 
-  items.forEach(item => {
-    item.addEventListener('click', () => openGalleryModal(item));
-    item.addEventListener('keydown', event => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openGalleryModal(item);
-      }
+    items.forEach(item => {
+      item.addEventListener('click', () => openGalleryModal(item));
+      item.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openGalleryModal(item);
+        }
+      });
     });
-  });
-  modalClose.addEventListener('click', closeGalleryModal);
-  modal.addEventListener('click', event => { if (event.target === modal) closeGalleryModal(); });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && modal.classList.contains('open')) closeGalleryModal();
-  });
+    modalClose.addEventListener('click', closeGalleryModal);
+    modal.addEventListener('click', event => { if (event.target === modal) closeGalleryModal(); });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && modal.classList.contains('open')) closeGalleryModal();
+    });
+  }
 
   // ===== АНИМАЦИИ ПРИ СКРОЛЛЕ =====
   const fadeElements = document.querySelectorAll('.fade-in');
@@ -1354,153 +1307,153 @@
   updateToTopButton();
   toTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
-  // ===== НАРОДНЫЙ КАЛЕНДАРЬ =====
+  // ===== НАРОДНЫЙ КАЛЕНДАРЬ ЧУВАШИИ =====
+  // Даты считаются от Пасхи (церковные праздники) или фиксированно (сезонные).
+  // Сверху — ближайший праздник с отсчётом; в его день — «Сегодня — ...»;
+  // после прохождения автоматически показывается следующий.
   function getEasterDate(year) {
-    const a = year % 4;
-    const b = year % 7;
-    const c = year % 19;
+    const a = year % 4, b = year % 7, c = year % 19;
     const d = (19 * c + 15) % 30;
     const e = (2 * a + 4 * b - d + 34) % 7;
     const julianMonth = Math.floor((d + e + 114) / 31);
     const julianDay = ((d + e + 114) % 31) + 1;
-    const calendarDifference = Math.floor(year / 100) - Math.floor(year / 400) - 2;
-    const utc = new Date(Date.UTC(year, julianMonth - 1, julianDay + calendarDifference));
+    const diff = Math.floor(year / 100) - Math.floor(year / 400) - 2;
+    const utc = new Date(Date.UTC(year, julianMonth - 1, julianDay + diff));
     return new Date(utc.getUTCFullYear(), utc.getUTCMonth(), utc.getUTCDate());
   }
 
-  function easterShifted(easter, days) {
-    const date = new Date(easter);
-    date.setDate(date.getDate() + days);
-    return date;
+  function nearestSundayTo(year, month, day) {
+    const ref = new Date(year, month, day);
+    const before = new Date(year, month, day - ref.getDay());
+    const after = new Date(year, month, day + ((7 - ref.getDay()) % 7));
+    return (ref - before) <= (after - ref) ? before : after;
   }
 
-  function getNearestToRepublicDay(year) {
-    return new Date(year, 5, 24);
+  function easterPlus(year, offset) {
+    const d = getEasterDate(year);
+    d.setDate(d.getDate() + offset);
+    return d;
   }
 
-  const folkTraditions = [
-    {
-      name: 'Сурхури', ru: 'Зимние гадания и колядование', kind: 'Зимний цикл', approx: true,
-      period: 'конец декабря — начало января',
-      fixedDate: (year) => new Date(year, 11, 22),
-      description: 'Старинный зимний праздник: отмечался в период зимнего солнцестояния.'
-    },
-    {
-      name: 'Нартукан', ru: 'Зимние святки', kind: 'Зимний праздник', approx: true,
-      period: '7–19 января',
-      fixedDate: (year) => new Date(year, 0, 7),
-      description: 'Праздник зимнего солнцестояния и новогоднего цикла.'
-    },
-    {
-      name: 'Ҫӑварни', ru: 'Масленица (проводы зимы)', kind: 'Праздник проводов зимы', approx: false,
-      period: 'неделя перед Великим постом',
-      easterOffset: -56,
-      description: 'Проводы зимы. В старину приурочивался к весеннему равноденствию.'
-    },
-    {
-      name: 'Мӑнкун', ru: 'Великий день (Пасха)', kind: 'Главный весенний праздник', approx: false,
-      period: 'весна',
-      easterOffset: 0,
-      description: '«Великий день» — праздник обновления природы и жизни, совпадающий с Пасхой.'
-    },
-    {
-      name: 'Акатуй', ru: 'Праздник плуга («свадьба плуга и земли»)', kind: 'Праздник', approx: false,
-      period: 'после завершения весенне-полевых работ',
-      fixedDate: (year) => getNearestToRepublicDay(year),
-      description: 'Праздник окончания посевных работ, который в Чебоксарах традиционно привязывают ко Дню Республики (24 июня).'
-    },
-    {
-      name: 'Ҫимӗк', ru: 'Семик (праздник предков)', kind: 'Праздник', approx: false,
-      period: 'весна — начало лета',
-      easterOffset: 49,
-      description: 'Праздник почитания предков и обновления жизни.'
-    },
-    {
-      name: 'Ниме', ru: 'Взаимопомощь', kind: 'Обряд взаимопомощи', period: 'лето — осень, по необходимости',
-      description: 'Обряд коллективной взаимопомощи: односельчане бесплатно помогали в тяжёлых работах.'
-    }
+  const FOLK_HOLIDAYS = [
+    { name: 'Сурхури', ru: 'Зимние гадания и колядование', approx: true,
+      date: y => new Date(y, 11, 22),
+      desc: 'Старинный зимний праздник у солнцестояния: гадания о судьбе и урожае, обходы дворов с обрядовыми песнями и угощениями.' },
+    { name: 'Нартукан', ru: 'Зимние святки', approx: true,
+      date: y => new Date(y, 0, 7),
+      desc: 'Неделя ряженых и игрищ между Рождеством и Крещением: обходы дворов, гадания, зимние забавы.' },
+    { name: 'Ҫӑварни', ru: 'Масленица (проводы зимы)', approx: false,
+      date: y => easterPlus(y, -56),
+      desc: 'Проводы зимы: катание на санях и качелях, блины и обрядовая еда перед Великим постом.' },
+    { name: 'Мӑнкун', ru: 'Великий день (Пасха)', approx: false,
+      date: y => getEasterDate(y),
+      desc: 'Главный весенний праздник — обновление природы: обрядовая каша, крашеные яйца, обходы дворов.' },
+    { name: 'Калӑм', ru: 'Поминовение предков (Радоница)', approx: false,
+      date: y => easterPlus(y, 9),
+      desc: 'Поминальный обряд: почитание умерших предков, моления и угощения на месте захоронений.' },
+    { name: 'Акатуй', ru: 'Праздник плуга', approx: false,
+      date: y => nearestSundayTo(y, 5, 24),
+      desc: 'Праздник окончания посевных работ: борьба керӳ, скачки, песни и угощения. В Чебоксарах проводится в воскресенье около Дня Республики (24 июня).' },
+    { name: 'Ҫимӗк', ru: 'Семик (праздник предков)', approx: false,
+      date: y => easterPlus(y, 49),
+      desc: 'Праздник почитания предков и обновления жизни, совпадает по времени с Семиком и Троицей.' },
+    { name: 'Ҫинҫе', ru: 'Летний праздник солнцестояния', approx: true,
+      date: y => new Date(y, 5, 24),
+      desc: 'Дохристианский цикл у летнего солнцестояния: моления земле, сбор трав, время отдыха перед жатвой.' },
+    { name: 'Вырма', ru: 'Жатва', approx: true,
+      date: y => new Date(y, 7, 15),
+      desc: 'Уборочная страда: в старину хлеба жали серпами вручную — самый тяжёлый период крестьянского года.' },
+    { name: 'Чӳклеме', ru: 'Освящение нового урожая', approx: true,
+      date: y => new Date(y, 9, 1),
+      desc: 'Осенний обряд: пекли хлеб из нового зерна, варили пиво и молились всем селом.' }
   ];
 
-  const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-
-  function getTraditionDate(tradition, year) {
-    const easter = getEasterDate(year);
-    if (typeof tradition.easterOffset === 'number') return easterShifted(easter, tradition.easterOffset);
-    if (typeof tradition.fixedDate === 'function') return tradition.fixedDate(year);
-    return null;
-  }
-
   function renderFolkCalendar() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const year = today.getFullYear();
+    const nameEl = document.getElementById('nextHolidayName');
+    const dateEl = document.getElementById('nextHolidayDate');
+    const descEl = document.getElementById('nextHolidayDesc');
+    const countdownEl = document.getElementById('nextHolidayCountdown');
+    const listEl = document.getElementById('holidayList');
+    if (!listEl) return;
 
-    let datedEvents = [];
-    [year, year + 1].forEach(eventYear => {
-      folkTraditions.forEach(tradition => {
-        const date = getTraditionDate(tradition, eventYear);
-        if (date) datedEvents.push({ tradition, date });
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const year = today.getFullYear();
+    const opts = { day: 'numeric', month: 'long', year: 'numeric' };
+
+    const events = [];
+    [year, year + 1].forEach(y => {
+      FOLK_HOLIDAYS.forEach(h => {
+        const d = h.date(y);
+        if (d) events.push({ h, d });
       });
     });
-    datedEvents.sort((a, b) => a.date - b.date);
-    const nextEvent = datedEvents.find(event => event.date >= today);
+    events.sort((a, b) => a.d - b.d);
+    const next = events.find(ev => ev.d >= today);
 
-    const nameEl = document.getElementById('next-holiday-name');
-    const dateEl = document.getElementById('next-holiday-date');
-    const countdownEl = document.getElementById('next-holiday-countdown');
-
-    if (nextEvent) {
-      nameEl.textContent = nextEvent.tradition.name + ' (' + nextEvent.tradition.ru + ')';
-      const prefix = nextEvent.tradition.approx ? 'Ближайшая дата (≈): ' : 'Ближайшая дата: ';
-      dateEl.textContent = prefix + nextEvent.date.toLocaleDateString('ru-RU', dateOptions);
-      const diffDays = Math.round((nextEvent.date - today) / 86400000);
-      if (diffDays === 0) {
-        countdownEl.textContent = '🎉 Сегодня — ' + nextEvent.tradition.name + '!';
+    if (next) {
+      nameEl.textContent = next.h.name + ' — ' + next.h.ru;
+      dateEl.textContent = next.h.d.toLocaleDateString('ru-RU', opts);
+      descEl.textContent = next.h.desc;
+      const days = Math.round((next.d - today) / 86400000);
+      if (days === 0) {
+        countdownEl.textContent = '🎉 Сегодня — ' + next.h.name + '!';
         countdownEl.style.background = '#e7f1e9';
         countdownEl.style.color = '#1e665c';
       } else {
-        countdownEl.textContent = 'До неё: ' + diffDays + ' дн.';
+        countdownEl.textContent = '⏳ До праздника: ' + days + ' ' +
+          (days % 10 === 1 && days % 100 !== 11 ? 'день' :
+           [2,3,4].includes(days % 10) && ![12,13,14].includes(days % 100) ? 'дня' : 'дней');
         countdownEl.style.background = 'rgba(185,75,61,.1)';
         countdownEl.style.color = '#9c4035';
       }
     } else {
       nameEl.textContent = 'Народный календарь';
-      dateEl.textContent = 'Традиции года перечислены ниже';
+      dateEl.textContent = '';
+      descEl.textContent = '';
       countdownEl.textContent = '';
     }
 
-    const listEl = document.getElementById('holiday-list');
     listEl.innerHTML = '';
-
-    folkTraditions.forEach(tradition => {
+    FOLK_HOLIDAYS.forEach(h => {
+      const d = h.date(year);
+      const isToday = d && d.getTime() === today.getTime();
       const item = document.createElement('div');
-      item.className = 'holiday-item';
+      item.className = 'holiday-item' + (isToday ? ' holiday-today' : '');
+
       const info = document.createElement('div');
       info.className = 'holiday-info';
+
       const title = document.createElement('h4');
-      title.textContent = tradition.name;
+      title.textContent = h.name + (isToday ? ' — сегодня! 🎉' : '');
+
       const ruName = document.createElement('p');
       ruName.className = 'ru-name';
-      ruName.textContent = tradition.ru;
+      ruName.textContent = h.ru;
+
       const when = document.createElement('p');
       when.className = 'date';
-      const date = getTraditionDate(tradition, year);
-      when.textContent = date
-        ? (tradition.approx ? '≈ ' : '') + date.toLocaleDateString('ru-RU', dateOptions) + ' · ' + tradition.period
-        : tradition.period;
+      when.textContent = d ? (h.approx ? '≈ ' : '') + d.toLocaleDateString('ru-RU', opts) : 'дата не фиксирована';
+
       const desc = document.createElement('p');
       desc.className = 'desc';
-      desc.textContent = tradition.description;
+      desc.textContent = h.desc;
+
       info.append(title, ruName, when, desc);
-      const kind = document.createElement('div');
-      kind.className = 'holiday-type';
-      kind.textContent = tradition.kind;
-      item.append(info, kind);
+      item.appendChild(info);
       listEl.appendChild(item);
     });
   }
 
   renderFolkCalendar();
+  // Пересчёт после полуночи — отсчёт и «сегодняшний» праздник всегда актуальны.
+  (function scheduleCalendarRefresh() {
+    const now = new Date();
+    const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    setTimeout(() => {
+      renderFolkCalendar();
+      scheduleCalendarRefresh();
+    }, Math.max(1000, nextMidnight - now + 1000));
+  })();
 </script>
 </body>
 </html>
