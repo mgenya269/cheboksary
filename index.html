@@ -174,14 +174,12 @@
     background: linear-gradient(transparent, rgba(0,0,0,0.8));
     color: #fff; padding: 30px 14px 12px; width: 100%; font-size: 0.9rem; font-weight: 600;
   }
-  /* Старые фото */
   .g1 { background-image: url('g1-mother.jpg'); }
   .g2 { background-image: url('g2-bay.jpg'); }
   .g3 { background-image: url('g3-boulevard.jpg'); }
   .g4 { background-image: url('g4-akatuy.jpg'); }
   .g5 { background-image: url('g5-embankment.jpg'); }
   .g6 { background-image: url('g6-sobor.jpg'); }
-  /* Новые места (заглушки) */
   .g7 { background-image: url('g7-chapaev.jpg'); background-color: #333; }
   .g8 { background-image: url('g8-artmuseum.jpg'); background-color: #444; }
   .g9 { background-image: url('g9-embroidery.jpg'); background-color: #555; }
@@ -209,7 +207,7 @@
     font-size: 1.8rem; cursor: pointer; color: var(--gray); line-height: 1;
   }
 
-  /* ===== ПАРКИ (НОВАЯ СЕКЦИЯ) ===== */
+  /* ===== ПАРКИ ===== */
   .parks-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -220,7 +218,7 @@
     border-radius: 16px;
     padding: 24px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    border-left: 4px solid var(--accent); /* Зелёная полоска */
+    border-left: 4px solid var(--accent);
     transition: 0.3s;
   }
   .park-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
@@ -236,7 +234,6 @@
   .culture-card h3 { margin-bottom: 12px; color: var(--text); }
   .culture-card p { color: var(--gray); font-size: 0.95rem; }
   
-  /* Блок фраз всегда тёмный */
   .phrase-box {
     margin-top: 40px; 
     background: #1a1a2e !important; 
@@ -318,48 +315,64 @@
     text-align: left;
   }
 
-  /* ===== СОБЫТИЯ ===== */
-  .events-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-  }
-  .event-card {
+  /* ===== ЖИВОЙ КАЛЕНДАРЬ ===== */
+  .live-calendar-wrapper {
     background: var(--card-bg);
     border-radius: 16px;
-    padding: 24px;
+    padding: 32px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    border-left: 4px solid var(--accent);
-    display: flex;
+    margin-bottom: 30px;
+    border-left: 6px solid var(--red);
+  }
+  .next-holiday-title {
+    font-size: 1.4rem;
+    color: var(--text);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .next-holiday-date {
+    font-size: 1.1rem;
+    color: var(--gray);
+    margin-bottom: 15px;
+  }
+  .countdown {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #c8102e;
+    background: rgba(200, 16, 46, 0.1);
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 20px;
+  }
+  .holiday-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 16px;
-    align-items: flex-start;
   }
-  .event-date {
-    background: var(--accent);
-    color: #fff;
+  .holiday-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+  }
+  .holiday-item.past {
+    opacity: 0.5;
+    background: var(--bg);
+  }
+  .holiday-info h4 { margin-bottom: 4px; color: var(--text); font-size: 1rem; }
+  .holiday-info p { color: var(--gray); font-size: 0.85rem; }
+  .holiday-type {
+    font-size: 0.75rem;
+    padding: 4px 8px;
     border-radius: 10px;
-    padding: 8px 12px;
-    text-align: center;
-    min-width: 60px;
-    flex-shrink: 0;
+    background: var(--border);
+    color: var(--gray);
+    white-space: nowrap;
   }
-  .event-date .day { font-size: 1.6rem; font-weight: 800; line-height: 1; }
-  .event-date .month { font-size: 0.75rem; text-transform: uppercase; }
-  .event-info h4 { margin-bottom: 6px; color: var(--text); }
-  .event-info p { color: var(--gray); font-size: 0.9rem; }
-
-  /* ===== КНОПКА НАВЕРХ ===== */
-  .to-top {
-    position: fixed; bottom: 30px; right: 30px;
-    width: 50px; height: 50px; border-radius: 50%;
-    background: var(--red); color: #fff; border: none;
-    font-size: 1.5rem; cursor: pointer;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    opacity: 0; visibility: hidden;
-    transition: 0.3s; z-index: 90;
-  }
-  .to-top.visible { opacity: 1; visibility: visible; }
-  .to-top:hover { background: #a00d25; transform: translateY(-3px); }
 
   /* ===== ПОДВАЛ ===== */
   footer {
@@ -417,9 +430,9 @@
   <ul id="navMenu">
     <li><a href="#route" class="active">Маршрут</a></li>
     <li><a href="#gallery">Галерея</a></li>
-    <li><a href="#parks">Парки</a></li> <!-- НОВЫЙ ПУНКТ -->
+    <li><a href="#parks">Парки</a></li>
     <li><a href="#culture">Культура</a></li>
-    <li><a href="#events">События</a></li>
+    <li><a href="#events">Календарь</a></li>
     <li><a href="#about">О городе</a></li>
     <li><a href="#symbols">Символика</a></li>
   </ul>
@@ -468,7 +481,6 @@
     </div>
   </div>
   
-  <!-- Карта (Яндекс.Конструктор) -->
   <div class="map-container fade-in">
     <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ab847ff171bd33b6205227cb7865dd7ffa67b0780e6ac9b7e9c1d2a3b3d11d51a&amp;width=500&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
   </div>
@@ -504,7 +516,6 @@
     <div class="gallery-item g6" data-cat="arch" data-title="Введенский собор" data-desc="Старейшее здание Чебоксар, построенное в XVII веке. Находится в историческом центре города.">
       <span class="label">Введенский собор</span>
     </div>
-    <!-- Музеи -->
     <div class="gallery-item g7" data-cat="museums" data-title="Музей В. И. Чапаева" data-desc="Экспозиция о жизни и деятельности легендарного начдива. Здание в форме знамени, рядом — мемориальный дом.">
       <span class="label">Музей Чапаева</span>
     </div>
@@ -520,7 +531,7 @@
   </div>
 </section>
 
-<!-- ПАРКИ (НОВАЯ СЕКЦИЯ) -->
+<!-- ПАРКИ -->
 <section id="parks" class="fade-in">
   <h2 class="section-title">Парки и места отдыха</h2>
   <p class="section-sub">Где погулять, отдохнуть и насладиться природой.</p>
@@ -639,33 +650,21 @@
   </div>
 </section>
 
-<!-- СОБЫТИЯ -->
+<!-- ЖИВОЙ КАЛЕНДАРЬ СОБЫТИЙ -->
 <section id="events" class="fade-in">
-  <h2 class="section-title">События и праздники</h2>
-  <p class="section-sub">Что стоит посетить в Чебоксарах в ближайшее время.</p>
-  <div class="events-grid">
-    <div class="event-card">
-      <div class="event-date"><div class="day">15</div><div class="month">Июн</div></div>
-      <div class="event-info">
-        <h4>Акатуй — праздник плуга</h4>
-        <p>Национальный праздник чувашского народа с песнями, танцами и угощениями. Проходит на открытых площадках города.</p>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date"><div class="day">20</div><div class="month">Июл</div></div>
-      <div class="event-info">
-        <h4>Фестиваль «Чебоксарская волна»</h4>
-        <p>Музыкальный фестиваль на набережной залива. Выступления местных и приглашённых коллективов.</p>
-      </div>
-    </div>
-    <div class="event-card">
-      <div class="event-date"><div class="day">5</div><div class="month">Авг</div></div>
-      <div class="event-info">
-        <h4>День города</h4>
-        <p>Ежегодное празднование с салютом, ярмарками и концертами. Отмечается в августе.</p>
-      </div>
-    </div>
+  <h2 class="section-title">Календарь праздников</h2>
+  <p class="section-sub">Живой календарь Чувашии. Даты обновляются автоматически.</p>
+  
+  <!-- Блок ближайшего праздника -->
+  <div class="live-calendar-wrapper">
+    <div class="next-holiday-title" id="next-holiday-name">Загрузка...</div>
+    <div class="next-holiday-date" id="next-holiday-date"></div>
+    <div class="countdown" id="next-holiday-countdown"></div>
   </div>
+
+  <!-- Список всех праздников -->
+  <h3 style="margin-bottom: 20px; color: var(--text);">Все праздники года</h3>
+  <div class="holiday-list" id="holiday-list"></div>
 </section>
 
 <!-- О ГОРОДЕ / ФАКТЫ -->
@@ -866,6 +865,140 @@
   toTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // ===== ЖИВОЙ КАЛЕНДАРЬ =====
+  
+  // 1. Алгоритм Гаусса для Пасхи
+  function getEasterDate(year) {
+    const a = year % 19;
+    const b = Math.floor(year / 100);
+    const c = year % 100;
+    const d = Math.floor(b / 4);
+    const e = b % 4;
+    const f = Math.floor((b + 8) / 25);
+    const g = Math.floor((b - f + 1) / 3);
+    const h = (19 * a + b - d - g + 15) % 30;
+    const i = Math.floor(c / 4);
+    const k = c % 4;
+    const l = (32 + 2 * e + 2 * i - h - k) % 7;
+    const m = Math.floor((a + 11 * h + 22 * l) / 451);
+    const month = Math.floor((h + l - 7 * m + 114) / 31);
+    const day = ((h + l - 7 * m + 114) % 31) + 1;
+    return new Date(year, month - 1, day);
+  }
+
+  // 2. Третье воскресенье месяца
+  function getThirdSunday(year, monthIndex) {
+    const firstDay = new Date(year, monthIndex, 1);
+    let dayOfWeek = firstDay.getDay(); // 0 - вс
+    let offset = (dayOfWeek === 0) ? 0 : 7 - dayOfWeek;
+    const firstSunday = 1 + offset;
+    const thirdSunday = firstSunday + 14;
+    return new Date(year, monthIndex, thirdSunday);
+  }
+
+  // 3. Генерация списка праздников
+  function generateEvents(year) {
+    const easter = getEasterDate(year);
+    
+    // Масленица (за 56 дней до Пасхи)
+    const maslenitsa = new Date(easter);
+    maslenitsa.setDate(maslenitsa.getDate() - 56);
+    
+    // Троица (через 49 дней после Пасхи)
+    const trinity = new Date(easter);
+    trinity.setDate(trinity.getDate() + 49);
+
+    // Семик (четверг перед Троицей)
+    const semik = new Date(trinity);
+    semik.setDate(semik.getDate() - 3);
+
+    const thirdSundayAug = getThirdSunday(year, 7); // 7 = август
+
+    return [
+      { name: "День чувашской печати", date: getThirdSunday(year, 0), type: "Официальный" },
+      { name: "Сурхури", date: new Date(year, 0, 10), type: "Народный" },
+      { name: "Çăварни (Масленица)", date: maslenitsa, type: "Народный" },
+      { name: "Мăнкун (Пасха)", date: easter, type: "Народный" },
+      { name: "День чувашского языка", date: new Date(year, 3, 25), type: "Официальный" },
+      { name: "День государственных символов ЧР", date: new Date(year, 3, 29), type: "Официальный" },
+      { name: "Çимĕк (Семик)", date: semik, type: "Народный" },
+      { name: "День Республики", date: new Date(year, 5, 24), type: "Официальный" },
+      { name: "Акатуй", date: new Date(year, 5, 24), type: "Народный" },
+      { name: "Уяв / Учук", date: new Date(year, 5, 24), type: "Народный" },
+      { name: "День города Чебоксары", date: thirdSundayAug, type: "Официальный" },
+      { name: "День профсоюзов ЧР", date: new Date(year, 8, 7), type: "Официальный" },
+      { name: "Ниме", date: new Date(year, 8, 15), type: "Народный" },
+      { name: "День сельской женщины", date: new Date(year, 9, 16), type: "Официальный" },
+      { name: "День памяти строителей рубежей", date: new Date(year, 9, 28), type: "Официальный" },
+      { name: "День чувашской вышивки", date: new Date(year, 10, 26), type: "Официальный" }
+    ].sort((a, b) => a.date - b.date);
+  }
+
+  // 4. Отрисовка календаря
+  function renderCalendar() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Берем праздники текущего года и следующего (на случай, если все текущие прошли)
+    let events = generateEvents(today.getFullYear());
+    const nextYearEvents = generateEvents(today.getFullYear() + 1);
+    
+    // Ищем ближайший будущий праздник
+    let nextEvent = events.find(e => e.date >= today);
+    
+    if (!nextEvent) {
+      // Если в этом году все прошли, берем первый из следующего
+      nextEvent = nextYearEvents[0];
+      events = nextYearEvents;
+    }
+
+    // Отрисовка "Ближайший праздник"
+    const nameEl = document.getElementById('next-holiday-name');
+    const dateEl = document.getElementById('next-holiday-date');
+    const countdownEl = document.getElementById('next-holiday-countdown');
+
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    nameEl.textContent = nextEvent.name;
+    dateEl.textContent = nextEvent.date.toLocaleDateString('ru-RU', options);
+
+    // Считаем дни
+    const diffTime = nextEvent.date - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) {
+      countdownEl.textContent = "🎉 Сегодня праздник!";
+      countdownEl.style.background = "#d4edda";
+      countdownEl.style.color = "#155724";
+    } else {
+      countdownEl.textContent = `До праздника: ${diffDays} дн.`;
+      countdownEl.style.background = "rgba(200, 16, 46, 0.1)";
+      countdownEl.style.color = "#c8102e";
+    }
+
+    // Отрисовка списка
+    const listEl = document.getElementById('holiday-list');
+    listEl.innerHTML = '';
+    
+    events.forEach(event => {
+      const isPast = event.date < today;
+      const div = document.createElement('div');
+      div.className = `holiday-item ${isPast ? 'past' : ''}`;
+      
+      div.innerHTML = `
+        <div class="holiday-info">
+          <h4>${event.name}</h4>
+          <p>${event.date.toLocaleDateString('ru-RU', options)}</p>
+        </div>
+        <div class="holiday-type">${event.type}</div>
+      `;
+      listEl.appendChild(div);
+    });
+  }
+
+  // Запуск
+  renderCalendar();
+
 </script>
 </body>
 </html>
