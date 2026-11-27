@@ -5,11 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Чебоксары — жемчужина Поволжья | Путеводитель на 7 дней</title>
 <meta name="description" content="Путеводитель по Чебоксарам: маршрут на семь дней, достопримечательности, парки, музеи, где поесть, как добраться.">
-<meta property="og:title" content="Чебоксары — жемчужина Поволжья">
-<meta property="og:description" content="Маршрут на семь дней, достопримечательности, где поесть и как добраться.">
-<meta property="og:image" content="https://mgenya269.github.io/cheboksary/hero-bg.jpg">
-<meta property="og:url" content="https://mgenya269.github.io/cheboksary/">
-<meta property="og:type" content="website">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <style>
   :root {
@@ -96,9 +91,9 @@
     display: inline-block; padding: 14px 27px; border-radius: 12px;
     background: #b94b3d; color: #fff; text-decoration: none;
     font-weight: 600; transition: 0.3s; z-index: 1; border: none; cursor: pointer;
-    font-size: 1rem; box-shadow: 0 8px 22px rgba(107,43,35,.2); letter-spacing: .01em;
+    font-size: 1rem; box-shadow: 0 8px 22px rgba(107,43,35,.2);
   }
-  .btn:hover { background: #a63e33; box-shadow: 0 12px 26px rgba(107,43,35,.26); transform: translateY(-2px); }
+  .btn:hover { background: #a63e33; transform: translateY(-2px); }
 
   /* ===== СЕКЦИИ ===== */
   section { max-width: 1320px; padding: 82px clamp(20px, 5vw, 76px); margin: 0 auto; }
@@ -132,35 +127,21 @@
     background: linear-gradient(90deg,#b94b3d,#e7bd77);
   }
   .day-card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(26,48,61,.11); }
-  .day-card h3 { font-size: 1.18rem; letter-spacing: -.01em; margin-bottom: 16px; color: var(--text); }
+  .day-card h3 { font-size: 1.18rem; margin-bottom: 16px; color: var(--text); }
   .day-card ul { list-style: none; margin-bottom: 16px; }
   .day-card li {
-    padding: 10px 0 10px 26px; position: relative;
+    padding: 10px 0; position: relative;
     border-bottom: 1px dashed var(--border); font-size: 0.95rem; line-height: 1.65;
-    display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
   }
   .day-card li:last-child { border-bottom: none; }
-  .day-card li::before { content: '📍'; position: absolute; left: 0; }
-  .addr-btn {
-    display: inline-block; padding: 4px 12px;
-    background: var(--accent); color: #fff; text-decoration: none;
-    border-radius: 999px; font-size: 0.78rem; font-weight: 600; transition: 0.2s;
-    white-space: nowrap; flex-shrink: 0;
-  }
-  .addr-btn:hover { background: #1e665c; }
+  .day-card li::before { content: '📍'; position: absolute; left: 0; padding-left: 0; }
+  .day-card li { padding-left: 26px; }
   .map-link {
     display: inline-block; margin-top: 10px; padding: 8px 16px;
     background: var(--accent); color: #fff; text-decoration: none;
     border-radius: 999px; font-size: 0.85rem; font-weight: 600; transition: 0.2s;
   }
   .map-link:hover { background: #1e665c; }
-  .yandex-route-btn {
-    display: inline-block; padding: 12px 22px;
-    background: #3a7be8; color: #fff; text-decoration: none;
-    border-radius: 999px; font-size: 0.92rem; font-weight: 600; transition: 0.2s;
-  }
-  .yandex-route-btn:hover { background: #2a6bbd; }
-  .route-actions { margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
 
   /* ===== АУДИОГИД ===== */
   .audio-guide {
@@ -285,7 +266,7 @@
     box-shadow: 0 8px 28px rgba(26,48,61,.055); border: 1px solid var(--border);
     position: relative;
   }
-  .culture-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #e4bd75; border-radius: 20px 0 0 20px; }
+  .culture-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #e4bd75; }
   .culture-card h3 { margin-bottom: 12px; color: var(--text); }
   .culture-card p { color: var(--gray); font-size: 0.95rem; }
   .phrase-box {
@@ -331,7 +312,7 @@
     border-radius: 18px; padding: 28px; text-align: center; transition: 0.3s;
     box-shadow: 0 7px 22px rgba(26,48,61,.045);
   }
-  .fact:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(26,48,61,.08); }
+  .fact:hover { transform: translateY(-4px); }
   .fact .num { font-size: 2.4rem; font-weight: 800; color: #b9853e; line-height: 1; margin-bottom: 8px; }
   .fact .txt { font-size: 0.9rem; color: var(--gray); }
 
@@ -341,8 +322,8 @@
     background: var(--card-bg); border-radius: 20px; padding: 30px; text-align: center;
     box-shadow: 0 8px 28px rgba(26,48,61,.055); transition: 0.3s; border: 1px solid var(--border);
   }
-  .symbol-card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(26,48,61,.11); }
-  .symbol-card img { max-width: 180px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
+  .symbol-card:hover { transform: translateY(-4px); }
+  .symbol-card img { max-width: 180px; height: auto; margin-bottom: 20px; }
   .symbol-card h3 { margin-bottom: 12px; font-size: 1.3rem; color: var(--text); }
   .symbol-card p { color: var(--gray); font-size: 0.95rem; text-align: left; }
 
@@ -364,19 +345,14 @@
   .holiday-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
   .holiday-item {
     background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
-    padding: 18px; display: flex; justify-content: space-between; align-items: center;
-    gap: 12px; transition: 0.2s;
+    padding: 18px; transition: 0.2s;
   }
-  .holiday-item:hover { border-color: #c9a56d; transform: translateY(-2px); }
+  .holiday-item:hover { border-color: #c9a56d; }
   .holiday-item.holiday-today { border-color: #28a745; background: rgba(40,167,69,.06); }
   .holiday-info h4 { margin-bottom: 4px; color: var(--text); font-size: 1rem; }
   .holiday-info .ru-name { color: var(--accent); font-size: .9rem; margin-bottom: 4px; }
   .holiday-info .date { color: var(--text); font-size: 0.88rem; margin-bottom: 4px; font-weight: 600; }
   .holiday-info .desc { color: var(--gray); font-size: 0.85rem; }
-  .holiday-type {
-    font-size: 0.75rem; padding: 4px 8px; border-radius: 10px;
-    background: var(--border); color: var(--gray); white-space: nowrap;
-  }
 
   /* ===== ПОДВАЛ ===== */
   footer { background: #172b3a; color: #d3dde0; padding: 48px 5%; text-align: center; }
@@ -386,12 +362,6 @@
   .footer-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin: 20px 0; }
   .footer-links a { font-size: 0.85rem; opacity: 0.8; }
   .footer-links a:hover { opacity: 1; }
-  .share-btn {
-    display: inline-block; margin-top: 16px; padding: 10px 20px;
-    background: #f0c879; color: #172b3a; border: none; border-radius: 999px;
-    font-weight: 700; cursor: pointer; font-size: 0.9rem; transition: 0.2s;
-  }
-  .share-btn:hover { background: #f5d99e; }
 
   /* ===== АДАПТИВ ===== */
   @media (max-width: 800px) {
@@ -427,10 +397,6 @@
     .audio-btn { width: 100%; text-align: center; }
     .audio-status { flex-direction: column; gap: 4px; }
   }
-  @media (max-width: 480px) {
-    .holiday-item { flex-direction: column; align-items: stretch; }
-    .holiday-type { align-self: flex-start; }
-  }
 
   /* Доступность */
   html { scroll-behavior: smooth; }
@@ -445,11 +411,6 @@
   }
   .to-top.visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
   .to-top:hover { background: #1e665c; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-    .day-card:hover, .park-card:hover, .symbol-card:hover, .gallery-item:hover, .holiday-item:hover, .food-card:hover, .fact:hover { transform: none; }
-  }
 </style>
 </head>
 <body>
@@ -457,7 +418,7 @@
 <!-- НАВИГАЦИЯ -->
 <nav>
   <div class="logo">🌊 ЧЕБОКСАРЫ</div>
-  <button class="menu-toggle" id="menuToggle" type="button" aria-label="Открыть меню" aria-controls="navMenu" aria-expanded="false">☰</button>
+  <button class="menu-toggle" id="menuToggle" type="button" aria-label="Открыть меню">☰</button>
   <ul id="navMenu">
     <li><a href="#route" class="active">Маршрут</a></li>
     <li><a href="#places-map">Карта</a></li>
@@ -465,7 +426,7 @@
     <li><a href="#culture">Культура</a></li>
     <li><a href="#events">Календарь</a></li>
   </ul>
-  <button class="theme-toggle" id="themeToggle" type="button" title="Переключить тему" aria-label="Переключить тему">🌙</button>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Переключить тему">🌙</button>
 </nav>
 
 <!-- HERO -->
@@ -475,15 +436,10 @@
   <a href="#route" class="btn">Составить маршрут →</a>
 </header>
 
-<!-- ВИДЖЕТ ПОГОДЫ -->
-<div id="weather-widget" style="text-align: center; margin: 20px auto; padding: 15px; background: rgba(26,26,46,0.9); color: white; border-radius: 16px; max-width: 390px; position: relative; z-index: 10; backdrop-filter: blur(5px); box-shadow: 0 12px 34px rgba(23,43,58,.18); border: 1px solid rgba(255,255,255,.14);">
-  <span id="weather-text">Загрузка погоды...</span>
-</div>
-
 <!-- МАРШРУТ -->
 <section id="route" class="fade-in">
   <h2 class="section-title">Чебоксары за 7 дней</h2>
-  <p class="section-sub">Семь дней, чтобы познакомиться с городом. У каждого места — кнопка с адресом, а под списком дня — переход к его точкам на карте.</p>
+  <p class="section-sub">Семь дней, чтобы познакомиться с городом. Под списком дня — переход к его точкам на карте.</p>
 
   <!-- АУДИОГИД -->
   <div class="audio-guide" id="audioGuide">
@@ -509,44 +465,39 @@
       <button id="audioResumeBtn" class="audio-btn" type="button" disabled>⏵ Продолжить</button>
       <button id="audioStopBtn" class="audio-btn" type="button" disabled>⏹ Остановить</button>
     </div>
-    <div class="audio-status" aria-live="polite">
+    <div class="audio-status">
       <span id="audioDayName">День не выбран</span>
       <span id="audioStateText">Готово к воспроизведению</span>
     </div>
-  </div>
-
-  <!-- КНОПКА МАРШРУТА В ЯНДЕКС КАРТАХ (строится по выбранному дню) -->
-  <div class="route-actions">
-    <a href="#" id="yandexRouteBtn" class="yandex-route-btn" target="_blank" rel="noopener">🗺️ Маршрут в Яндекс.Картах</a>
   </div>
 
  <div class="days">
   <div class="day-card" id="day-1">
     <h3>📅 День 1 — Знакомство с городом</h3>
     <ul>
-      <li>Прогулка по Чебоксарскому заливу <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Историческая набережная" target="_blank" rel="noopener">Адрес</a></li>
-      <li>Фото у Монумента Матери-Покровительницы <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Историческая набережная, 14" target="_blank" rel="noopener">Адрес</a></li>
-      <li>Прогулка по Бульвару купца Ефремова <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Бульвар купца Ефремова" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Прогулка по Чебоксарскому заливу</li>
+      <li>Фото у Монумента Матери-Покровительницы</li>
+      <li>Прогулка по Бульвару купца Ефремова</li>
       <li>Обед в кафе на набережной</li>
-      <li>Вечерний световой мост <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Светомузыкальный фонтанный мост" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Вечерний световой мост</li>
     </ul>
     <a href="#places-map" class="map-link" data-day="1">Показать на карте</a>
   </div>
   <div class="day-card" id="day-2">
     <h3>📅 День 2 — История и музеи</h3>
     <ul>
-      <li>Музей В. И. Чапаева <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, проспект Ленина, 46А" target="_blank" rel="noopener">Адрес</a></li>
-      <li>Чувашский национальный музей <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Красная площадь, 5/2" target="_blank" rel="noopener">Адрес</a></li>
-      <li>Введенский собор (XVII век) <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, улица Константина Иванова, 21" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Музей В. И. Чапаева</li>
+      <li>Чувашский национальный музей</li>
+      <li>Введенский собор (XVII век)</li>
       <li>Обед в центре города</li>
-      <li>Прогулка по Красной площади <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Красная площадь" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Прогулка по Красной площади</li>
     </ul>
     <a href="#places-map" class="map-link" data-day="2">Показать на карте</a>
   </div>
   <div class="day-card" id="day-3">
     <h3>📅 День 3 — Волга и набережная</h3>
     <ul>
-      <li>Прогулка по Московской набережной <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Московская набережная" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Прогулка по Московской набережной</li>
       <li>Прокат велосипедов или самокатов</li>
       <li>Речная прогулка на кораблике (по погоде)</li>
       <li>Обед с видом на Волгу</li>
@@ -557,10 +508,10 @@
   <div class="day-card" id="day-4">
     <h3>📅 День 4 — Природа и парки</h3>
     <ul>
-      <li>Парк «Лакреевский лес» (белки, аттракционы) <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, улица Лесная, 1" target="_blank" rel="noopener">Адрес</a></li>
-      <li>Этнокомплекс «Амазония» (колесо обозрения) <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, проспект Максима Горького, 2" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Парк «Лакреевский лес» (белки, аттракционы)</li>
+      <li>Этнокомплекс «Амазония» (колесо обозрения)</li>
       <li>Обед в парке</li>
-      <li>Мемориальный парк Победы (панорама Волги) <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, улица Зои Яковлевой, 54В" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Мемориальный парк Победы (панорама Волги)</li>
       <li>Вечерний отдых</li>
     </ul>
     <a href="#places-map" class="map-link" data-day="4">Показать на карте</a>
@@ -568,9 +519,9 @@
   <div class="day-card" id="day-5">
     <h3>📅 День 5 — Культура и искусство</h3>
     <ul>
-      <li>Чувашский художественный музей <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, улица Калинина, 60" target="_blank" rel="noopener">Адрес</a></li>
-      <li>Музей чувашской вышивки <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, улица Карла Маркса, 32" target="_blank" rel="noopener">Адрес</a></li>
-      <li>Музей Михаила Сеспеля <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, улица Михаила Сеспеля, 8" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Чувашский художественный музей</li>
+      <li>Музей чувашской вышивки</li>
+      <li>Музей Михаила Сеспеля</li>
       <li>Обед в национальном кафе</li>
       <li>Прогулка по вечернему центру</li>
     </ul>
@@ -580,7 +531,7 @@
     <h3>📅 День 6 — Гастрономия и отдых</h3>
     <ul>
       <li>Дегустация блюд: шурпе, хуплу</li>
-      <li>Посещение Музея пива <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, бульвар купца Ефремова, 6А" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Посещение Музея пива</li>
       <li>Обед в национальном ресторане</li>
       <li>Шоппинг (сувениры, вышивка)</li>
       <li>Спокойный вечер в центре</li>
@@ -591,7 +542,7 @@
     <h3>📅 День 7 — Заволжье и природа</h3>
     <ul>
       <li>Поездка в Заволжье (паром или мост)</li>
-      <li>Этнопарк «Сувар» (деревянные скульптуры) <a class="addr-btn" href="https://yandex.ru/maps/?text=Чебоксары, Заволжье, посёлок Сосновка" target="_blank" rel="noopener">Адрес</a></li>
+      <li>Этнопарк «Сувар» (деревянные скульптуры)</li>
       <li>Пикник на природе</li>
       <li>Возвращение в город</li>
       <li>Прощальный ужин</li>
@@ -604,8 +555,8 @@
     <h2 class="section-title">Карта достопримечательностей</h2>
     <p class="section-sub">Отмеченные места из маршрута. Выберите день, чтобы оставить на карте нужные точки.</p>
     <p class="map-legend">📍 — прогулочные места · 🗿 — памятники · 🏛️ — музеи · 🌳 — парки · ⛪ — храмы</p>
-    <div class="map-toolbar" aria-label="Фильтр карты">
-      <select id="mapDayFilter" aria-label="Фильтр по дню маршрута">
+    <div class="map-toolbar">
+      <select id="mapDayFilter">
         <option value="all">Все дни маршрута</option>
         <option value="1">День 1 — Знакомство с городом</option>
         <option value="2">День 2 — История и музеи</option>
@@ -616,7 +567,7 @@
         <option value="7">День 7 — Заволжье и природа</option>
       </select>
     </div>
-    <div id="placesMap" role="application" aria-label="Интерактивная карта достопримечательностей Чебоксар"></div>
+    <div id="placesMap" aria-label="Интерактивная карта достопримечательностей Чебоксар"></div>
   </section>
 </section>
 
@@ -632,34 +583,34 @@
     <button data-filter="museums">Музеи</button>
   </div>
   <div class="gallery" id="galleryGrid">
-    <div class="gallery-item g1" role="button" tabindex="0" data-cat="arch" data-title="Монумент Матери-Покровительницы" data-desc="46-метровая статуя на берегу залива — символ города. Местные шутят, что это «наш Рио-де-Жанейро».">
+    <div class="gallery-item g1" role="button" tabindex="0" data-cat="arch" data-title="Монумент Матери-Покровительницы" data-desc="46-метровая статуя на берегу залива — символ города.">
       <span class="label">Мать-Покровительница</span>
     </div>
-    <div class="gallery-item g2" role="button" tabindex="0" data-cat="nature" data-title="Чебоксарский залив" data-desc="Искусственный водоём в центре города, любимое место прогулок. Вдоль залива — кафе, спортивные площадки и световой мост.">
+    <div class="gallery-item g2" role="button" tabindex="0" data-cat="nature" data-title="Чебоксарский залив" data-desc="Искусственный водоём в центре города, любимое место прогулок.">
       <span class="label">Чебоксарский залив</span>
     </div>
-    <div class="gallery-item g3" role="button" tabindex="0" data-cat="arch" data-title="Бульвар купца Ефремова" data-desc="Пешеходная улица с купеческими особняками XIX века и скульптурами героев «Двенадцати стульев».">
+    <div class="gallery-item g3" role="button" tabindex="0" data-cat="arch" data-title="Бульвар купца Ефремова" data-desc="Пешеходная улица с купеческими особняками XIX века.">
       <span class="label">Бульвар Ефремова</span>
     </div>
-    <div class="gallery-item g4" role="button" tabindex="0" data-cat="people" data-title="Праздник Акатуй" data-desc="Чувашский праздник плуга, который отмечают летом. Песни, танцы, национальная борьба и угощения.">
+    <div class="gallery-item g4" role="button" tabindex="0" data-cat="people" data-title="Праздник Акатуй" data-desc="Чувашский праздник плуга, который отмечают летом.">
       <span class="label">Акатуй</span>
     </div>
-    <div class="gallery-item g5" role="button" tabindex="0" data-cat="nature" data-title="Московская набережная" data-desc="Многокилометровая набережная вдоль Волги. Идеально для велосипедов, пробежек и встречи заката.">
+    <div class="gallery-item g5" role="button" tabindex="0" data-cat="nature" data-title="Московская набережная" data-desc="Многокилометровая набережная вдоль Волги.">
       <span class="label">Московская набережная</span>
     </div>
-    <div class="gallery-item g6" role="button" tabindex="0" data-cat="arch" data-title="Введенский собор" data-desc="Старейшее здание Чебоксар, построенное в XVII веке. Находится в историческом центре города.">
+    <div class="gallery-item g6" role="button" tabindex="0" data-cat="arch" data-title="Введенский собор" data-desc="Старейшее здание Чебоксар, построенное в XVII веке.">
       <span class="label">Введенский собор</span>
     </div>
-    <div class="gallery-item g7" role="button" tabindex="0" data-cat="museums" data-title="Музей В. И. Чапаева" data-desc="Экспозиция о жизни и деятельности легендарного начдива. Здание в форме знамени, рядом — мемориальный дом.">
+    <div class="gallery-item g7" role="button" tabindex="0" data-cat="museums" data-title="Музей В. И. Чапаева" data-desc="Экспозиция о жизни и деятельности легендарного начдива.">
       <span class="label">Музей Чапаева</span>
     </div>
-    <div class="gallery-item g8" role="button" tabindex="0" data-cat="museums" data-title="Чувашский художественный музей" data-desc="Крупнейший культурный центр республики. Иконопись, русское и зарубежное искусство, работы чувашских мастеров.">
+    <div class="gallery-item g8" role="button" tabindex="0" data-cat="museums" data-title="Чувашский художественный музей" data-desc="Крупнейший культурный центр республики.">
       <span class="label">Художественный музей</span>
     </div>
-    <div class="gallery-item g9" role="button" tabindex="0" data-cat="museums" data-title="Музей чувашской вышивки" data-desc="Уникальные вышитые панно и традиционные узоры. Отличное место, чтобы увидеть наследие ЮНЕСКО вживую.">
+    <div class="gallery-item g9" role="button" tabindex="0" data-cat="museums" data-title="Музей чувашской вышивки" data-desc="Уникальные вышитые панно и традиционные узоры.">
       <span class="label">Музей вышивки</span>
     </div>
-    <div class="gallery-item g10" role="button" tabindex="0" data-cat="museums" data-title="Музей Михаила Сеспеля" data-desc="Жизнь и творчество основоположника чувашской поэзии. Здесь хранятся уникальные фотографии старого города.">
+    <div class="gallery-item g10" role="button" tabindex="0" data-cat="museums" data-title="Музей Михаила Сеспеля" data-desc="Жизнь и творчество основоположника чувашской поэзии.">
       <span class="label">Музей Сеспеля</span>
     </div>
   </div>
@@ -672,25 +623,25 @@
   <div class="parks-grid">
     <div class="park-card">
       <h4>🌳 Парк «Лакреевский лес»</h4>
-      <p>Центральный парк с аттракционами, верёвочным городком и ручными белками. Отличное место для семейного отдыха и прогулок в тени деревьев.</p>
+      <p>Центральный парк с аттракционами, верёвочным городком и ручными белками. Отличное место для семейного отдыха.</p>
     </div>
     <div class="park-card">
       <h4>🎡 Парк «Амазония»</h4>
-      <p>Большой этнокомплекс с колесом обозрения, аквазоной и множеством развлечений. Находится рядом с набережной, идеально для активного отдыха.</p>
+      <p>Большой этнокомплекс с колесом обозрения, аквазоной и множеством развлечений.</p>
     </div>
     <div class="park-card">
       <h4>🕊️ Мемориальный парк Победы</h4>
-      <p>Самая высокая точка города с панорамным видом на Волгу. Здесь находится музей военной техники под открытым небом и Вечный огонь.</p>
+      <p>Самая высокая точка города с панорамным видом на Волгу. Музей военной техники под открытым небом и Вечный огонь.</p>
     </div>
     <div class="park-card">
       <h4>🗿 Этнопарк «Сувар»</h4>
-      <p>Музей под открытым небом в Заволжье. Более 100 деревянных скульптур, рассказывающих о чувашской мифологии и культуре.</p>
+      <p>Музей под открытым небом в Заволжье. Более 100 деревянных скульптур о чувашской мифологии.</p>
     </div>
   </div>
 </section>
 
 <!-- МОДАЛЬНОЕ ОКНО -->
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+<div class="modal" id="modal" role="dialog" aria-modal="true">
   <div class="modal-box">
     <button class="modal-close" id="modalClose" type="button" aria-label="Закрыть окно">×</button>
     <div class="big" id="modalBig"></div>
@@ -706,15 +657,15 @@
   <div class="culture-grid">
     <div class="culture-card">
       <h3>🎉 Акатуй</h3>
-      <p>Праздник плуга, отмечаемый летом. Символизирует окончание весенне-полевых работ. Сопровождается песнями, танцами, борьбой и национальными угощениями.</p>
+      <p>Праздник плуга, отмечаемый летом. Символизирует окончание весенне-полевых работ.</p>
     </div>
     <div class="culture-card">
       <h3>🍲 Кухня</h3>
-      <p>Шурпе — наваристый суп с мясом и субпродуктами. Хуплу — пирог с мясом и картофелем. И, конечно, чувашское пиво — часть национальной традиции.</p>
+      <p>Шурпе — наваристый суп с мясом. Хуплу — пирог с мясом и картофелем. И чувашское пиво — часть национальной традиции.</p>
     </div>
     <div class="culture-card">
       <h3>🧵 Вышивка</h3>
-      <p>Чувашская вышивка — объект нематериального культурного наследия ЮНЕСКО. Узоры служили оберегами и передавались из поколения в поколение.</p>
+      <p>Чувашская вышивка — объект нематериального культурного наследия ЮНЕСКО. Узоры служили оберегами.</p>
     </div>
   </div>
 
@@ -725,105 +676,12 @@
     <div class="phrase"><span class="cv">Мӗнле пурӑнатӑр?</span><span class="ru">Как дела?</span></div>
     <div class="phrase"><span class="cv">Сывӑ пул!</span><span class="ru">До свидания!</span></div>
   </div>
-
-  <div style="margin-top: 40px;">
-    <h3 style="margin-bottom: 20px;">🎨 Цвета чувашской вышивки</h3>
-    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-      <div style="flex: 1; min-width: 120px; background: #c8102e; color: white; padding: 15px; border-radius: 12px; text-align: center;">
-        <b>Красный</b><br><small>Счастье, любовь</small>
-      </div>
-      <div style="flex: 1; min-width: 120px; background: #ffd100; color: #1a1a2e; padding: 15px; border-radius: 12px; text-align: center;">
-        <b>Жёлтый</b><br><small>Солнце, радость</small>
-      </div>
-      <div style="flex: 1; min-width: 120px; background: #0f6b4f; color: white; padding: 15px; border-radius: 12px; text-align: center;">
-        <b>Зелёный</b><br><small>Природа, жизнь</small>
-      </div>
-      <div style="flex: 1; min-width: 120px; background: #ffffff; color: #1a1a2e; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #ddd;">
-        <b>Белый</b><br><small>Чистота, правда</small>
-      </div>
-      <div style="flex: 1; min-width: 120px; background: #1a1a2e; color: white; padding: 15px; border-radius: 12px; text-align: center;">
-        <b>Чёрный</b><br><small>Земля, труд</small>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ГДЕ ПОЕСТЬ -->
-<section id="food" class="fade-in">
-  <h2 class="section-title">Где поесть</h2>
-  <p class="section-sub">Национальная кухня и уютные места, где можно попробовать шурпе, хуплу и другие блюда.</p>
-  <div class="food-grid">
-    <div class="food-card">
-      <h4>🍲 «Чувашская кухня»</h4>
-      <div class="food-type">Национальная кухня</div>
-      <p>Шурпе, хуплу, домашние супы и выпечка. Уютная атмосфера и аутентичные блюда.</p>
-      <div class="food-address">📍 ул. Карла Маркса, 15</div>
-      <a href="https://yandex.ru/maps/?text=Чебоксары, улица Карла Маркса, 15" target="_blank">Показать на карте →</a>
-    </div>
-    <div class="food-card">
-      <h4>🍺 «Пивная»</h4>
-      <div class="food-type">Пивной ресторан</div>
-      <p>Чувашское пиво, закуски, национальные блюда. Отличное место для вечернего отдыха.</p>
-      <div class="food-address">📍 бульвар купца Ефремова, 6</div>
-      <a href="https://yandex.ru/maps/?text=Чебоксары, бульвар купца Ефремова, 6" target="_blank">Показать на карте →</a>
-    </div>
-    <div class="food-card">
-      <h4>☕ «Кофейня»</h4>
-      <div class="food-type">Кофейня и завтраки</div>
-      <p>Кофе, десерты, лёгкие завтраки. Идеально для перерыва между прогулками.</p>
-      <div class="food-address">📍 ул. Ленинградская, 22</div>
-      <a href="https://yandex.ru/maps/?text=Чебоксары, улица Ленинградская, 22" target="_blank">Показать на карте →</a>
-    </div>
-    <div class="food-card">
-      <h4>🍕 «Пиццерия»</h4>
-      <div class="food-type">Итальянская кухня</div>
-      <p>Пицца, паста, салаты. Хороший вариант для семейного обеда или ужина.</p>
-      <div class="food-address">📍 ул. Гагарина, 10</div>
-      <a href="https://yandex.ru/maps/?text=Чебоксары, улица Гагарина, 10" target="_blank">Показать на карте →</a>
-    </div>
-  </div>
-</section>
-
-<!-- КАК ДОБРАТЬСЯ -->
-<section id="transport" class="fade-in">
-  <h2 class="section-title">Как добраться</h2>
-  <p class="section-sub">Чебоксары — крупный транспортный узел Поволжья.</p>
-  <div class="transport-grid">
-    <div class="transport-card">
-      <div class="transport-icon">✈️</div>
-      <div>
-        <h4>Самолётом</h4>
-        <p>Аэропорт «Чебоксары» (CSY) принимает рейсы из Москвы и других городов. От аэропорта до центра — на такси или автобусе.</p>
-      </div>
-    </div>
-    <div class="transport-card">
-      <div class="transport-icon">🚂</div>
-      <div>
-        <h4>Поездом</h4>
-        <p>Железнодорожный вокзал Чебоксар. Поезда из Москвы, Казани и других городов. Вокзал находится в центре города.</p>
-      </div>
-    </div>
-    <div class="transport-card">
-      <div class="transport-icon">🚌</div>
-      <div>
-        <h4>Автобусом</h4>
-        <p>Автовокзал принимает междугородние рейсы из Москвы, Казани, Нижнего Новгорода и других городов Поволжья.</p>
-      </div>
-    </div>
-    <div class="transport-card">
-      <div class="transport-icon">🚗</div>
-      <div>
-        <h4>На автомобиле</h4>
-        <p>Через Чебоксары проходит трасса М-7 «Волга». От Москвы — около 650 км, от Казани — около 150 км.</p>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- НАРОДНЫЙ КАЛЕНДАРЬ -->
 <section id="events" class="fade-in">
   <h2 class="section-title">Народный календарь Чувашии</h2>
-  <p class="section-sub">Традиционные праздники и обряды. Даты пересчитываются автоматически на каждый год: у праздников, привязанных к Пасхе, даты точные; у сезонных обрядов — ориентировочные (помечены ≈), потому что в старину сроки определяла община.</p>
+  <p class="section-sub">Традиционные праздники и обряды. Даты пересчитываются автоматически на каждый год: у праздников, привязанных к Пасхе, даты точные; у сезонных обрядов — ориентировочные (помечены ≈).</p>
 
   <div class="live-calendar-wrapper">
     <div class="next-holiday-title" id="nextHolidayName">Загрузка...</div>
@@ -846,31 +704,10 @@
     <div class="fact"><div class="num">320 м</div><div class="txt">самый длинный световой мост в России</div></div>
     <div class="fact"><div class="num">46 м</div><div class="txt">высота Монумента Матери-Покровительницы</div></div>
   </div>
-  <p style="margin-top:40px; color:var(--gray); max-width:700px;">
-    Чебоксары — город, который часто называют «жемчужиной Поволжья» за чистоту, ухоженные парки и спокойный ритм жизни. Здесь древние храмы соседствуют с современными набережными, а национальная культура чувствуется в каждом узоре и каждом блюде.
-  </p>
-</section>
-
-<!-- СИМВОЛИКА -->
-<section id="symbols" class="fade-in">
-  <h2 class="section-title">Официальная символика</h2>
-  <p class="section-sub">Герб и флаг Чебоксар — отражение истории и характера города.</p>
-  <div class="symbols-grid">
-    <div class="symbol-card">
-      <img src="gerb.png" alt="Герб Чебоксар">
-      <h3>Герб города</h3>
-      <p>Серебряный щит с пятью летящими утками (символ свободы и изобилия), тремя дубами (сила и вечность) и датой «1469» — годом первого упоминания. Увенчан тремя звёздами с девизом «Были, есть и будем».</p>
-    </div>
-    <div class="symbol-card">
-      <img src="flag.png" alt="Флаг Чебоксар">
-      <h3>Флаг города</h3>
-      <p>Белое полотно с изображением герба в центре. Утверждён 14 июня 2001 года. Белый цвет традиционно символизирует чистоту и мир.</p>
-    </div>
-  </div>
 </section>
 
 <!-- КНОПКА НАВЕРХ -->
-<button class="to-top" id="toTop" type="button" title="Наверх" aria-label="Наверх">↑</button>
+<button class="to-top" id="toTop" type="button" aria-label="Наверх">↑</button>
 
 <!-- ПОДВАЛ -->
 <footer>
@@ -880,21 +717,16 @@
     <a href="#route">Маршрут</a>
     <a href="#places-map">Карта</a>
     <a href="#gallery">Галерея</a>
-    <a href="#parks">Парки</a>
     <a href="#culture">Культура</a>
-    <a href="#food">Где поесть</a>
-    <a href="#transport">Как добраться</a>
     <a href="#events">Календарь</a>
     <a href="#about">О городе</a>
-    <a href="#symbols">Символика</a>
   </div>
-  <button class="share-btn" onclick="shareSite()">📤 Поделиться сайтом</button>
   <p style="margin-top: 16px; font-size: 0.85rem; opacity: 0.7;">Сделано с любовью к городу на Волге · 2026</p>
 </footer>
 
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
-  // ===== ДАННЫЕ КАРТЫ (с категориями для разных маркеров) =====
+  // ===== ДАННЫЕ КАРТЫ =====
   const PLACES = [
     {name:'Монумент Матери-Покровительницы',lat:56.148692,lng:47.242115,day:1,category:'monument',address:'Историческая набережная, 14',description:'Главный монумент Чувашии: медная фигура Матери высотой 16 метров на 25-метровом постаменте.'},
     {name:'Набережная Чебоксарского залива',lat:56.147267,lng:47.245928,day:1,category:'sights',address:'Исторический центр',description:'Прогулочная зона вдоль залива с мостами, кафе и площадками.'},
@@ -922,15 +754,8 @@
   const navMenu = document.getElementById('navMenu');
   const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"]'));
 
-  function closeMenu() {
-    navMenu.classList.remove('show');
-    menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.setAttribute('aria-label', 'Открыть меню');
-  }
-
   menuToggle.addEventListener('click', () => {
     const isOpen = navMenu.classList.toggle('show');
-    menuToggle.setAttribute('aria-expanded', String(isOpen));
     menuToggle.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
   });
 
@@ -942,16 +767,15 @@
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       navLinks.forEach(item => item.classList.remove('active'));
       link.classList.add('active');
-      closeMenu();
+      navMenu.classList.remove('show');
     });
   });
 
   // ===== ТЁМНАЯ ТЕМА =====
   const themeToggle = document.getElementById('themeToggle');
   const savedTheme = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+  if (savedTheme === 'dark') {
     document.body.classList.add('dark-theme');
     themeToggle.textContent = '☀️';
   } else if (savedTheme === 'light') {
@@ -969,78 +793,6 @@
     }
   });
 
-  // ===== ПОДЕЛИТЬСЯ САЙТОМ =====
-  function shareSite() {
-    const shareData = {
-      title: 'Чебоксары — жемчужина Поволжья',
-      text: 'Путеводитель по Чебоксарам: маршрут на 7 дней, карта, культура и где поесть.',
-      url: window.location.href
-    };
-    if (navigator.share) {
-      navigator.share(shareData).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(window.location.href).then(() => {
-        alert('Ссылка скопирована в буфер обмена!');
-      }).catch(() => {
-        prompt('Скопируйте ссылку:', window.location.href);
-      });
-    }
-  }
-
-  // ===== ПОГОДА (с кэшем на 10 минут) =====
-  const WEATHER_CACHE_KEY = 'cheboksary_weather_v1';
-  const WEATHER_CACHE_TTL = 10 * 60 * 1000;
-
-  async function getWeather() {
-    const weatherText = document.getElementById('weather-text');
-    try {
-      const cached = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || 'null');
-      if (cached && cached.timestamp && (Date.now() - cached.timestamp < WEATHER_CACHE_TTL)) {
-        weatherText.textContent = cached.text;
-        return;
-      }
-    } catch (e) {}
-
-    const weatherUrl = 'https://api.open-meteo.com/v1/forecast?latitude=56.146&longitude=47.251&current=temperature_2m,weather_code&timezone=Europe%2FMoscow';
-    const weatherDescriptions = {
-      0: ['☀️', 'Ясно'], 1: ['🌤️', 'Преимущественно ясно'],
-      2: ['⛅', 'Переменная облачность'], 3: ['☁️', 'Пасмурно'],
-      45: ['🌫️', 'Туман'], 48: ['🌫️', 'Изморозь'],
-      51: ['🌦️', 'Лёгкая морось'], 53: ['🌦️', 'Морось'],
-      55: ['🌧️', 'Сильная морось'], 56: ['🌧️', 'Ледяная морось'],
-      57: ['🌧️', 'Сильная ледяная морось'],
-      61: ['🌦️', 'Небольшой дождь'], 63: ['🌧️', 'Дождь'],
-      65: ['🌧️', 'Сильный дождь'], 66: ['🌧️', 'Ледяной дождь'],
-      67: ['🌧️', 'Сильный ледяной дождь'],
-      71: ['🌨️', 'Небольшой снег'], 73: ['🌨️', 'Снег'],
-      75: ['❄️', 'Сильный снег'], 77: ['🌨️', 'Снежные зёрна'],
-      80: ['🌦️', 'Ливень'], 81: ['🌧️', 'Сильный ливень'],
-      82: ['⛈️', 'Очень сильный ливень'],
-      85: ['🌨️', 'Снегопад'], 86: ['❄️', 'Сильный снегопад'],
-      95: ['⛈️', 'Гроза'], 96: ['⛈️', 'Гроза с градом'],
-      99: ['⛈️', 'Сильная гроза с градом']
-    };
-
-    try {
-      const response = await fetch(weatherUrl);
-      if (!response.ok) throw new Error('Weather request failed');
-      const data = await response.json();
-      const current = data && data.current;
-      if (!current || !Number.isFinite(current.temperature_2m) || !Number.isFinite(current.weather_code)) throw new Error('Invalid weather');
-
-      const temperature = Math.round(current.temperature_2m);
-      const temperatureText = (temperature > 0 ? '+' : '') + temperature + '°C';
-      const info = weatherDescriptions[current.weather_code] || ['🌡️', 'Погодные условия'];
-      const text = info[0] + ' Сейчас в Чебоксарах: ' + temperatureText + ' · ' + info[1];
-      weatherText.textContent = text;
-      localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ text: text, timestamp: Date.now() }));
-    } catch (error) {
-      weatherText.textContent = 'Погода временно недоступна';
-    }
-  }
-  getWeather();
-  setInterval(getWeather, WEATHER_CACHE_TTL);
-
   // ===== АУДИОГИД =====
   const audioDaySelect = document.getElementById('audioDaySelect');
   const audioRateSelect = document.getElementById('audioRateSelect');
@@ -1056,16 +808,16 @@
   let isPlaying = false;
   let isPaused = false;
 
-  // Убирает фрагменты в скобках и эмодзи — чтобы они не озвучивались
+  // Убирает скобки и эмодзи — чтобы они не озвучивались
   function stripForSpeech(text) {
     return text
-      .replace(/$[^)]*$/g, '')      // круглые скобки с содержимым
+      .replace(/$[^)]*$/g, '')
       .replace(/
 $$
 [^
 $$
-]*\]/g, '')     // квадратные скобки с содержимым
-      .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}\u{FE0F}]/gu, '') // эмодзи и значки
+]*\]/g, '')
+      .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}\u{FE0F}]/gu, '')
       .replace(/\s+/g, ' ')
       .trim();
   }
@@ -1129,7 +881,6 @@ $$
     utterance.lang = 'ru-RU';
     utterance.voice = voice;
     utterance.rate = parseFloat(audioRateSelect.value) || 0.95;
-    utterance.pitch = 1;
 
     utterance.onboundary = e => { if (typeof e.charIndex === 'number') session.charIndex = e.charIndex; };
     utterance.onend = () => {
@@ -1216,7 +967,7 @@ $$
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
     map.addControl(new maplibregl.AttributionControl({
       compact: true,
-      customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">© OpenFreeMap</a> · <a href="https://openmaptiles.org/" target="_blank" rel="noopener">© OpenMapTiles</a> · <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a>'
+      customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">© OpenFreeMap</a> · <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a>'
     }), 'bottom-right');
 
     let markers = [];
@@ -1236,8 +987,7 @@ $$
         const popup = new maplibregl.Popup({ offset: 36 }).setHTML(
           '<div class="map-popup-title">' + place.name + '</div>' +
           '<div>' + place.description + '</div>' +
-          '<div class="map-popup-meta">' + place.address + '<br>День ' + place.day + '</div>' +
-          '<a class="map-popup-link" href="https://www.openstreetmap.org/?mlat=' + place.lat + '&mlon=' + place.lng + '#map=17/' + place.lat + '/' + place.lng + '" target="_blank" rel="noopener">Открыть на OpenStreetMap ↗</a>'
+          '<div class="map-popup-meta">' + place.address + '<br>День ' + place.day + '</div>'
         );
         const marker = new maplibregl.Marker({ element: el })
           .setLngLat([place.lng, place.lat])
@@ -1269,22 +1019,6 @@ $$
     window.setTimeout(() => map.resize(), 250);
   } else if (mapElement) {
     mapElement.textContent = 'Не удалось загрузить карту.';
-  }
-
-  // ===== КНОПКА «МАРШРУТ В ЯНДЕКС.КАРТАХ» =====
-  // Берёт точки выбранного дня из тех же данных, что и карта, и строит маршрут.
-  const yandexRouteBtn = document.getElementById('yandexRouteBtn');
-  if (yandexRouteBtn) {
-    function updateYandexRoute() {
-      const day = document.getElementById('mapDayFilter').value;
-      const points = PLACES.filter(p => day === 'all' || String(p.day) === day);
-      if (!points.length) return;
-      // Формат Яндекс Карт: rtext=lon1,lat1~lon2,lat2...&rtt=auto (на авто)
-      const rtext = points.map(p => p.lng + ',' + p.lat).join('~');
-      yandexRouteBtn.href = 'https://yandex.ru/maps/?mode=routes&rtext=' + rtext + '&rtt=auto';
-    }
-    document.getElementById('mapDayFilter').addEventListener('change', updateYandexRoute);
-    updateYandexRoute();
   }
 
   // ===== ФИЛЬТР ГАЛЕРЕИ =====
@@ -1366,7 +1100,7 @@ $$
   updateToTopButton();
   toTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
-  // ===== ЛЕТ ГОРОДУ (автоподсчёт) =====
+  // ===== ЛЕТ ГОРОДУ =====
   const cityYears = document.getElementById('cityYears');
   if (cityYears) cityYears.textContent = (new Date().getFullYear() - 1469) + '+';
 
@@ -1396,34 +1130,34 @@ $$
   }
 
   const FOLK_HOLIDAYS = [
-    { name: 'Сурхури', ru: 'Зимние гадания и колядование', kind: 'Зимний цикл', approx: true,
+    { name: 'Сурхури', ru: 'Зимние гадания и колядование', approx: true,
       date: y => new Date(y, 11, 22),
       desc: 'Старинный зимний праздник у солнцестояния: гадания о судьбе и урожае, обходы дворов с обрядовыми песнями и угощениями.' },
-    { name: 'Нартукан', ru: 'Зимние святки', kind: 'Зимний праздник', approx: true,
+    { name: 'Нартукан', ru: 'Зимние святки', approx: true,
       date: y => new Date(y, 0, 7),
       desc: 'Неделя ряженых и игрищ между Рождеством и Крещением: обходы дворов, гадания, зимние забавы.' },
-    { name: 'Ҫӑварни', ru: 'Масленица (проводы зимы)', kind: 'Праздник проводов зимы', approx: false,
+    { name: 'Ҫӑварни', ru: 'Масленица (проводы зимы)', approx: false,
       date: y => easterPlus(y, -56),
       desc: 'Проводы зимы: катание на санях и качелях, блины и обрядовая еда перед Великим постом.' },
-    { name: 'Мӑнкун', ru: 'Великий день (Пасха)', kind: 'Главный весенний праздник', approx: false,
+    { name: 'Мӑнкун', ru: 'Великий день (Пасха)', approx: false,
       date: y => getEasterDate(y),
       desc: 'Главный весенний праздник — обновление природы: обрядовая каша, крашеные яйца, обходы дворов.' },
-    { name: 'Калӑм', ru: 'Поминовение предков (Радоница)', kind: 'Поминальный обряд', approx: false,
+    { name: 'Калӑм', ru: 'Поминовение предков (Радоница)', approx: false,
       date: y => easterPlus(y, 9),
       desc: 'Поминальный обряд: почитание умерших предков, моления и угощения на месте захоронений.' },
-    { name: 'Акатуй', ru: 'Праздник плуга', kind: 'Праздник', approx: false,
+    { name: 'Акатуй', ru: 'Праздник плуга', approx: false,
       date: y => nearestSundayTo(y, 5, 24),
       desc: 'Праздник окончания посевных работ: борьба керӳ, скачки, песни и угощения. В Чебоксарах проводится в воскресенье около Дня Республики (24 июня).' },
-    { name: 'Ҫимӗк', ru: 'Семик (праздник предков)', kind: 'Праздник', approx: false,
+    { name: 'Ҫимӗк', ru: 'Семик (праздник предков)', approx: false,
       date: y => easterPlus(y, 49),
       desc: 'Праздник почитания предков и обновления жизни, совпадает по времени с Семиком и Троицей.' },
-    { name: 'Ҫинҫе', ru: 'Летний праздник солнцестояния', kind: 'Летний цикл', approx: true,
+    { name: 'Ҫинҫе', ru: 'Летний праздник солнцестояния', approx: true,
       date: y => new Date(y, 5, 24),
       desc: 'Дохристианский цикл у летнего солнцестояния: моления земле, сбор трав, время отдыха перед жатвой.' },
-    { name: 'Вырма', ru: 'Жатва', kind: 'Трудовой период', approx: true,
+    { name: 'Вырма', ru: 'Жатва', approx: true,
       date: y => new Date(y, 7, 15),
       desc: 'Уборочная страда: в старину хлеба жали серпами вручную — самый тяжёлый период крестьянского года.' },
-    { name: 'Чӳклеме', ru: 'Освящение нового урожая', kind: 'Осенний обряд', approx: true,
+    { name: 'Чӳклеме', ru: 'Освящение нового урожая', approx: true,
       date: y => new Date(y, 9, 1),
       desc: 'Осенний обряд: пекли хлеб из нового зерна, варили пиво и молились всем селом.' }
   ];
