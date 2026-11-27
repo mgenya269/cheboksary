@@ -473,6 +473,121 @@
     }
   }
 
+
+  /* ===== ВИЗУАЛЬНОЕ ОБНОВЛЕНИЕ: СОВРЕМЕННЫЙ ТУРИСТИЧЕСКИЙ СТИЛЬ ===== */
+  :root {
+    --red: #b94b3d;
+    --yellow: #f0c879;
+    --dark: #172b3a;
+    --light: #f5f2eb;
+    --accent: #287c70;
+    --gray: #687783;
+    --bg: #f4f2ed;
+    --text: #203342;
+    --card-bg: #ffffff;
+    --border: #e2e6e3;
+  }
+  body.dark-theme {
+    --bg: #14232d;
+    --text: #edf2f2;
+    --card-bg: #1d303b;
+    --border: #344852;
+    --gray: #b2c0c5;
+    --light: #14232d;
+    --dark: #edf2f2;
+  }
+  body { font-family: Inter, 'Segoe UI', Tahoma, sans-serif; }
+  nav {
+    min-height: 68px; height: auto; padding: 10px clamp(18px, 5vw, 76px);
+    background: rgba(23,43,58,.94); box-shadow: 0 8px 28px rgba(13,31,43,.16);
+  }
+  nav .logo { color: #f0c879; font-size: 1.08rem; letter-spacing: 1.4px; }
+  nav ul { gap: 5px; }
+  nav a { padding: 9px 13px; border-radius: 999px; font-size: .82rem; }
+  nav a:hover, nav a.active { background: rgba(240,200,121,.18); color: #f5d99e; }
+  .theme-toggle { border-color: rgba(240,200,121,.8); color: #f0c879; }
+  .theme-toggle:hover { background: #f0c879; color: #172b3a; }
+
+  header.hero {
+    min-height: min(790px, 88vh); padding: 90px 6% 110px;
+    background-image: linear-gradient(115deg, rgba(14,35,49,.78), rgba(14,35,49,.28)), url('hero-bg.jpg');
+    background-position: center 48%;
+  }
+  header.hero::before {
+    content: ''; position: absolute; inset: auto 0 0; height: 150px;
+    background: linear-gradient(transparent, var(--bg)); pointer-events: none;
+  }
+  header.hero h1 {
+    max-width: 950px; font-size: clamp(2.7rem, 7vw, 5.2rem);
+    letter-spacing: -.045em; line-height: 1.04; margin-bottom: 25px;
+  }
+  header.hero h1 span { color: #f2cf8a; }
+  header.hero p { max-width: 720px; font-size: clamp(1.02rem, 2vw, 1.22rem); line-height: 1.8; }
+  .btn {
+    padding: 14px 27px; border-radius: 12px; background: #b94b3d;
+    box-shadow: 0 8px 22px rgba(107,43,35,.2); letter-spacing: .01em;
+  }
+  .btn:hover { background: #a63e33; box-shadow: 0 12px 26px rgba(107,43,35,.26); }
+  #weather-widget {
+    max-width: 390px !important; margin: -34px auto 16px !important;
+    padding: 16px 24px !important; border: 1px solid rgba(255,255,255,.14);
+    border-radius: 16px !important; box-shadow: 0 12px 34px rgba(23,43,58,.18) !important;
+  }
+  section { max-width: 1320px; padding: 82px clamp(20px, 5vw, 76px); }
+  .section-title { font-size: clamp(1.85rem, 4vw, 2.65rem); letter-spacing: -.035em; }
+  .section-title::after { width: 52px; height: 4px; background: #b94b3d; margin-top: 12px; }
+  .section-sub { max-width: 760px; line-height: 1.75; margin-bottom: 34px; }
+  .days { gap: 22px; }
+  .day-card, .park-card, .culture-card, .quiz, .symbol-card, .live-calendar-wrapper {
+    border: 1px solid var(--border); border-radius: 20px;
+    box-shadow: 0 8px 28px rgba(26,48,61,.055);
+  }
+  .day-card { padding: 28px; border-top: 0; position: relative; overflow: hidden; }
+  .day-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg,#b94b3d,#e7bd77); }
+  .day-card:hover, .park-card:hover, .symbol-card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(26,48,61,.11); }
+  .day-card h3 { font-size: 1.18rem; letter-spacing: -.01em; }
+  .day-card li { line-height: 1.65; padding-top: 10px; padding-bottom: 10px; }
+  .map-container { border-radius: 20px; box-shadow: 0 12px 32px rgba(23,43,58,.12); }
+  .filters button { border: 1px solid var(--border); border-radius: 999px; padding: 9px 17px; }
+  .filters button.active, .filters button:hover { background: var(--dark); border-color: var(--dark); color: #fff; }
+  .gallery { gap: 18px; }
+  .gallery-item { border-radius: 18px; box-shadow: 0 7px 22px rgba(20,40,52,.1); }
+  .gallery-item:hover { transform: translateY(-4px); }
+  .gallery-item .label { padding: 42px 17px 16px; font-size: .95rem; }
+  .park-card { border-left: 0; padding: 27px; position: relative; overflow: hidden; }
+  .park-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #287c70; }
+  .culture-card { border-left: 0; padding: 28px; position: relative; }
+  .culture-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #e4bd75; border-radius: 20px 0 0 20px; }
+  .phrase-box { border-radius: 20px; box-shadow: 0 12px 30px rgba(15,35,48,.15); }
+  .fact { border-radius: 18px; box-shadow: 0 7px 22px rgba(26,48,61,.045); }
+  .fact .num { color: #b9853e; }
+  .symbol-card { padding: 30px; }
+  .live-calendar-wrapper { border-left: 0; position: relative; overflow: hidden; }
+  .live-calendar-wrapper::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #b94b3d; }
+  .holiday-item { border-radius: 14px; padding: 18px; }
+  .holiday-item:hover { border-color: #c9a56d; transform: translateY(-2px); }
+  .countdown { color: #9c4035; background: rgba(185,75,61,.1); border-radius: 12px; }
+  footer { background: #172b3a; color: #d3dde0; border-top: 0; }
+  footer .logo, footer a { color: #f0c879; }
+  .to-top { background: #287c70; border-radius: 14px; }
+  .to-top:hover { background: #1e665c; }
+  @media (max-width: 800px) {
+    nav { min-height: 60px; padding: 8px 4%; }
+    nav ul { background: rgba(23,43,58,.99); }
+    nav a { border-radius: 0; }
+    header.hero { min-height: 76vh; padding: 76px 7% 90px; background-position: 55% center; }
+    header.hero h1 { font-size: clamp(2.35rem, 10vw, 3.6rem); }
+    section { padding: 62px 5%; }
+    .days { grid-template-columns: 1fr; }
+    .day-card { padding: 24px; }
+    .gallery { grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 12px; }
+    .gallery-item { border-radius: 14px; }
+    #weather-widget { margin-top: -26px !important; max-width: calc(100% - 40px) !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .day-card:hover, .park-card:hover, .symbol-card:hover, .gallery-item:hover, .holiday-item:hover { transform: none; }
+  }
+
 </style>
 </head>
 <body>
