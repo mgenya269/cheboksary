@@ -5,553 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Чебоксары — жемчужина Поволжья | Путеводитель на 7 дней</title>
 <meta name="description" content="Путеводитель по Чебоксарам: маршрут на семь дней, достопримечательности, парки, музеи, чувашская кухня и традиции.">
-<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <meta property="og:title" content="Чебоксары — жемчужина Поволжья">
 <meta property="og:description" content="Маршрут на семь дней, достопримечательности, фото и культура Чувашии.">
 <meta property="og:image" content="https://mgenya269.github.io/cheboksary/hero-bg.jpg">
 <meta property="og:url" content="https://mgenya269.github.io/cheboksary/">
 <meta property="og:type" content="website">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <style>
-  :root {
-    --red: #c8102e;
-    --yellow: #ffd100;
-    --dark: #1a1a2e;
-    --light: #f8f6f1;
-    --accent: #0f6b4f;
-    --gray: #6b6b7b;
-    --bg: #f8f6f1;
-    --text: #1a1a2e;
-    --card-bg: #ffffff;
-    --border: #e0e0e0;
-  }
-  body.dark-theme {
-    --bg: #12121f;
-    --text: #e8e8f0;
-    --card-bg: #1e1e30;
-    --border: #33334a;
-    --gray: #a0a0b8;
-    --light: #12121f;
-    --dark: #e8e8f0;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    transition: background 0.3s, color 0.3s;
-  }
-  /* ===== НАВИГАЦИЯ ===== */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(26,26,46,0.95);
-    backdrop-filter: blur(8px);
-    padding: 0 5%;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 64px;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.2);
-    gap: 10px;
-  }
-  nav .logo {
-    color: var(--yellow); font-weight: 800; font-size: 1.2rem;
-    letter-spacing: 1px;
-    white-space: nowrap;
-  }
-  nav ul { display: flex; list-style: none; gap: 4px; flex-wrap: wrap; }
-  nav a {
-    color: #fff; text-decoration: none; padding: 8px 12px;
-    border-radius: 20px; font-size: 0.85rem; transition: 0.3s;
-  }
-  nav a:hover, nav a.active { background: var(--red); }
-  .theme-toggle {
-    background: none; border: 2px solid var(--yellow); color: var(--yellow);
-    border-radius: 50%; width: 38px; height: 38px; cursor: pointer;
-    font-size: 1.1rem; transition: 0.3s; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .theme-toggle:hover { background: var(--yellow); color: var(--dark); }
-
-  /* ===== HERO ===== */
-  header.hero {
-    min-height: 90vh;
-    background-image: linear-gradient(rgba(26,26,46,0.6), rgba(26,26,46,0.6)), url('hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 40px 5%; position: relative; overflow: hidden;
-  }
-  header.hero h1 {
-    font-size: clamp(2.2rem, 6vw, 4rem);
-    color: #fff; z-index: 1; line-height: 1.1;
-    margin-bottom: 20px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  }
-  header.hero h1 span { color: var(--yellow); }
-  header.hero p {
-    color: #f0f0f0; font-size: clamp(1rem, 2vw, 1.3rem);
-    max-width: 700px; z-index: 1; margin-bottom: 32px;
-    text-shadow: 0 1px 5px rgba(0,0,0,0.5);
-  }
-  .btn {
-    display: inline-block; padding: 14px 36px; border-radius: 40px;
-    background: var(--red); color: #fff; text-decoration: none;
-    font-weight: 600; transition: 0.3s; z-index: 1; border: none; cursor: pointer;
-    font-size: 1rem;
-  }
-  .btn:hover { background: #a00d25; transform: translateY(-2px); }
-
-  /* ===== СЕКЦИИ ===== */
-  section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
-  .section-title {
-    font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 12px;
-    position: relative; display: inline-block;
-  }
-  .section-title::after {
-    content: ''; display: block; width: 60px; height: 4px;
-    background: var(--red); margin-top: 8px; border-radius: 2px;
-  }
-  .section-sub { color: var(--gray); margin-bottom: 40px; font-size: 1.05rem; }
-
-  /* ===== АНИМАЦИИ ПРИ СКРОЛЛЕ ===== */
-  .fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ===== МАРШРУТ ===== */
-  .days { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
-  .day-card {
-    background: var(--card-bg); border-radius: 16px; padding: 28px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    border-top: 4px solid var(--red);
-    transition: 0.3s;
-  }
-  .day-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
-  .day-card h3 { margin-bottom: 16px; color: var(--text); }
-  .day-card ul { list-style: none; }
-  .day-card li {
-    padding: 8px 0 8px 26px; position: relative;
-    border-bottom: 1px dashed var(--border); font-size: 0.95rem;
-  }
-  .day-card li:last-child { border-bottom: none; }
-  .day-card li::before { content: '📍'; position: absolute; left: 0; }
-
-  /* ===== АУДИОГИД ===== */
-  .audio-guide {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 24px;
-    margin-bottom: 32px;
-    box-shadow: 0 8px 28px rgba(26,48,61,.055);
-  }
-  .audio-guide h3 { margin-bottom: 16px; color: var(--text); font-size: 1.15rem; }
-  .audio-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  .audio-row select {
-    border: 1px solid var(--border); border-radius: 999px;
-    padding: 10px 15px; background: var(--card-bg); color: var(--text);
-    font: inherit; min-width: 240px;
-  }
-  .audio-btn {
-    border: 1px solid var(--border); border-radius: 999px;
-    padding: 10px 16px; background: var(--card-bg); color: var(--text);
-    font: inherit; font-size: .92rem; cursor: pointer; transition: .2s;
-    white-space: nowrap;
-  }
-  .audio-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .audio-btn:disabled { opacity: .45; cursor: not-allowed; }
-  .audio-btn:not(:disabled):hover { background: var(--dark); color: #fff; border-color: var(--dark); }
-  .audio-btn.primary:not(:disabled):hover { background: #1e665c; border-color: #1e665c; }
-  .audio-status {
-    display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;
-    margin-top: 14px; color: var(--gray); font-size: .95rem;
-  }
-  .audio-status strong { color: var(--text); }
-  #audioStateText { font-variant-numeric: tabular-nums; }
-  @media (max-width: 600px) {
-    .audio-row select { min-width: 0; width: 100%; }
-    .audio-row { flex-direction: column; align-items: stretch; }
-    .audio-btn { width: 100%; text-align: center; }
-    .audio-status { flex-direction: column; gap: 4px; }
-  }
-
-  /* ===== КАРТА МАРШРУТА ===== */
-  #placesMap { height: 560px; width: 100%; border-radius: 20px; z-index: 1; background: #e7e5df; }
-  .map-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 16px; }
-  .map-toolbar select {
-    border: 1px solid var(--border); border-radius: 999px;
-    padding: 10px 15px; background: var(--card-bg); color: var(--text); font: inherit;
-  }
-
-  /* Собственные маркеры MapLibre */
-  .map-marker {
-    width: 34px; height: 34px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; line-height: 1;
-    background: #fff; border: 2px solid #287c70;
-    box-shadow: 0 3px 10px rgba(0,0,0,.35);
-    cursor: pointer; transition: transform .15s ease;
-  }
-  .map-marker:hover { transform: scale(1.12); }
-
-  /* Оформление всплывающих карточек MapLibre */
-  .maplibregl-popup-content {
-    border-radius: 14px; padding: 14px 16px;
-    color: #203342; min-width: 200px; max-width: 290px;
-    font-family: inherit; font-size: .95rem; line-height: 1.5;
-  }
-  .maplibregl-popup-close-button { font-size: 1.2rem; padding: 4px 8px; color: #667085; }
-  .maplibregl-popup-anchor-bottom .maplibregl-popup-tip { border-top-color: #fff; }
-  .maplibregl-popup-anchor-top .maplibregl-popup-tip { border-bottom-color: #fff; }
-  .maplibregl-popup-anchor-left .maplibregl-popup-tip { border-right-color: #fff; }
-  .maplibregl-popup-anchor-right .maplibregl-popup-tip { border-left-color: #fff; }
-  .maplibregl-ctrl-attrib { font-size: 11px; }
-  .maplibregl-ctrl-attrib a { color: #456; }
-  .maplibregl-ctrl-group button { width: 30px; height: 30px; }
-  .map-popup-title { font-weight: 700; font-size: 1rem; margin-bottom: 5px; }
-  .map-popup-meta { color: #667085; font-size: .82rem; margin-top: 7px; }
-  .map-popup-link { display: inline-block; margin-top: 8px; color: #176b58; font-weight: 600; }
-  @media (max-width: 800px) {
-    #placesMap { height: 440px; }
-    .map-toolbar select { width: 100%; }
-  }
-
-  /* ===== ГАЛЕРЕЯ ===== */
-  .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
-  .filters button {
-    padding: 8px 20px; border-radius: 20px; border: 2px solid var(--text);
-    background: transparent; cursor: pointer; font-weight: 600; transition: 0.3s;
-    font-size: 0.9rem; color: var(--text);
-  }
-  .filters button.active, .filters button:hover { background: var(--text); color: var(--bg); }
-  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
-  .gallery-item {
-    aspect-ratio: 4/3; border-radius: 12px; overflow: hidden; cursor: pointer;
-    position: relative; background-size: cover; background-position: center;
-    transition: 0.3s; display: flex; align-items: flex-end;
-  }
-  .gallery-item:hover { transform: scale(1.03); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-  .gallery-item .label {
-    background: linear-gradient(transparent, rgba(0,0,0,0.8));
-    color: #fff; padding: 30px 14px 12px; width: 100%; font-size: 0.9rem; font-weight: 600;
-  }
-  .g1 { background-image: url('g1-mother.jpg'); }
-  .g2 { background-image: url('g2-bay.jpg'); }
-  .g3 { background-image: url('g3-boulevard.jpg'); }
-  .g4 { background-image: url('g4-akatuy.jpg'); }
-  .g5 { background-image: url('g5-embankment.jpg'); }
-  .g6 { background-image: url('g6-sobor.jpg'); }
-  .g7 { background-image: url('g7-chapaev.jpg'); background-color: #333; }
-  .g8 { background-image: url('g8-artmuseum.jpg'); background-color: #444; }
-  .g9 { background-image: url('g9-embroidery.jpg'); background-color: #555; }
-  .g10 { background-image: url('g10-sespel.jpg'); background-color: #666; }
-
-  /* Модальное окно */
-  .modal {
-    display: none; position: fixed; inset: 0; z-index: 200;
-    background: rgba(0,0,0,0.85); align-items: center; justify-content: center;
-    padding: 20px;
-  }
-  .modal.open { display: flex; }
-  .modal-box {
-    background: var(--card-bg); border-radius: 16px; max-width: 600px; width: 100%;
-    padding: 32px; position: relative; text-align: center;
-  }
-  .modal-box .big {
-    height: 240px; border-radius: 12px; margin-bottom: 20px;
-    background-size: cover; background-position: center;
-  }
-  .modal-box h3 { margin-bottom: 8px; color: var(--text); }
-  .modal-box p { color: var(--gray); }
-  .modal-close {
-    position: absolute; top: 12px; right: 16px; background: none; border: none;
-    font-size: 1.8rem; cursor: pointer; color: var(--gray); line-height: 1;
-  }
-
-  /* ===== ПАРКИ ===== */
-  .parks-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
-  }
-  .park-card {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    border-left: 4px solid var(--accent);
-    transition: 0.3s;
-  }
-  .park-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
-  .park-card h4 { margin-bottom: 10px; color: var(--text); font-size: 1.15rem; }
-  .park-card p { color: var(--gray); font-size: 0.95rem; }
-
-  /* ===== КУЛЬТУРА ===== */
-  .culture-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
-  .culture-card {
-    background: var(--card-bg); border-radius: 16px; padding: 28px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06); border-left: 4px solid var(--yellow);
-  }
-  .culture-card h3 { margin-bottom: 12px; color: var(--text); }
-  .culture-card p { color: var(--gray); font-size: 0.95rem; }
-
-  .phrase-box {
-    margin-top: 40px;
-    background: #1a1a2e !important;
-    color: #ffffff !important;
-    border-radius: 16px; padding: 32px;
-  }
-  .phrase-box h3 { color: #ffd100 !important; margin-bottom: 20px; }
-  .phrase { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; gap: 8px; }
-  .phrase:last-child { border-bottom: none; }
-  .phrase .ru { color: #c9c9d9 !important; font-size: 1rem; }
-  .phrase .cv { font-weight: 700; color: #ffd100 !important; font-size: 1.05rem; }
-
-  /* ===== КВИЗ ===== */
-  .quiz { margin-top: 40px; background: var(--card-bg); border-radius: 16px; padding: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
-  .quiz h3 { margin-bottom: 20px; color: var(--text); }
-  .quiz-progress {
-    height: 8px; background: var(--border); border-radius: 4px; margin-bottom: 24px; overflow: hidden;
-  }
-  .quiz-progress-fill {
-    height: 100%; width: 0%; background: var(--accent); border-radius: 4px; transition: width 0.3s;
-  }
-  .quiz .q { margin-bottom: 20px; }
-  .quiz .q p { font-weight: 600; margin-bottom: 10px; color: var(--text); }
-  .quiz .opt {
-    display: block; width: 100%; text-align: left; padding: 10px 16px; margin-bottom: 8px;
-    border: 2px solid var(--border); border-radius: 10px; background: var(--card-bg);
-    cursor: pointer; transition: 0.2s; font-size: 0.95rem; color: var(--text);
-  }
-  .quiz .opt:hover { border-color: var(--accent); }
-  .quiz .opt.correct { background: #d4edda; border-color: #28a745; color: #1a1a2e; }
-  .quiz .opt.wrong { background: #f8d7da; border-color: #dc3545; color: #1a1a2e; }
-  .quiz-result { margin-top: 16px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
-
-  /* ===== ФАКТЫ ===== */
-  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px; }
-  .fact {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    color: var(--text);
-    border-radius: 16px; padding: 28px; text-align: center;
-    transition: 0.3s;
-  }
-  .fact .num { font-size: 2.4rem; font-weight: 800; color: #ffb703; line-height: 1; margin-bottom: 8px; }
-  .fact .txt { font-size: 0.9rem; color: var(--gray); }
-
-  /* ===== СИМВОЛИКА ===== */
-  .symbols-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 32px;
-    margin-top: 40px;
-  }
-  .symbol-card {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 32px;
-    text-align: center;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    transition: 0.3s;
-  }
-  .symbol-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-  }
-  .symbol-card img {
-    max-width: 180px;
-    height: auto;
-    margin-bottom: 20px;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
-  }
-  .symbol-card h3 {
-    margin-bottom: 12px;
-    font-size: 1.3rem;
-    color: var(--text);
-  }
-  .symbol-card p {
-    color: var(--gray);
-    font-size: 0.95rem;
-    text-align: left;
-  }
-
-  /* ===== НАРОДНЫЙ КАЛЕНДАРЬ ===== */
-  .live-calendar-wrapper {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 32px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    margin-bottom: 30px;
-    border-left: 6px solid var(--red);
-  }
-  .next-holiday-title {
-    font-size: 1.4rem;
-    color: var(--text);
-    margin-bottom: 10px;
-    font-weight: 700;
-  }
-  .next-holiday-date {
-    font-size: 1.1rem;
-    color: var(--gray);
-    margin-bottom: 15px;
-  }
-  .countdown {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: #c8102e;
-    background: rgba(200, 16, 46, 0.1);
-    display: inline-block;
-    padding: 8px 20px;
-    border-radius: 20px;
-  }
-  .holiday-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
-  }
-  .holiday-item {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    transition: 0.2s;
-  }
-  .holiday-item:hover {
-    border-color: #c9a56d;
-    transform: translateY(-2px);
-  }
-  .holiday-info h4 { margin-bottom: 4px; color: var(--text); font-size: 1rem; }
-  .holiday-info .ru-name { color: var(--accent); font-size: .9rem; margin-bottom: 4px; }
-  .holiday-info .date { color: var(--text); font-size: 0.88rem; margin-bottom: 4px; font-weight: 600; }
-  .holiday-info .desc { color: var(--gray); font-size: 0.85rem; }
-  .holiday-type {
-    font-size: 0.75rem;
-    padding: 4px 8px;
-    border-radius: 10px;
-    background: var(--border);
-    color: var(--gray);
-    white-space: nowrap;
-  }
-  .calendar-sources {
-    margin-top: 24px;
-    font-size: .85rem;
-    color: var(--gray);
-    max-width: 760px;
-  }
-  .calendar-sources a { color: var(--accent); }
-
-  /* ===== ПОДВАЛ ===== */
-  footer {
-    background: var(--card-bg);
-    color: var(--gray);
-    padding: 48px 5%; text-align: center;
-    border-top: 1px solid var(--border);
-  }
-  footer .logo { color: #ffb703; font-weight: 800; font-size: 1.2rem; margin-bottom: 12px; }
-  footer p { font-size: 0.9rem; margin-bottom: 8px; }
-  footer a { color: #ffb703; text-decoration: none; }
-
-  /* ===== АДАПТИВ И ФИКС ШАПКИ ===== */
-  @media (max-width: 800px) {
-    nav { height: 60px; padding: 0 4%; position: sticky; top: 0; }
-    nav .logo { font-size: 1.1rem; }
-
-    nav ul {
-      display: none;
-      position: absolute;
-      top: 60px;
-      left: 0;
-      width: 100%;
-      background: rgba(26,26,46,0.98);
-      flex-direction: column;
-      padding: 10px 0;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-      z-index: 200;
-    }
-
-    nav ul.show { display: flex; }
-    nav ul li { width: 100%; text-align: center; }
-    nav a { display: block; padding: 12px; border-radius: 0; font-size: 1rem; }
-
-    .menu-toggle {
-      display: block; background: none; border: none; color: var(--yellow);
-      font-size: 1.8rem; cursor: pointer; margin-left: auto; margin-right: 15px;
-    }
-
-    .theme-toggle { width: 34px; height: 34px; font-size: 1rem; }
-    section { padding: 60px 5%; }
-  }
-
-  @media (min-width: 801px) {
-    .menu-toggle { display: none; }
-  }
-
-  /* ===== ДОСТУПНОСТЬ И ДОПОЛНИТЕЛЬНЫЕ ЭЛЕМЕНТЫ ===== */
-  html { scroll-behavior: smooth; }
-  section[id] { scroll-margin-top: 78px; }
-  :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
-  .fade-in { opacity: 1; transform: none; }
-  html.js-animations .fade-in {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  html.js-animations .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .to-top {
-    position: fixed;
-    right: 22px;
-    bottom: 22px;
-    z-index: 150;
-    width: 48px;
-    height: 48px;
-    border: 0;
-    border-radius: 50%;
-    background: var(--red);
-    color: #fff;
-    font-size: 1.6rem;
-    line-height: 1;
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translateY(10px);
-    transition: opacity .25s, visibility .25s, transform .25s, background .25s;
-  }
-  .to-top.visible {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-  .to-top:hover { background: #a00d25; }
-  .gallery-item[role="button"] { cursor: pointer; }
-  .modal-box { max-height: calc(100vh - 40px); overflow-y: auto; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after {
-      scroll-behavior: auto !important;
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
-
-
-  /* ===== ВИЗУАЛЬНОЕ ОБНОВЛЕНИЕ: СОВРЕМЕННЫЙ ТУРИСТИЧЕСКИЙ СТИЛЬ ===== */
   :root {
     --red: #b94b3d;
     --yellow: #f0c879;
@@ -573,22 +33,49 @@
     --light: #14232d;
     --dark: #edf2f2;
   }
-  body { font-family: Inter, 'Segoe UI', Tahoma, sans-serif; }
-  nav {
-    min-height: 68px; height: auto; padding: 10px clamp(18px, 5vw, 76px);
-    background: rgba(23,43,58,.94); box-shadow: 0 8px 28px rgba(13,31,43,.16);
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Inter, 'Segoe UI', Tahoma, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
   }
-  nav .logo { color: #f0c879; font-size: 1.08rem; letter-spacing: 1.4px; }
-  nav ul { gap: 5px; }
-  nav a { padding: 9px 13px; border-radius: 999px; font-size: .82rem; }
+  /* ===== НАВИГАЦИЯ ===== */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(23,43,58,.94);
+    backdrop-filter: blur(8px);
+    min-height: 68px; height: auto; padding: 10px clamp(18px, 5vw, 76px);
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 8px 28px rgba(13,31,43,.16);
+    gap: 10px;
+  }
+  nav .logo {
+    color: #f0c879; font-weight: 800; font-size: 1.08rem;
+    letter-spacing: 1.4px; white-space: nowrap;
+  }
+  nav ul { display: flex; list-style: none; gap: 5px; flex-wrap: wrap; }
+  nav a {
+    color: #fff; text-decoration: none; padding: 9px 13px;
+    border-radius: 999px; font-size: .82rem; transition: 0.3s;
+  }
   nav a:hover, nav a.active { background: rgba(240,200,121,.18); color: #f5d99e; }
-  .theme-toggle { border-color: rgba(240,200,121,.8); color: #f0c879; }
+  .theme-toggle {
+    background: none; border: 2px solid rgba(240,200,121,.8); color: #f0c879;
+    border-radius: 50%; width: 38px; height: 38px; cursor: pointer;
+    font-size: 1.1rem; transition: 0.3s; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
   .theme-toggle:hover { background: #f0c879; color: #172b3a; }
 
+  /* ===== HERO ===== */
   header.hero {
     min-height: min(790px, 88vh); padding: 90px 6% 110px;
     background-image: linear-gradient(115deg, rgba(14,35,49,.78), rgba(14,35,49,.28)), url('hero-bg.jpg');
-    background-position: center 48%;
+    background-size: cover; background-position: center 48%; background-repeat: no-repeat;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; position: relative; overflow: hidden;
   }
   header.hero::before {
     content: ''; position: absolute; inset: auto 0 0; height: 150px;
@@ -596,74 +83,325 @@
   }
   header.hero h1 {
     max-width: 950px; font-size: clamp(2.7rem, 7vw, 5.2rem);
-    letter-spacing: -.045em; line-height: 1.04; margin-bottom: 25px;
+    color: #fff; z-index: 1; letter-spacing: -.045em; line-height: 1.04; margin-bottom: 25px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
   }
   header.hero h1 span { color: #f2cf8a; }
-  header.hero p { max-width: 720px; font-size: clamp(1.02rem, 2vw, 1.22rem); line-height: 1.8; }
+  header.hero p {
+    max-width: 720px; color: #f0f0f0; font-size: clamp(1.02rem, 2vw, 1.22rem);
+    line-height: 1.8; z-index: 1; margin-bottom: 32px; text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+  }
   .btn {
-    padding: 14px 27px; border-radius: 12px; background: #b94b3d;
-    box-shadow: 0 8px 22px rgba(107,43,35,.2); letter-spacing: .01em;
+    display: inline-block; padding: 14px 27px; border-radius: 12px;
+    background: #b94b3d; color: #fff; text-decoration: none;
+    font-weight: 600; transition: 0.3s; z-index: 1; border: none; cursor: pointer;
+    font-size: 1rem; box-shadow: 0 8px 22px rgba(107,43,35,.2); letter-spacing: .01em;
   }
-  .btn:hover { background: #a63e33; box-shadow: 0 12px 26px rgba(107,43,35,.26); }
-  #weather-widget {
-    max-width: 390px !important; margin: -34px auto 16px !important;
-    padding: 16px 24px !important; border: 1px solid rgba(255,255,255,.14);
-    border-radius: 16px !important; box-shadow: 0 12px 34px rgba(23,43,58,.18) !important;
+  .btn:hover { background: #a63e33; box-shadow: 0 12px 26px rgba(107,43,35,.26); transform: translateY(-2px); }
+
+  /* ===== СЕКЦИИ ===== */
+  section { max-width: 1320px; padding: 82px clamp(20px, 5vw, 76px); margin: 0 auto; }
+  .section-title {
+    font-size: clamp(1.85rem, 4vw, 2.65rem); margin-bottom: 12px;
+    letter-spacing: -.035em; position: relative; display: inline-block;
   }
-  section { max-width: 1320px; padding: 82px clamp(20px, 5vw, 76px); }
-  .section-title { font-size: clamp(1.85rem, 4vw, 2.65rem); letter-spacing: -.035em; }
-  .section-title::after { width: 52px; height: 4px; background: #b94b3d; margin-top: 12px; }
-  .section-sub { max-width: 760px; line-height: 1.75; margin-bottom: 34px; }
-  .days { gap: 22px; }
-  .day-card, .park-card, .culture-card, .quiz, .symbol-card, .live-calendar-wrapper, .audio-guide {
-    border: 1px solid var(--border); border-radius: 20px;
-    box-shadow: 0 8px 28px rgba(26,48,61,.055);
+  .section-title::after {
+    content: ''; display: block; width: 52px; height: 4px;
+    background: #b94b3d; margin-top: 12px; border-radius: 2px;
   }
-  .day-card { padding: 28px; border-top: 0; position: relative; overflow: hidden; }
-  .day-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg,#b94b3d,#e7bd77); }
-  .day-card:hover, .park-card:hover, .symbol-card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(26,48,61,.11); }
-  .day-card h3 { font-size: 1.18rem; letter-spacing: -.01em; }
-  .day-card li { line-height: 1.65; padding-top: 10px; padding-bottom: 10px; }
-  .filters button { border: 1px solid var(--border); border-radius: 999px; padding: 9px 17px; }
-  .filters button.active, .filters button:hover { background: var(--dark); border-color: var(--dark); color: #fff; }
-  .gallery { gap: 18px; }
-  .gallery-item { border-radius: 18px; box-shadow: 0 7px 22px rgba(20,40,52,.1); }
-  .gallery-item:hover { transform: translateY(-4px); }
-  .gallery-item .label { padding: 42px 17px 16px; font-size: .95rem; }
-  .park-card { border-left: 0; padding: 27px; position: relative; overflow: hidden; }
-  .park-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #287c70; }
-  .culture-card { border-left: 0; padding: 28px; position: relative; }
-  .culture-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #e4bd75; border-radius: 20px 0 0 20px; }
-  .phrase-box { border-radius: 20px; box-shadow: 0 12px 30px rgba(15,35,48,.15); }
-  .fact { border-radius: 18px; box-shadow: 0 7px 22px rgba(26,48,61,.045); }
-  .fact .num { color: #b9853e; }
-  .symbol-card { padding: 30px; }
-  .live-calendar-wrapper { border-left: 0; position: relative; overflow: hidden; }
-  .live-calendar-wrapper::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #b94b3d; }
-  .holiday-item { border-radius: 14px; padding: 18px; }
-  .holiday-item:hover { border-color: #c9a56d; transform: translateY(-2px); }
-  .countdown { color: #9c4035; background: rgba(185,75,61,.1); border-radius: 12px; }
-  footer { background: #172b3a; color: #d3dde0; border-top: 0; }
-  footer .logo, footer a { color: #f0c879; }
-  .to-top { background: #287c70; border-radius: 14px; }
-  .to-top:hover { background: #1e665c; }
+  .section-sub { color: var(--gray); max-width: 760px; line-height: 1.75; margin-bottom: 34px; font-size: 1.05rem; }
+
+  /* ===== АНИМАЦИИ ПРИ СКРОЛЛЕ ===== */
+  .fade-in { opacity: 1; transform: none; }
+  html.js-animations .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  html.js-animations .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== МАРШРУТ ===== */
+  .days { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+  .day-card {
+    background: var(--card-bg); border-radius: 20px; padding: 28px;
+    box-shadow: 0 8px 28px rgba(26,48,61,.055); border: 1px solid var(--border);
+    transition: 0.3s; position: relative; overflow: hidden;
+  }
+  .day-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+    background: linear-gradient(90deg,#b94b3d,#e7bd77);
+  }
+  .day-card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(26,48,61,.11); }
+  .day-card h3 { font-size: 1.18rem; letter-spacing: -.01em; margin-bottom: 16px; color: var(--text); }
+  .day-card ul { list-style: none; margin-bottom: 16px; }
+  .day-card li {
+    padding: 10px 0 10px 26px; position: relative;
+    border-bottom: 1px dashed var(--border); font-size: 0.95rem; line-height: 1.65;
+  }
+  .day-card li:last-child { border-bottom: none; }
+  .day-card li::before { content: '📍'; position: absolute; left: 0; }
+  .map-link {
+    display: inline-block; margin-top: 10px; padding: 8px 16px;
+    background: var(--accent); color: #fff; text-decoration: none;
+    border-radius: 999px; font-size: 0.85rem; font-weight: 600; transition: 0.2s;
+  }
+  .map-link:hover { background: #1e665c; }
+
+  /* ===== АУДИОГИД ===== */
+  .audio-guide {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
+    padding: 24px; margin-bottom: 32px; box-shadow: 0 8px 28px rgba(26,48,61,.055);
+  }
+  .audio-guide h3 { margin-bottom: 16px; color: var(--text); font-size: 1.15rem; }
+  .audio-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .audio-row select {
+    border: 1px solid var(--border); border-radius: 999px; padding: 10px 15px;
+    background: var(--card-bg); color: var(--text); font: inherit; min-width: 240px;
+  }
+  .audio-btn {
+    border: 1px solid var(--border); border-radius: 999px; padding: 10px 16px;
+    background: var(--card-bg); color: var(--text); font: inherit; font-size: .92rem;
+    cursor: pointer; transition: .2s; white-space: nowrap;
+  }
+  .audio-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .audio-btn:disabled { opacity: .45; cursor: not-allowed; }
+  .audio-btn:not(:disabled):hover { background: var(--dark); color: #fff; border-color: var(--dark); }
+  .audio-btn.primary:not(:disabled):hover { background: #1e665c; border-color: #1e665c; }
+  .audio-status { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 14px; color: var(--gray); font-size: .95rem; }
+  .audio-status strong { color: var(--text); }
+  @media (max-width: 600px) {
+    .audio-row select { min-width: 0; width: 100%; }
+    .audio-row { flex-direction: column; align-items: stretch; }
+    .audio-btn { width: 100%; text-align: center; }
+    .audio-status { flex-direction: column; gap: 4px; }
+  }
+
+  /* ===== КАРТА ===== */
+  #placesMap { height: 560px; width: 100%; border-radius: 20px; z-index: 1; background: #e7e5df; }
+  .map-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 16px; }
+  .map-toolbar select {
+    border: 1px solid var(--border); border-radius: 999px; padding: 10px 15px;
+    background: var(--card-bg); color: var(--text); font: inherit;
+  }
+  .map-marker {
+    width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 16px; line-height: 1; background: #fff; border: 2px solid #287c70;
+    box-shadow: 0 3px 10px rgba(0,0,0,.35); cursor: pointer; transition: transform .15s ease;
+  }
+  .map-marker:hover { transform: scale(1.12); }
+  .maplibregl-popup-content {
+    border-radius: 14px; padding: 14px 16px; color: #203342; min-width: 200px; max-width: 290px;
+    font-family: inherit; font-size: .95rem; line-height: 1.5;
+  }
+  .maplibregl-popup-close-button { font-size: 1.2rem; padding: 4px 8px; color: #667085; }
+  .maplibregl-popup-anchor-bottom .maplibregl-popup-tip { border-top-color: #fff; }
+  .maplibregl-popup-anchor-top .maplibregl-popup-tip { border-bottom-color: #fff; }
+  .maplibregl-popup-anchor-left .maplibregl-popup-tip { border-right-color: #fff; }
+  .maplibregl-popup-anchor-right .maplibregl-popup-tip { border-left-color: #fff; }
+  .maplibregl-ctrl-attrib { font-size: 11px; }
+  .maplibregl-ctrl-attrib a { color: #456; }
+  .maplibregl-ctrl-group button { width: 30px; height: 30px; }
+  .map-popup-title { font-weight: 700; font-size: 1rem; margin-bottom: 5px; }
+  .map-popup-meta { color: #667085; font-size: .82rem; margin-top: 7px; }
+  .map-popup-link { display: inline-block; margin-top: 8px; color: #176b58; font-weight: 600; }
   @media (max-width: 800px) {
-    nav { min-height: 60px; padding: 8px 4%; }
-    nav ul { background: rgba(23,43,58,.99); }
-    nav a { border-radius: 0; }
+    #placesMap { height: 440px; }
+    .map-toolbar select { width: 100%; }
+  }
+
+  /* ===== ГАЛЕРЕЯ ===== */
+  .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+  .filters button {
+    padding: 9px 17px; border-radius: 999px; border: 1px solid var(--border);
+    background: transparent; cursor: pointer; font-weight: 600; transition: 0.3s;
+    font-size: 0.9rem; color: var(--text);
+  }
+  .filters button.active, .filters button:hover { background: var(--dark); border-color: var(--dark); color: #fff; }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+  .gallery-item {
+    aspect-ratio: 4/3; border-radius: 18px; overflow: hidden; cursor: pointer;
+    position: relative; background-size: cover; background-position: center;
+    transition: 0.3s; display: flex; align-items: flex-end;
+    box-shadow: 0 7px 22px rgba(20,40,52,.1);
+  }
+  .gallery-item:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .gallery-item .label {
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: #fff; padding: 42px 17px 16px; width: 100%; font-size: .95rem; font-weight: 600;
+  }
+  .g1 { background-image: url('g1-mother.jpg'); }
+  .g2 { background-image: url('g2-bay.jpg'); }
+  .g3 { background-image: url('g3-boulevard.jpg'); }
+  .g4 { background-image: url('g4-akatuy.jpg'); }
+  .g5 { background-image: url('g5-embankment.jpg'); }
+  .g6 { background-image: url('g6-sobor.jpg'); }
+  .g7 { background-image: url('g7-chapaev.jpg'); background-color: #333; }
+  .g8 { background-image: url('g8-artmuseum.jpg'); background-color: #444; }
+  .g9 { background-image: url('g9-embroidery.jpg'); background-color: #555; }
+  .g10 { background-image: url('g10-sespel.jpg'); background-color: #666; }
+
+  /* Модальное окно */
+  .modal { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; }
+  .modal.open { display: flex; }
+  .modal-box { background: var(--card-bg); border-radius: 16px; max-width: 600px; width: 100%; padding: 32px; position: relative; text-align: center; max-height: calc(100vh - 40px); overflow-y: auto; }
+  .modal-box .big { height: 240px; border-radius: 12px; margin-bottom: 20px; background-size: cover; background-position: center; }
+  .modal-box h3 { margin-bottom: 8px; color: var(--text); }
+  .modal-box p { color: var(--gray); }
+  .modal-close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--gray); line-height: 1; }
+
+  /* ===== ПАРКИ ===== */
+  .parks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .park-card {
+    background: var(--card-bg); border-radius: 20px; padding: 27px;
+    box-shadow: 0 8px 28px rgba(26,48,61,.055); border: 1px solid var(--border);
+    transition: 0.3s; position: relative; overflow: hidden;
+  }
+  .park-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #287c70; }
+  .park-card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(26,48,61,.11); }
+  .park-card h4 { margin-bottom: 10px; color: var(--text); font-size: 1.15rem; }
+  .park-card p { color: var(--gray); font-size: 0.95rem; }
+
+  /* ===== КУЛЬТУРА ===== */
+  .culture-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .culture-card {
+    background: var(--card-bg); border-radius: 20px; padding: 28px;
+    box-shadow: 0 8px 28px rgba(26,48,61,.055); border: 1px solid var(--border);
+    position: relative;
+  }
+  .culture-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #e4bd75; border-radius: 20px 0 0 20px; }
+  .culture-card h3 { margin-bottom: 12px; color: var(--text); }
+  .culture-card p { color: var(--gray); font-size: 0.95rem; }
+  .phrase-box {
+    margin-top: 40px; background: #1a1a2e !important; color: #ffffff !important;
+    border-radius: 20px; padding: 32px; box-shadow: 0 12px 30px rgba(15,35,48,.15);
+  }
+  .phrase-box h3 { color: #ffd100 !important; margin-bottom: 20px; }
+  .phrase { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; gap: 8px; }
+  .phrase:last-child { border-bottom: none; }
+  .phrase .ru { color: #c9c9d9 !important; font-size: 1rem; }
+  .phrase .cv { font-weight: 700; color: #ffd100 !important; font-size: 1.05rem; }
+
+  /* ===== КВИЗ ===== */
+  .quiz { margin-top: 40px; background: var(--card-bg); border-radius: 20px; padding: 32px; box-shadow: 0 8px 28px rgba(26,48,61,.055); border: 1px solid var(--border); }
+  .quiz h3 { margin-bottom: 20px; color: var(--text); }
+  .quiz-progress { height: 8px; background: var(--border); border-radius: 4px; margin-bottom: 24px; overflow: hidden; }
+  .quiz-progress-fill { height: 100%; width: 0%; background: var(--accent); border-radius: 4px; transition: width 0.3s; }
+  .quiz .q { margin-bottom: 20px; }
+  .quiz .q p { font-weight: 600; margin-bottom: 10px; color: var(--text); }
+  .quiz .opt {
+    display: block; width: 100%; text-align: left; padding: 10px 16px; margin-bottom: 8px;
+    border: 2px solid var(--border); border-radius: 10px; background: var(--card-bg);
+    cursor: pointer; transition: 0.2s; font-size: 0.95rem; color: var(--text);
+  }
+  .quiz .opt:hover { border-color: var(--accent); }
+  .quiz .opt.correct { background: #d4edda; border-color: #28a745; color: #1a1a2e; }
+  .quiz .opt.wrong { background: #f8d7da; border-color: #dc3545; color: #1a1a2e; }
+  .quiz-result { margin-top: 16px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
+
+  /* ===== ФАКТЫ ===== */
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px; }
+  .fact {
+    background: var(--card-bg); border: 1px solid var(--border); color: var(--text);
+    border-radius: 18px; padding: 28px; text-align: center; transition: 0.3s;
+    box-shadow: 0 7px 22px rgba(26,48,61,.045);
+  }
+  .fact:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(26,48,61,.08); }
+  .fact .num { font-size: 2.4rem; font-weight: 800; color: #b9853e; line-height: 1; margin-bottom: 8px; }
+  .fact .txt { font-size: 0.9rem; color: var(--gray); }
+
+  /* ===== СИМВОЛИКА ===== */
+  .symbols-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; margin-top: 40px; }
+  .symbol-card {
+    background: var(--card-bg); border-radius: 20px; padding: 30px; text-align: center;
+    box-shadow: 0 8px 28px rgba(26,48,61,.055); transition: 0.3s; border: 1px solid var(--border);
+  }
+  .symbol-card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(26,48,61,.11); }
+  .symbol-card img { max-width: 180px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
+  .symbol-card h3 { margin-bottom: 12px; font-size: 1.3rem; color: var(--text); }
+  .symbol-card p { color: var(--gray); font-size: 0.95rem; text-align: left; }
+
+  /* ===== НАРОДНЫЙ КАЛЕНДАРЬ ===== */
+  .live-calendar-wrapper {
+    background: var(--card-bg); border-radius: 20px; padding: 32px;
+    box-shadow: 0 8px 28px rgba(26,48,61,.055); margin-bottom: 30px;
+    position: relative; overflow: hidden; border: 1px solid var(--border);
+  }
+  .live-calendar-wrapper::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: #b94b3d; }
+  .next-holiday-title { font-size: 1.4rem; color: var(--text); margin-bottom: 10px; font-weight: 700; }
+  .next-holiday-date { font-size: 1.1rem; color: var(--gray); margin-bottom: 15px; }
+  .countdown {
+    font-size: 1.2rem; font-weight: 800; color: #9c4035;
+    background: rgba(185,75,61,.1); display: inline-block; padding: 8px 20px; border-radius: 12px;
+  }
+  .holiday-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .holiday-item {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px; display: flex; justify-content: space-between; align-items: center;
+    gap: 12px; transition: 0.2s;
+  }
+  .holiday-item:hover { border-color: #c9a56d; transform: translateY(-2px); }
+  .holiday-info h4 { margin-bottom: 4px; color: var(--text); font-size: 1rem; }
+  .holiday-info .ru-name { color: var(--accent); font-size: .9rem; margin-bottom: 4px; }
+  .holiday-info .date { color: var(--text); font-size: 0.88rem; margin-bottom: 4px; font-weight: 600; }
+  .holiday-info .desc { color: var(--gray); font-size: 0.85rem; }
+  .holiday-type {
+    font-size: 0.75rem; padding: 4px 8px; border-radius: 10px;
+    background: var(--border); color: var(--gray); white-space: nowrap;
+  }
+  .calendar-sources { margin-top: 24px; font-size: .85rem; color: var(--gray); max-width: 760px; }
+  .calendar-sources a { color: var(--accent); }
+
+  /* ===== ПОДВАЛ ===== */
+  footer { background: #172b3a; color: #d3dde0; padding: 48px 5%; text-align: center; }
+  footer .logo { color: #f0c879; font-weight: 800; font-size: 1.2rem; margin-bottom: 12px; }
+  footer p { font-size: 0.9rem; margin-bottom: 8px; }
+  footer a { color: #f0c879; text-decoration: none; }
+
+  /* ===== АДАПТИВ ===== */
+  @media (max-width: 800px) {
+    nav { min-height: 60px; padding: 8px 4%; position: sticky; top: 0; }
+    nav .logo { font-size: 1.1rem; }
+    nav ul {
+      display: none; position: absolute; top: 60px; left: 0; width: 100%;
+      background: rgba(23,43,58,.99); flex-direction: column; padding: 10px 0;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 200;
+    }
+    nav ul.show { display: flex; }
+    nav ul li { width: 100%; text-align: center; }
+    nav a { display: block; padding: 12px; border-radius: 0; font-size: 1rem; }
+    .menu-toggle {
+      display: block; background: none; border: none; color: var(--yellow);
+      font-size: 1.8rem; cursor: pointer; margin-left: auto; margin-right: 15px;
+    }
+    .theme-toggle { width: 34px; height: 34px; font-size: 1rem; }
+    section { padding: 62px 5%; }
     header.hero { min-height: 76vh; padding: 76px 7% 90px; background-position: 55% center; }
     header.hero h1 { font-size: clamp(2.35rem, 10vw, 3.6rem); }
-    section { padding: 62px 5%; }
     .days { grid-template-columns: 1fr; }
     .day-card { padding: 24px; }
     .gallery { grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 12px; }
     .gallery-item { border-radius: 14px; }
-    #weather-widget { margin-top: -26px !important; max-width: calc(100% - 40px) !important; }
   }
+  @media (min-width: 801px) { .menu-toggle { display: none; } }
+
+  /* Доступность и предпочтения */
+  html { scroll-behavior: smooth; }
+  section[id] { scroll-margin-top: 78px; }
+  :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+  .to-top {
+    position: fixed; right: 22px; bottom: 22px; z-index: 150; width: 48px; height: 48px;
+    border: 0; border-radius: 14px; background: #287c70; color: #fff; font-size: 1.6rem;
+    line-height: 1; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(10px);
+    transition: opacity .25s, visibility .25s, transform .25s, background .25s;
+  }
+  .to-top.visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+  .to-top:hover { background: #1e665c; }
+  .gallery-item[role="button"] { cursor: pointer; }
   @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     .day-card:hover, .park-card:hover, .symbol-card:hover, .gallery-item:hover, .holiday-item:hover { transform: none; }
   }
-
 </style>
 </head>
 <body>
@@ -693,16 +431,16 @@
 </header>
 
 <!-- ВИДЖЕТ ПОГОДЫ -->
-<div id="weather-widget" style="text-align: center; margin: 20px auto; padding: 15px; background: rgba(26,26,46,0.9); color: white; border-radius: 20px; max-width: 300px; position: relative; z-index: 10; backdrop-filter: blur(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+<div id="weather-widget" style="text-align: center; margin: 20px auto; padding: 15px; background: rgba(26,26,46,0.9); color: white; border-radius: 16px; max-width: 390px; position: relative; z-index: 10; backdrop-filter: blur(5px); box-shadow: 0 12px 34px rgba(23,43,58,.18); border: 1px solid rgba(255,255,255,.14);">
   <span id="weather-text">Загрузка погоды...</span>
 </div>
 
 <!-- МАРШРУТ -->
 <section id="route" class="fade-in">
   <h2 class="section-title">Чебоксары за 7 дней</h2>
-  <p class="section-sub">Семь дней, чтобы познакомиться с городом, его историей, природой и культурой.</p>
+  <p class="section-sub">Семь дней, чтобы познакомиться с городом, его историей, природой и культурой. Нажмите на кнопку дня, чтобы перейти к его точкам на карте.</p>
 
-  <!-- ПАНЕЛЬ АУДИОГИДА -->
+  <!-- АУДИОГИД -->
   <div class="audio-guide" id="audioGuide">
     <h3>🎧 Аудиогид по маршруту</h3>
     <div class="audio-row">
@@ -716,9 +454,14 @@
         <option value="6">День 6 — Гастрономия и отдых</option>
         <option value="7">День 7 — Заволжье и природа</option>
       </select>
+      <select id="audioRateSelect" aria-label="Скорость озвучки">
+        <option value="0.85">Медленно</option>
+        <option value="0.95" selected>Обычно</option>
+        <option value="1.1">Быстро</option>
+      </select>
       <button id="audioPlayBtn" class="audio-btn primary" type="button" disabled>▶ Воспроизвести</button>
       <button id="audioPauseBtn" class="audio-btn" type="button" disabled>⏸ Пауза</button>
-      <button id="audioResumeBtn" class="audio-btn" type="button" disabled>⏯️ Продолжить</button>
+      <button id="audioResumeBtn" class="audio-btn" type="button" disabled>⏵ Продолжить</button>
       <button id="audioStopBtn" class="audio-btn" type="button" disabled>⏹ Остановить</button>
     </div>
     <div class="audio-status" aria-live="polite">
@@ -728,7 +471,7 @@
   </div>
 
  <div class="days">
-  <div class="day-card">
+  <div class="day-card" id="day-1">
     <h3>📅 День 1 — Знакомство с городом</h3>
     <ul>
       <li>Прогулка по Чебоксарскому заливу</li>
@@ -737,8 +480,9 @@
       <li>Обед в кафе на набережной</li>
       <li>Вечерний световой мост</li>
     </ul>
+    <a href="#places-map" class="map-link" data-day="1">Показать на карте</a>
   </div>
-  <div class="day-card">
+  <div class="day-card" id="day-2">
     <h3>📅 День 2 — История и музеи</h3>
     <ul>
       <li>Музей В. И. Чапаева</li>
@@ -747,8 +491,9 @@
       <li>Обед в центре города</li>
       <li>Прогулка по Красной площади</li>
     </ul>
+    <a href="#places-map" class="map-link" data-day="2">Показать на карте</a>
   </div>
-  <div class="day-card">
+  <div class="day-card" id="day-3">
     <h3>📅 День 3 — Волга и набережная</h3>
     <ul>
       <li>Прогулка по Московской набережной</li>
@@ -757,8 +502,9 @@
       <li>Обед с видом на Волгу</li>
       <li>Закат на набережной</li>
     </ul>
+    <a href="#places-map" class="map-link" data-day="3">Показать на карте</a>
   </div>
-  <div class="day-card">
+  <div class="day-card" id="day-4">
     <h3>📅 День 4 — Природа и парки</h3>
     <ul>
       <li>Парк «Лакреевский лес» (белки, аттракционы)</li>
@@ -767,8 +513,9 @@
       <li>Мемориальный парк Победы (панорама Волги)</li>
       <li>Вечерний отдых</li>
     </ul>
+    <a href="#places-map" class="map-link" data-day="4">Показать на карте</a>
   </div>
-  <div class="day-card">
+  <div class="day-card" id="day-5">
     <h3>📅 День 5 — Культура и искусство</h3>
     <ul>
       <li>Чувашский художественный музей</li>
@@ -777,8 +524,9 @@
       <li>Обед в национальном кафе</li>
       <li>Прогулка по вечернему центру</li>
     </ul>
+    <a href="#places-map" class="map-link" data-day="5">Показать на карте</a>
   </div>
-  <div class="day-card">
+  <div class="day-card" id="day-6">
     <h3>📅 День 6 — Гастрономия и отдых</h3>
     <ul>
       <li>Дегустация блюд: шурпе, хуплу</li>
@@ -787,8 +535,9 @@
       <li>Шоппинг (сувениры, вышивка)</li>
       <li>Спокойный вечер в центре</li>
     </ul>
+    <a href="#places-map" class="map-link" data-day="6">Показать на карте</a>
   </div>
-  <div class="day-card">
+  <div class="day-card" id="day-7">
     <h3>📅 День 7 — Заволжье и природа</h3>
     <ul>
       <li>Поездка в Заволжье (паром или мост)</li>
@@ -797,6 +546,7 @@
       <li>Возвращение в город</li>
       <li>Прощальный ужин</li>
     </ul>
+    <a href="#places-map" class="map-link" data-day="7">Показать на карте</a>
   </div>
  </div>
 
@@ -988,14 +738,12 @@
   <h2 class="section-title">Народный календарь Чувашии</h2>
   <p class="section-sub">Традиционные праздники и обряды чувашского народа. Даты пересчитываются автоматически на каждый год: у событий, привязанных к церковному календарю (через Пасху), даты точные; у сезонных обрядов дата ориентировочная (помечена ≈), потому что в старину сроки определяла община по состоянию природы.</p>
 
-  <!-- Блок ближайшей даты -->
   <div class="live-calendar-wrapper">
     <div class="next-holiday-title" id="next-holiday-name">Загрузка...</div>
     <div class="next-holiday-date" id="next-holiday-date"></div>
     <div class="countdown" id="next-holiday-countdown"></div>
   </div>
 
-  <!-- Список традиций года -->
   <h3 style="margin-bottom: 20px; color: var(--text);">Все традиции года</h3>
   <div class="holiday-list" id="holiday-list"></div>
   <p class="calendar-sources">Составлено по этнографическим источникам: Национальная библиотека Чувашской Республики — <a href="https://nasledie.nbchr.ru/nasledie/obychai/obrjady/" target="_blank" rel="noopener">«Обряды, традиции и праздники»</a> и <a href="https://elbib.nbchr.ru/lib_files/0/kkst_0_0000871.pdf" target="_blank" rel="noopener">«Обрядовый календарь чуваш»</a>; <a href="https://chgign.ru/a/public/122-%D0%9E%D0%91%D0%A0%D0%AF%D0%94%D0%AB%20%D0%98%20%D0%9F%D0%A0%D0%90%D0%97%D0%94%D0%9D%D0%98%D0%9A%D0%98%20%D0%A7%D0%A3%D0%92%D0%90%D0%A8%D0%95%D0%99.html" target="_blank" rel="noopener">ЧГИГН «Обряды и праздники чувашей»</a>; портал органов власти Чувашии — <a href="https://cap.ru/chuvashia/nasledie/etnografiya/narodnie-prazdniki" target="_blank" rel="noopener">«Народные праздники»</a>.</p>
@@ -1006,7 +754,7 @@
   <h2 class="section-title">Мой город в цифрах</h2>
   <p class="section-sub">Несколько фактов, которые говорят сами за себя.</p>
   <div class="facts">
-    <div class="fact"><div class="num">556</div><div class="txt">лет городу (на 2025 год)</div></div>
+    <div class="fact"><div class="num">556+</div><div class="txt">лет городу</div></div>
     <div class="fact"><div class="num">507K</div><div class="txt">жителей — почти половина Чувашии</div></div>
     <div class="fact"><div class="num">320 м</div><div class="txt">самый длинный световой мост в России</div></div>
     <div class="fact"><div class="num">46 м</div><div class="txt">высота Монумента Матери-Покровительницы</div></div>
@@ -1047,7 +795,7 @@
 
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
-  // ===== МОБИЛЬНОЕ МЕНЮ И НАВИГАЦИЯ =====
+  // ===== МОБИЛЬНОЕ МЕНЮ =====
   const menuToggle = document.getElementById('menuToggle');
   const navMenu = document.getElementById('navMenu');
   const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"]'));
@@ -1076,24 +824,6 @@
     });
   });
 
-  // Подсветка пункта меню в зависимости от видимого раздела.
-  if ('IntersectionObserver' in window) {
-    const sectionObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const activeLink = navLinks.find(link => link.getAttribute('href') === '#' + entry.target.id);
-        if (activeLink) {
-          navLinks.forEach(link => link.classList.remove('active'));
-          activeLink.classList.add('active');
-        }
-      });
-    }, { rootMargin: '-20% 0px -65% 0px', threshold: 0 });
-    navLinks.forEach(link => {
-      const section = document.querySelector(link.getAttribute('href'));
-      if (section) sectionObserver.observe(section);
-    });
-  }
-
   // ===== ТЁМНАЯ ТЕМА =====
   const themeToggle = document.getElementById('themeToggle');
   const body = document.body;
@@ -1113,101 +843,23 @@
     }
   });
 
-  // ===== ИНТЕРАКТИВНАЯ КАРТА: MAPLIBRE GL JS + OPENFREMAP =====
-  const mapElement = document.getElementById('placesMap');
-  if (mapElement && window.maplibregl) {
-    // Проверенные координаты и адреса (открытые справочные источники, OSM).
-    const places = [
-      {name:'Монумент Матери-Покровительницы',lat:56.148692,lng:47.242115,day:1,address:'Историческая набережная, 14',description:'Главный монумент Чувашии: медная фигура Матери высотой 16 метров на 25-метровом постаменте (общая высота от холма — 46 метров). Открыт 9 мая 2003 года на холме у Чебоксарского залива.'},
-      {name:'Набережная Чебоксарского залива',lat:56.147267,lng:47.245928,day:1,address:'Исторический центр Чебоксар',description:'Прогулочная зона вдоль залива с мостами, кафе и площадками. Залив образовался в устье реки Чебоксарки при подпоре Чебоксарской ГЭС.'},
-      {name:'Бульвар купца Ефремова',lat:56.145791,lng:47.252119,day:1,address:'Бульвар купца Ефремова',description:'Пешеходный бульвар исторического центра с купеческой застройкой XIX века и городскими скульптурами.'},
-      {name:'Свято-Троицкий мужской монастырь',lat:56.151736,lng:47.253182,day:1,address:'ул. Константина Иванова, 7',description:'Древнейшая обитель Чувашии: основана в 1566 году по указу Ивана Грозного на берегу Волги. В советские годы был закрыт, возвращён Церкви в 1992–1993 годах.'},
-      {name:'Успенская церковь',lat:56.149961,lng:47.252728,day:1,address:'ул. Константина Иванова, 1В',description:'Храм 1763 года постройки. Нижний ярус оказался на дне залива после строительства Чебоксарской ГЭС и был засыпан песком.'},
-      {name:'Музей В. И. Чапаева',lat:56.116230,lng:47.257271,day:2,address:'проспект Ленина, 46А',description:'Филиал Чувашского национального музея: экспозиция о Чапаеве и восстановленный дом семьи Чапаевых в бывшей деревне Будайка, где он родился.'},
-      {name:'Памятник В. И. Чапаеву',lat:56.114964,lng:47.258665,day:2,address:'сквер им. В. И. Чапаева',description:'Монументальная скульптура Чапаева на вздыбленном коне, установлена 23 июня 1960 года. Скульптура отливалась в 1938–1939 годах для ВДНХ.'},
-      {name:'Чувашский национальный музей',lat:56.145402,lng:47.252677,day:2,address:'Красная площадь, 5/2',description:'Главный музей республики. Экспозиции знакомят с археологией, природой, историей и культурой Чувашского края.'},
-      {name:'Введенский собор',lat:56.151775,lng:47.246703,day:2,address:'ул. Константина Иванова, 21',description:'Исторический кафедральный собор XVII века — один из старейших сохранившихся каменных памятников Чувашии.'},
-      {name:'Красная площадь',lat:56.145734,lng:47.253292,day:2,address:'Красная площадь',description:'Центральное общественное пространство исторической части Чебоксар, рядом с музеями и памятниками города.'},
-      {name:'Московская набережная',lat:56.154949,lng:47.223881,day:3,address:'Московская набережная',description:'Протяжённая прогулочная зона вдоль Волги. Подходит для прогулок, велосипедных поездок и панорамных видов на реку.'},
-      {name:'Лакреевский лес',lat:56.1168377,lng:47.2530138,day:4,address:'ул. Лесная, 1',description:'Городской парк культуры и отдыха с лесными дорожками, зонами прогулок и аттракционами.'},
-      {name:'Парк «Амазония»',lat:56.1476411,lng:47.207798,day:4,address:'проспект Максима Горького, 2',description:'Большой городской парк и этнокомплекс с зонами отдыха и развлечений.'},
-      {name:'Мемориальный парк Победы',lat:56.146483,lng:47.269117,day:4,address:'ул. Зои Яковлевой, 54В',description:'Мемориальная территория на возвышенности с памятниками, военной техникой под открытым небом и панорамными видами на Волгу.'},
-      {name:'Чувашский художественный музей',lat:56.1411978,lng:47.2608983,day:5,address:'ул. Калинина, 60',description:'Художественный музей с коллекциями русского, зарубежного и чувашского искусства.'},
-      {name:'Музей чувашской вышивки',lat:56.141334,lng:47.249869,day:5,address:'ул. Карла Маркса, 32',description:'Музей, посвящённый традиционной чувашской вышивке, орнаментам, народному костюму и ремеслу.'},
-      {name:'Музей Михаила Сеспеля',lat:56.15128,lng:47.250775,day:5,address:'ул. Михаила Сеспеля, 8',description:'Мемориальный музей в доме, связанном с жизнью и работой чувашского поэта Михаила Сеспеля.'},
-      {name:'Музей пива',lat:56.144968,lng:47.252693,day:6,address:'бульвар купца Ефремова, 6А',description:'Музей, посвящённый истории пивоварения и его традициям в Чувашии.'},
-      {name:'Этнопарк «Сувар»',lat:56.188934,lng:47.219790,day:7,address:'Заволжье, посёлок Сосновка',description:'Этнокультурный парк деревянной обрядовой скульптуры на левом берегу Волги, напротив Чебоксар.'}
-    ];
+  // ===== КЭШ ПОГОДЫ (10 МИНУТ) =====
+  const WEATHER_CACHE_KEY = 'cheboksary_weather_v1';
+  const WEATHER_CACHE_TTL = 10 * 60 * 1000; // 10 минут
 
-    const map = new maplibregl.Map({
-      container: 'placesMap',
-      style: 'https://tiles.openfreemap.org/styles/liberty',
-      center: [47.247, 56.147],
-      zoom: 12.4,
-      attributionControl: false
-    });
-    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
-    // Обязательная атрибуция по условиям OpenFreeMap — показывается на самой карте.
-    map.addControl(new maplibregl.AttributionControl({
-      compact: true,
-      customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">© OpenFreeMap</a> · <a href="https://openmaptiles.org/" target="_blank" rel="noopener">© OpenMapTiles</a> · <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a>'
-    }), 'bottom-right');
-
-    let markers = [];
-    function clearMarkers() {
-      markers.forEach(marker => marker.remove());
-      markers = [];
-    }
-
-    function renderMapMarkers() {
-      clearMarkers();
-      const day = document.getElementById('mapDayFilter').value;
-
-      const visible = places.filter(place => day === 'all' || String(place.day) === day);
-
-      const bounds = new maplibregl.LngLatBounds();
-      visible.forEach(place => {
-        const el = document.createElement('div');
-        el.className = 'map-marker';
-        el.textContent = '📍';
-        el.title = place.name;
-        const popup = new maplibregl.Popup({ offset: 36 }).setHTML(
-          '<div class="map-popup-title">' + place.name + '</div>' +
-          '<div>' + place.description + '</div>' +
-          '<div class="map-popup-meta">' + place.address + '<br>День ' + place.day + '</div>' +
-          '<a class="map-popup-link" href="https://www.openstreetmap.org/?mlat=' + place.lat + '&mlon=' + place.lng + '#map=17/' + place.lat + '/' + place.lng + '" target="_blank" rel="noopener">Открыть точку на OpenStreetMap ↗</a>'
-        );
-        const marker = new maplibregl.Marker({ element: el })
-          .setLngLat([place.lng, place.lat])
-          .setPopup(popup)
-          .addTo(map);
-        markers.push(marker);
-        bounds.extend([place.lng, place.lat]);
-      });
-
-      if (visible.length) {
-        map.fitBounds(bounds, {
-          padding: { top: 60, bottom: 60, left: 40, right: 40 },
-          maxZoom: 14,
-          duration: 500
-        });
-      }
-    }
-
-    document.getElementById('mapDayFilter').addEventListener('change', renderMapMarkers);
-
-    map.on('load', renderMapMarkers);
-    renderMapMarkers(); // на случай, если стиль уже готов до подписки
-    window.setTimeout(() => map.resize(), 250);
-  } else if (mapElement) {
-    mapElement.textContent = 'Не удалось загрузить карту. Проверьте подключение к интернету и обновите страницу.';
-  }
-
-  // ===== ПОГОДА =====
   async function getWeather() {
     const weatherText = document.getElementById('weather-text');
-    const weatherUrl = 'https://api.open-meteo.com/v1/forecast?latitude=56.146&longitude=47.251&current=temperature_2m,weather_code&timezone=Europe%2FMoscow';
 
+    // Проверяем кэш
+    try {
+      const cached = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || 'null');
+      if (cached && cached.timestamp && (Date.now() - cached.timestamp < WEATHER_CACHE_TTL)) {
+        weatherText.textContent = cached.text;
+        return;
+      }
+    } catch (e) { /* игнорируем ошибки парсинга */ }
+
+    const weatherUrl = 'https://api.open-meteo.com/v1/forecast?latitude=56.146&longitude=47.251&current=temperature_2m,weather_code&timezone=Europe%2FMoscow';
     const weatherDescriptions = {
       0: ['☀️', 'Ясно'], 1: ['🌤️', 'Преимущественно ясно'],
       2: ['⛅', 'Переменная облачность'], 3: ['☁️', 'Пасмурно'],
@@ -1239,18 +891,23 @@
       const temperature = Math.round(current.temperature_2m);
       const temperatureText = `${temperature > 0 ? '+' : ''}${temperature}°C`;
       const [icon, description] = weatherDescriptions[current.weather_code] || ['🌡️', 'Погодные условия'];
-      weatherText.textContent = `${icon} Сейчас в Чебоксарах: ${temperatureText} · ${description}`;
+      const text = `${icon} Сейчас в Чебоксарах: ${temperatureText} · ${description}`;
+      weatherText.textContent = text;
+
+      // Сохраняем в кэш
+      localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ text: text, timestamp: Date.now() }));
+
     } catch (error) {
       weatherText.textContent = 'Погода временно недоступна';
     }
   }
   getWeather();
+  // Обновляем виджет каждые 10 минут, даже если страница открыта долго
+  setInterval(getWeather, WEATHER_CACHE_TTL);
 
   // ===== АУДИОГИД: ЕДИНАЯ ПАНЕЛЬ ПО ДНЯМ МАРШРУТА =====
-  // Текст проговаривается по предложениям: пауза запоминает позицию,
-  // «Продолжить» продолжает с места остановки. Такой подход стабилен
-  // во всех браузерах, включая те, где встроенный resume() глючит.
   const audioDaySelect = document.getElementById('audioDaySelect');
+  const audioRateSelect = document.getElementById('audioRateSelect');
   const audioPlayBtn = document.getElementById('audioPlayBtn');
   const audioPauseBtn = document.getElementById('audioPauseBtn');
   const audioResumeBtn = document.getElementById('audioResumeBtn');
@@ -1267,16 +924,13 @@
     const voices = window.speechSynthesis.getVoices();
     const russianVoices = voices.filter(voice => voice.lang && voice.lang.toLowerCase().startsWith('ru'));
     if (!russianVoices.length) return null;
-    // Сначала известные качественные русские голоса, затем локальные.
     return russianVoices.find(voice => /google/i.test(voice.name)) ||
            russianVoices.find(voice => /milena|elena|alyona|alena|yuri|aleksander|alexander|katya|tatyana/i.test(voice.name)) ||
            russianVoices.find(voice => voice.localService) ||
            russianVoices[0];
   }
 
-  function setAudioState(text) {
-    audioStateText.textContent = text;
-  }
+  function setAudioState(text) { audioStateText.textContent = text; }
 
   function setAudioButtons() {
     const dayChosen = audioDaySelect.value !== '';
@@ -1291,7 +945,6 @@
     return cards[dayNumber - 1] || null;
   }
 
-  // Текст озвучки собирается из содержимого выбранной карточки маршрута.
   function buildDaySpeech(dayNumber) {
     const card = getDayCard(dayNumber);
     if (!card) return null;
@@ -1302,33 +955,24 @@
     if (!items.length) return null;
     return {
       title: title,
-      // Каждая строка маршрута — отдельное предложение: у паузы и
-      // продолжения появляются естественные точки возврата.
       sentences: [title + '.'].concat(items.map(item => item + '.'))
     };
   }
 
-  // Проговаривает текущее предложение активной сессии (с запомненной позиции).
   function speakChunk(session) {
     const synth = window.speechSynthesis;
     if (!session || audioSession !== session) return;
 
     if (session.index >= session.sentences.length) {
-      audioSession = null;
-      isPlaying = false;
-      isPaused = false;
-      setAudioButtons();
-      setAudioState('Озвучка завершена');
+      audioSession = null; isPlaying = false; isPaused = false;
+      setAudioButtons(); setAudioState('Озвучка завершена');
       return;
     }
 
     const voice = pickRussianVoice();
     if (!voice) {
-      audioSession = null;
-      isPlaying = false;
-      isPaused = false;
-      setAudioButtons();
-      setAudioState('Русский голос недоступен в этом браузере — проверьте системные речевые голоса');
+      audioSession = null; isPlaying = false; isPaused = false;
+      setAudioButtons(); setAudioState('Русский голос недоступен');
       return;
     }
 
@@ -1336,18 +980,14 @@
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'ru-RU';
     utterance.voice = voice;
-    utterance.rate = 0.95; // комфортный темп речи
+    utterance.rate = parseFloat(audioRateSelect.value) || 0.95;
     utterance.pitch = 1;
 
-    // Запоминаем позицию внутри предложения (если браузер поддерживает).
     utterance.onboundary = event => {
-      if (typeof event.charIndex === 'number') {
-        session.charIndex = event.charIndex;
-      }
+      if (typeof event.charIndex === 'number') session.charIndex = event.charIndex;
     };
 
     utterance.onend = () => {
-      // Если сессия заменена, остановлена или на паузе — не продолжаем.
       if (audioSession !== session || session.paused) return;
       session.index += 1;
       session.charIndex = 0;
@@ -1356,22 +996,16 @@
 
     utterance.onerror = () => {
       if (audioSession !== session || session.paused) return;
-      audioSession = null;
-      isPlaying = false;
-      isPaused = false;
-      setAudioButtons();
-      setAudioState('Ошибка воспроизведения речи');
+      audioSession = null; isPlaying = false; isPaused = false;
+      setAudioButtons(); setAudioState('Ошибка воспроизведения речи');
     };
 
     synth.speak(utterance);
   }
 
   audioDaySelect.addEventListener('change', () => {
-    // При выборе другого дня предыдущая озвучка прекращается полностью.
     if (speechSupported) window.speechSynthesis.cancel();
-    audioSession = null;
-    isPlaying = false;
-    isPaused = false;
+    audioSession = null; isPlaying = false; isPaused = false;
     const day = audioDaySelect.value;
     if (day) {
       const speech = buildDaySpeech(Number(day));
@@ -1383,69 +1017,139 @@
     setAudioButtons();
   });
 
+  audioRateSelect.addEventListener('change', () => {
+    // Если идёт воспроизведение, перезапускаем с той же позиции с новой скоростью
+    if (isPlaying && audioSession && !isPaused) {
+      window.speechSynthesis.cancel();
+      window.setTimeout(() => { if (audioSession) speakChunk(audioSession); }, 60);
+    }
+  });
+
   audioPlayBtn.addEventListener('click', () => {
     if (!speechSupported) return;
     const day = audioDaySelect.value;
-    if (!day) {
-      setAudioState('Сначала выберите день маршрута в списке');
-      return;
-    }
+    if (!day) { setAudioState('Сначала выберите день маршрута'); return; }
     const speech = buildDaySpeech(Number(day));
-    if (!speech) {
-      setAudioState('Не удалось прочитать текст карточки этого дня');
-      return;
-    }
-    if (!pickRussianVoice()) {
-      setAudioState('Русский голос недоступен в этом браузере — проверьте системные речевые голоса');
-      return;
-    }
+    if (!speech) { setAudioState('Не удалось прочитать текст карточки'); return; }
+    if (!pickRussianVoice()) { setAudioState('Русский голос недоступен'); return; }
     window.speechSynthesis.cancel();
     audioSession = { title: speech.title, sentences: speech.sentences, index: 0, charIndex: 0, paused: false };
-    isPlaying = true;
-    isPaused = false;
-    setAudioButtons();
-    setAudioState('Озвучивается: ' + speech.title);
-    // Небольшая задержка после cancel нужна для стабильности в Chrome.
-    window.setTimeout(() => {
-      if (audioSession && !audioSession.paused) speakChunk(audioSession);
-    }, 60);
+    isPlaying = true; isPaused = false;
+    setAudioButtons(); setAudioState('Озвучивается: ' + speech.title);
+    window.setTimeout(() => { if (audioSession && !audioSession.paused) speakChunk(audioSession); }, 60);
   });
 
   audioPauseBtn.addEventListener('click', () => {
     if (!speechSupported || !isPlaying || isPaused || !audioSession) return;
-    audioSession.paused = true;
-    isPaused = true;
-    // Останавливаем текущее предложение: позиция уже сохранена в сессии,
-    // поэтому «Продолжить» вернётся к месту остановки.
+    audioSession.paused = true; isPaused = true;
     window.speechSynthesis.cancel();
-    setAudioButtons();
-    setAudioState('Пауза');
+    setAudioButtons(); setAudioState('Пауза');
   });
 
   audioResumeBtn.addEventListener('click', () => {
     if (!speechSupported || !isPaused || !audioSession) return;
-    isPaused = false;
-    audioSession.paused = false;
-    setAudioButtons();
-    setAudioState('Озвучивается: ' + audioSession.title);
-    // Небольшая задержка после cancel нужна для стабильности в Chrome.
-    window.setTimeout(() => {
-      if (audioSession && !audioSession.paused) speakChunk(audioSession);
-    }, 60);
+    isPaused = false; audioSession.paused = false;
+    setAudioButtons(); setAudioState('Озвучивается: ' + audioSession.title);
+    window.setTimeout(() => { if (audioSession && !audioSession.paused) speakChunk(audioSession); }, 60);
   });
 
   audioStopBtn.addEventListener('click', () => {
     if (!speechSupported) return;
     window.speechSynthesis.cancel();
-    audioSession = null;
-    isPlaying = false;
-    isPaused = false;
-    setAudioButtons();
-    setAudioState('Воспроизведение остановлено');
+    audioSession = null; isPlaying = false; isPaused = false;
+    setAudioButtons(); setAudioState('Воспроизведение остановлено');
   });
 
-  if (!speechSupported) {
-    setAudioState('Этот браузер не поддерживает Web Speech API — озвучка недоступна');
+  if (!speechSupported) setAudioState('Этот браузер не поддерживает Web Speech API');
+
+  // ===== КАРТА: MAPLIBRE GL JS + OPENFREEMAP =====
+  const mapElement = document.getElementById('placesMap');
+  if (mapElement && window.maplibregl) {
+    const places = [
+      {name:'Монумент Матери-Покровительницы',lat:56.148692,lng:47.242115,day:1,address:'Историческая набережная, 14',description:'Главный монумент Чувашии: медная фигура Матери высотой 16 метров на 25-метровом постаменте. Открыт 9 мая 2003 года.'},
+      {name:'Набережная Чебоксарского залива',lat:56.147267,lng:47.245928,day:1,address:'Исторический центр',description:'Прогулочная зона вдоль залива с мостами, кафе и площадками.'},
+      {name:'Бульвар купца Ефремова',lat:56.145791,lng:47.252119,day:1,address:'Бульвар купца Ефремова',description:'Пешеходный бульвар с купеческой застройкой XIX века.'},
+      {name:'Свято-Троицкий монастырь',lat:56.151736,lng:47.253182,day:1,address:'ул. Константина Иванова, 7',description:'Древнейшая обитель Чувашии, основана в 1566 году.'},
+      {name:'Музей В. И. Чапаева',lat:56.116230,lng:47.257271,day:2,address:'проспект Ленина, 46А',description:'Филиал Чувашского национального музея, экспозиция о Чапаеве.'},
+      {name:'Памятник В. И. Чапаеву',lat:56.114964,lng:47.258665,day:2,address:'сквер им. В. И. Чапаева',description:'Монументальная скульптура Чапаева на вздыбленном коне.'},
+      {name:'Чувашский национальный музей',lat:56.145402,lng:47.252677,day:2,address:'Красная площадь, 5/2',description:'Главный музей республики.'},
+      {name:'Введенский собор',lat:56.151775,lng:47.246703,day:2,address:'ул. Константина Иванова, 21',description:'Исторический кафедральный собор XVII века.'},
+      {name:'Красная площадь',lat:56.145734,lng:47.253292,day:2,address:'Красная площадь',description:'Центральное общественное пространство.'},
+      {name:'Московская набережная',lat:56.154949,lng:47.223881,day:3,address:'Московская набережная',description:'Протяжённая прогулочная зона вдоль Волги.'},
+      {name:'Лакреевский лес',lat:56.1168377,lng:47.2530138,day:4,address:'ул. Лесная, 1',description:'Городской парк культуры и отдыха.'},
+      {name:'Парк «Амазония»',lat:56.1476411,lng:47.207798,day:4,address:'проспект Максима Горького, 2',description:'Большой городской парк и этнокомплекс.'},
+      {name:'Мемориальный парк Победы',lat:56.146483,lng:47.269117,day:4,address:'ул. Зои Яковлевой, 54В',description:'Мемориальная территория на возвышенности.'},
+      {name:'Чувашский художественный музей',lat:56.1411978,lng:47.2608983,day:5,address:'ул. Калинина, 60',description:'Художественный музей с коллекциями.'},
+      {name:'Музей чувашской вышивки',lat:56.141334,lng:47.249869,day:5,address:'ул. Карла Маркса, 32',description:'Музей традиционной чувашской вышивки.'},
+      {name:'Музей Михаила Сеспеля',lat:56.15128,lng:47.250775,day:5,address:'ул. Михаила Сеспеля, 8',description:'Мемориальный музей поэта.'},
+      {name:'Музей пива',lat:56.144968,lng:47.252693,day:6,address:'бульвар купца Ефремова, 6А',description:'Музей истории пивоварения.'},
+      {name:'Этнопарк «Сувар»',lat:56.188934,lng:47.219790,day:7,address:'Заволжье, посёлок Сосновка',description:'Этнокультурный парк деревянной скульптуры.'}
+    ];
+
+    const map = new maplibregl.Map({
+      container: 'placesMap',
+      style: 'https://tiles.openfreemap.org/styles/liberty',
+      center: [47.247, 56.147],
+      zoom: 12.4,
+      attributionControl: false
+    });
+    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+    map.addControl(new maplibregl.AttributionControl({
+      compact: true,
+      customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">© OpenFreeMap</a> · <a href="https://openmaptiles.org/" target="_blank" rel="noopener">© OpenMapTiles</a> · <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a>'
+    }), 'bottom-right');
+
+    let markers = [];
+    function clearMarkers() { markers.forEach(m => m.remove()); markers = []; }
+
+    function renderMapMarkers() {
+      clearMarkers();
+      const day = document.getElementById('mapDayFilter').value;
+      const visible = places.filter(p => day === 'all' || String(p.day) === day);
+      const bounds = new maplibregl.LngLatBounds();
+
+      visible.forEach(place => {
+        const el = document.createElement('div');
+        el.className = 'map-marker';
+        el.textContent = '📍';
+        el.title = place.name;
+        const popup = new maplibregl.Popup({ offset: 36 }).setHTML(
+          '<div class="map-popup-title">' + place.name + '</div>' +
+          '<div>' + place.description + '</div>' +
+          '<div class="map-popup-meta">' + place.address + '<br>День ' + place.day + '</div>' +
+          '<a class="map-popup-link" href="https://www.openstreetmap.org/?mlat=' + place.lat + '&mlon=' + place.lng + '#map=17/' + place.lat + '/' + place.lng + '" target="_blank" rel="noopener">Открыть на OpenStreetMap ↗</a>'
+        );
+        const marker = new maplibregl.Marker({ element: el })
+          .setLngLat([place.lng, place.lat])
+          .setPopup(popup)
+          .addTo(map);
+        markers.push(marker);
+        bounds.extend([place.lng, place.lat]);
+      });
+
+      if (visible.length) {
+        map.fitBounds(bounds, { padding: { top: 60, bottom: 60, left: 40, right: 40 }, maxZoom: 14, duration: 500 });
+      }
+    }
+
+    document.getElementById('mapDayFilter').addEventListener('change', renderMapMarkers);
+
+    // Якоря из карточек дней
+    document.querySelectorAll('.map-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const day = link.dataset.day;
+        document.getElementById('mapDayFilter').value = day;
+        renderMapMarkers();
+        document.getElementById('places-map').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    map.on('load', renderMapMarkers);
+    renderMapMarkers();
+    window.setTimeout(() => map.resize(), 250);
+  } else if (mapElement) {
+    mapElement.textContent = 'Не удалось загрузить карту. Проверьте подключение к интернету.';
   }
 
   // ===== ФИЛЬТР ГАЛЕРЕИ =====
@@ -1495,9 +1199,7 @@
     });
   });
   modalClose.addEventListener('click', closeGalleryModal);
-  modal.addEventListener('click', event => {
-    if (event.target === modal) closeGalleryModal();
-  });
+  modal.addEventListener('click', event => { if (event.target === modal) closeGalleryModal(); });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && modal.classList.contains('open')) closeGalleryModal();
   });
@@ -1546,21 +1248,12 @@
 
   // ===== КНОПКА НАВЕРХ =====
   const toTopBtn = document.getElementById('toTop');
-  function updateToTopButton() {
-    toTopBtn.classList.toggle('visible', window.scrollY > 400);
-  }
+  function updateToTopButton() { toTopBtn.classList.toggle('visible', window.scrollY > 400); }
   window.addEventListener('scroll', updateToTopButton, { passive: true });
   updateToTopButton();
-  toTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  toTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
   // ===== НАРОДНЫЙ КАЛЕНДАРЬ ЧУВАШИИ =====
-  // Источники: Национальная библиотека Чувашской Республики
-  // (nasledie.nbchr.ru, elbib.nbchr.ru), ЧГИГН, портал органов власти Чувашии.
-  // Даты пересчитываются каждый год: события, привязанные к церковному
-  // календарю, вычисляются от Пасхи точно; сезонным обрядам даётся
-  // ориентировочная дата внутри традиционного периода (помечена ≈).
   function getEasterDate(year) {
     const a = year % 4;
     const b = year % 7;
@@ -1574,178 +1267,58 @@
     return new Date(utc.getUTCFullYear(), utc.getUTCMonth(), utc.getUTCDate());
   }
 
-  // Сдвиг уже вычисленной даты Пасхи на заданное число дней.
   function easterShifted(easter, days) {
     const date = new Date(easter);
     date.setDate(date.getDate() + days);
     return date;
   }
 
+  // Ближайшая дата к Дню Республики (24 июня)
+  function getNearestToRepublicDay(year) {
+    const republicDay = new Date(year, 5, 24);
+    return republicDay;
+  }
+
   const folkTraditions = [
     {
-      name: 'Сурхури',
-      ru: 'Зимние гадания и колядование',
-      kind: 'Зимний цикл',
-      approx: true,
+      name: 'Сурхури', ru: 'Зимние гадания и колядование', kind: 'Зимний цикл', approx: true,
       period: 'конец декабря — начало января',
-      fixedDate: (year) => new Date(year, 11, 22), // ≈ зимнее солнцестояние
-      description: 'Старинный зимний праздник: отмечался в период зимнего солнцестояния, когда день начинал прибывать, и длился около недели. Гадания о судьбе и урожае, обходы дворов с обрядовыми песнями и угощения.'
+      fixedDate: (year) => new Date(year, 11, 22),
+      description: 'Старинный зимний праздник: отмечался в период зимнего солнцестояния.'
     },
     {
-      name: 'Нартукан',
-      ru: 'Зимние святки',
-      kind: 'Зимний праздник',
-      approx: true,
-      period: 'период между Рождеством и Крещением (7–19 января)',
-      fixedDate: (year) => new Date(year, 0, 7), // начало святочной недели
-      description: 'Праздник зимнего солнцестояния и новогоднего цикла. Ряженые обходили дворы с песнями, дети и молодёжь устраивали игрища и гадания; сроки в разных деревнях определялись общиной.'
+      name: 'Нартукан', ru: 'Зимние святки', kind: 'Зимний праздник', approx: true,
+      period: '7–19 января',
+      fixedDate: (year) => new Date(year, 0, 7),
+      description: 'Праздник зимнего солнцестояния и новогоднего цикла.'
     },
     {
-      name: 'Кӑшарни',
-      ru: 'Зимняя праздничная неделя',
-      kind: 'Зимний цикл',
-      approx: true,
-      period: 'святочная неделя; в разных местностях сроки совпадали с Нартуканом или сдвигались',
-      fixedDate: (year) => new Date(year, 0, 19), // завершение святочной недели
-      description: '«Зимняя неделя» — праздник новогоднего цикла. У низовых чувашей проводилась в неделю от Рождества до Крещения; по древней традиции — в период зимнего солнцестояния. Ряженые обходили дворы, гадали о будущем.'
-    },
-    {
-      name: 'Ҫӑварни',
-      ru: 'Масленица (проводы зимы)',
-      kind: 'Праздник проводов зимы',
-      approx: false,
+      name: 'Ҫӑварни', ru: 'Масленица (проводы зимы)', kind: 'Праздник проводов зимы', approx: false,
       period: 'неделя перед Великим постом',
       easterOffset: -56,
-      description: 'Проводы зимы. В старину приурочивался к весеннему равноденствию, начинался в четверг и у большинства чувашей длился две недели; позже слился с масленичной неделей перед Великим постом. Катание на санях и качелях, обрядовая еда.'
+      description: 'Проводы зимы. В старину приурочивался к весеннему равноденствию.'
     },
     {
-      name: 'Сӗрен',
-      ru: 'Обряд изгнания злых духов (весна)',
-      kind: 'Весенний обряд',
-      approx: true,
-      period: 'весна, до Мӑнкуна',
-      easterOffset: -14,
-      description: 'Весенний праздник низовых чувашей, посвящённый изгнанию из селения злых духов; само название означает «изгнание». Молодёжь с розгами обходила дворы, проводились обрядовые угощения; сроки определяла община.'
-    },
-    {
-      name: 'Вирӗм',
-      ru: 'Изгнание злых духов (предпасхальный обряд)',
-      kind: 'Весенний обряд',
-      approx: false,
-      period: 'накануне Мӑнкуна',
-      easterOffset: -1,
-      description: 'Весенний праздник верховых чувашей, посвящённый изгнанию злых духов старого года; проводился накануне Великого дня (Мӑнкуна). Молодёжь обходила сёла с розгами и собирала угощения.'
-    },
-    {
-      name: 'Мӑнкун',
-      ru: 'Великий день (Пасха)',
-      kind: 'Главный весенний праздник',
-      approx: false,
+      name: 'Мӑнкун', ru: 'Великий день (Пасха)', kind: 'Главный весенний праздник', approx: false,
       period: 'весна',
       easterOffset: 0,
-      description: '«Великий день» — праздник обновления природы и жизни, совпадающий с Пасхой. Моления, обрядовая каша, крашеные яйца, обходы дворов и молитвы о потомстве и урожае.'
+      description: '«Великий день» — праздник обновления природы и жизни, совпадающий с Пасхой.'
     },
     {
-      name: 'Калӑм',
-      ru: 'Поминовение предков (Радоница)',
-      kind: 'Поминальный обряд',
-      approx: false,
-      period: 'весна',
-      easterOffset: 9,
-      description: 'Весенний поминальный обряд: почитание умерших предков, моления и угощения на месте захоронений. По времени совпадал с Радоницей.'
+      name: 'Акатуй', ru: 'Праздник плуга («свадьба плуга и земли»)', kind: 'Праздник', approx: false,
+      period: 'после завершения весенне-полевых работ',
+      fixedDate: (year) => getNearestToRepublicDay(year),
+      description: 'Праздник окончания посевных работ, который в Чебоксарах традиционно привязывают ко Дню Республики (24 июня).'
     },
     {
-      name: 'Ака пӑтти',
-      ru: 'Посевная каша',
-      kind: 'Семейный обряд',
-      approx: true,
-      period: 'после завершения весеннего сева (май — начало июня)',
-      easterOffset: 40,
-      description: 'Обряд по случаю завершения ярового сева. Вся семья выходила в поле с кашей, хлебцами, яйцами и пивом и молилась о хорошем урожае.'
-    },
-    {
-      name: 'Акатуй',
-      ru: 'Праздник плуга («свадьба плуга и земли»)',
-      kind: 'Праздник',
-      approx: true,
-      period: 'после завершения весенне-полевых работ (конец весны — лето)',
-      easterOffset: 45,
-      description: 'Праздник окончания посевных работ. В старинном быту цикл начинался перед выходом в поле и завершался после сева яровых; борьба керӳ, скачки, песни и угощения. Современный праздник обычно проводится в июне.'
-    },
-    {
-      name: 'Уяв',
-      ru: 'Время хороводов и игрищ',
-      kind: 'Летний период',
-      approx: true,
-      period: 'раннее лето, после сева; длилось 3, 5 или 7 недель (нечётное число)',
-      easterOffset: 56,
-      description: 'Весенне-летние хороводы и игрища молодёжи, наступавшие после завершения посевных работ. Сроки и запретные дни устанавливали старейшие члены сельского общества.'
-    },
-    {
-      name: 'Ҫимӗк',
-      ru: 'Семик (праздник предков)',
-      kind: 'Праздник',
-      approx: false,
+      name: 'Ҫимӗк', ru: 'Семик (праздник предков)', kind: 'Праздник', approx: false,
       period: 'весна — начало лета',
       easterOffset: 49,
-      description: 'Праздник почитания предков и обновления жизни; совпадал по времени с Семиком и Троицей. В некоторых местностях с Ҫимӗка начинался период Уява.'
+      description: 'Праздник почитания предков и обновления жизни.'
     },
     {
-      name: 'Ҫинҫе',
-      ru: 'Летний праздник (дни солнцестояния)',
-      kind: 'Летний цикл',
-      approx: true,
-      period: 'летнее солнцестояние (конец июня — начало июля); длился 7–12 дней',
-      fixedDate: (year) => new Date(year, 5, 24), // ≈ летнее солнцестояние
-      description: 'Дохристианский обрядовый цикл, приуроченный к летнему солнцестоянию. Сроки зависели от созревания ржи и погоды. Время отдыха перед жатвой: моления земле, сбор трав, застолья.'
-    },
-    {
-      name: 'Вырма',
-      ru: 'Жатва',
-      kind: 'Трудовой период',
-      approx: true,
-      period: 'август — сентябрь',
-      fixedDate: (year) => new Date(year, 7, 15), // ≈ начало жатвы
-      description: 'Уборочная страда. В старину хлеба жали серпами вручную — изнурительный и очень ответственный период годичного трудового цикла крестьянина.'
-    },
-    {
-      name: 'Авӑн',
-      ru: 'Осенний праздник урожая',
-      kind: 'Осенний праздник',
-      approx: true,
-      period: 'конец августа — сентябрь',
-      fixedDate: (year) => new Date(year, 8, 1), // ≈ завершение уборки
-      description: 'Праздник завершения уборки урожая — вторая ступень осеннего цикла (после Вырмы, перед Чӳклеме). С обрядовыми угощениями из нового зерна благодарили за урожай.'
-    },
-    {
-      name: 'Чӳклеме',
-      ru: 'Освящение нового урожая',
-      kind: 'Осенний обряд',
-      approx: true,
-      period: 'сентябрь — октябрь',
-      fixedDate: (year) => new Date(year, 9, 1), // ≈ окончание осенних работ
-      description: 'Завершающий праздник осеннего сельскохозяйственного цикла. До него запрещалось есть хлеб нового урожая; пекли хлеб из нового зерна, варили пиво и молились всем селом.'
-    },
-    {
-      name: 'Чӳк',
-      ru: 'Дароприношение',
-      kind: 'Обряд дароприношения',
-      period: 'проводился в разные сезоны года',
-      description: 'Обряд жертвоприношения: семейные и общинные моления духам и предкам с обрядовой кашей, пивом и жертвенной едой. Крупные осенние чӳк совершались после сбора урожая; к одной фиксированной дате не привязан.'
-    },
-    {
-      name: 'Ниме',
-      ru: 'Взаимопомощь',
-      kind: 'Обряд взаимопомощи',
-      period: 'лето — осень, по необходимости',
-      description: 'Обряд коллективной взаимопомощи: односельчане бесплатно помогали в тяжёлых работах — строительстве дома, вывозе навоза, уборке урожая. Завершался общим угощением с пивом.'
-    },
-    {
-      name: 'Киремет карти',
-      ru: 'Священная роща',
-      kind: 'Священное место',
-      period: 'вне дат',
-      description: 'Обрядовое место общинных молений и жертвоприношений верховным богам и духу Киремет. Не праздник с датой, а постоянное святилище чувашской традиционной веры.'
+      name: 'Ниме', ru: 'Взаимопомощь', kind: 'Обряд взаимопомощи', period: 'лето — осень, по необходимости',
+      description: 'Обряд коллективной взаимопомощи: односельчане бесплатно помогали в тяжёлых работах.'
     }
   ];
 
@@ -1753,13 +1326,9 @@
 
   function getTraditionDate(tradition, year) {
     const easter = getEasterDate(year);
-    if (typeof tradition.easterOffset === 'number') {
-      return easterShifted(easter, tradition.easterOffset);
-    }
-    if (typeof tradition.fixedDate === 'function') {
-      return tradition.fixedDate(year);
-    }
-    return null; // у Чӳк, Ниме и Киремет карти даты нет
+    if (typeof tradition.easterOffset === 'number') return easterShifted(easter, tradition.easterOffset);
+    if (typeof tradition.fixedDate === 'function') return tradition.fixedDate(year);
+    return null;
   }
 
   function renderFolkCalendar() {
@@ -1767,12 +1336,11 @@
     today.setHours(0, 0, 0, 0);
     const year = today.getFullYear();
 
-    // Ближайшее событие ищем среди традиций с датой текущего и следующего года.
     let datedEvents = [];
     [year, year + 1].forEach(eventYear => {
       folkTraditions.forEach(tradition => {
         const date = getTraditionDate(tradition, eventYear);
-        if (date) datedEvents.push({ tradition: tradition, date: date });
+        if (date) datedEvents.push({ tradition, date });
       });
     });
     datedEvents.sort((a, b) => a.date - b.date);
@@ -1843,18 +1411,6 @@
   }
 
   renderFolkCalendar();
-  // Пересчёт дат после смены суток — календарь всегда актуален.
-  function scheduleCalendarRefresh() {
-    const now = new Date();
-    const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-    const delay = Math.max(1000, nextMidnight.getTime() - now.getTime() + 1000);
-    window.setTimeout(() => {
-      renderFolkCalendar();
-      scheduleCalendarRefresh();
-    }, delay);
-  }
-  scheduleCalendarRefresh();
-
 </script>
 </body>
 </html>
