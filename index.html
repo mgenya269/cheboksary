@@ -41,6 +41,7 @@
     line-height: 1.6;
     transition: background 0.3s, color 0.3s;
   }
+
   /* ===== НАВИГАЦИЯ ===== */
   nav {
     position: sticky; top: 0; z-index: 100;
@@ -134,13 +135,12 @@
   .day-card h3 { font-size: 1.18rem; letter-spacing: -.01em; margin-bottom: 16px; color: var(--text); }
   .day-card ul { list-style: none; margin-bottom: 16px; }
   .day-card li {
-    padding: 10px 0; position: relative;
+    padding: 10px 0 10px 26px; position: relative;
     border-bottom: 1px dashed var(--border); font-size: 0.95rem; line-height: 1.65;
     display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
   }
   .day-card li:last-child { border-bottom: none; }
   .day-card li::before { content: '📍'; position: absolute; left: 0; }
-  .day-card li { padding-left: 26px; }
   .addr-btn {
     display: inline-block; padding: 4px 12px;
     background: var(--accent); color: #fff; text-decoration: none;
@@ -154,6 +154,13 @@
     border-radius: 999px; font-size: 0.85rem; font-weight: 600; transition: 0.2s;
   }
   .map-link:hover { background: #1e665c; }
+  .yandex-route-btn {
+    display: inline-block; padding: 12px 22px;
+    background: #3a7be8; color: #fff; text-decoration: none;
+    border-radius: 999px; font-size: 0.92rem; font-weight: 600; transition: 0.2s;
+  }
+  .yandex-route-btn:hover { background: #2a6bbd; }
+  .route-actions { margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
 
   /* ===== АУДИОГИД ===== */
   .audio-guide {
@@ -176,12 +183,6 @@
   .audio-btn:not(:disabled):hover { background: var(--dark); color: #fff; border-color: var(--dark); }
   .audio-btn.primary:not(:disabled):hover { background: #1e665c; border-color: #1e665c; }
   .audio-status { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 14px; color: var(--gray); font-size: .95rem; }
-  @media (max-width: 600px) {
-    .audio-row select { min-width: 0; width: 100%; }
-    .audio-row { flex-direction: column; align-items: stretch; }
-    .audio-btn { width: 100%; text-align: center; }
-    .audio-status { flex-direction: column; gap: 4px; }
-  }
 
   /* ===== КАРТА ===== */
   #placesMap { height: 560px; width: 100%; border-radius: 20px; z-index: 1; background: #e7e5df; }
@@ -190,12 +191,25 @@
     border: 1px solid var(--border); border-radius: 999px; padding: 10px 15px;
     background: var(--card-bg); color: var(--text); font: inherit;
   }
+  .map-legend { margin-bottom: 14px; font-size: .88rem; color: var(--gray); }
   .map-marker {
-    width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 16px; line-height: 1; background: #fff; border: 2px solid #287c70;
-    box-shadow: 0 3px 10px rgba(0,0,0,.35); cursor: pointer; transition: transform .15s ease;
+    width: 34px; height: 34px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; line-height: 1;
+    background: #fff; border: 2px solid #fff;
+    box-shadow: 0 3px 10px rgba(0,0,0,.35);
+    cursor: pointer; transition: transform .15s ease;
   }
   .map-marker:hover { transform: scale(1.12); }
+  .map-marker.cat-monument { background: #b94b3d; }
+  .map-marker.cat-museum { background: #7b5ea7; }
+  .map-marker.cat-park { background: #287c70; }
+  .map-marker.cat-church { background: #d99a2b; }
+  .map-marker.cat-sights { background: #3a7be8; }
+  .map-marker.cat-monument, .map-marker.cat-museum,
+  .map-marker.cat-park, .map-marker.cat-church, .map-marker.cat-sights {
+    color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  }
   .maplibregl-popup-content {
     border-radius: 14px; padding: 14px 16px; color: #203342; min-width: 200px; max-width: 290px;
     font-family: inherit; font-size: .95rem; line-height: 1.5;
@@ -211,10 +225,6 @@
   .map-popup-title { font-weight: 700; font-size: 1rem; margin-bottom: 5px; }
   .map-popup-meta { color: #667085; font-size: .82rem; margin-top: 7px; }
   .map-popup-link { display: inline-block; margin-top: 8px; color: #176b58; font-weight: 600; }
-  @media (max-width: 800px) {
-    #placesMap { height: 440px; }
-    .map-toolbar select { width: 100%; }
-  }
 
   /* ===== ГАЛЕРЕЯ ===== */
   .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
@@ -279,14 +289,14 @@
   .culture-card h3 { margin-bottom: 12px; color: var(--text); }
   .culture-card p { color: var(--gray); font-size: 0.95rem; }
   .phrase-box {
-    margin-top: 40px; background: #1a1a2e !important; color: #ffffff !important;
+    margin-top: 40px; background: #1a1a2e; color: #ffffff;
     border-radius: 20px; padding: 32px; box-shadow: 0 12px 30px rgba(15,35,48,.15);
   }
-  .phrase-box h3 { color: #ffd100 !important; margin-bottom: 20px; }
+  .phrase-box h3 { color: #ffd100; margin-bottom: 20px; }
   .phrase { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; gap: 8px; }
   .phrase:last-child { border-bottom: none; }
-  .phrase .ru { color: #c9c9d9 !important; font-size: 1rem; }
-  .phrase .cv { font-weight: 700; color: #ffd100 !important; font-size: 1.05rem; }
+  .phrase .ru { color: #c9c9d9; font-size: 1rem; }
+  .phrase .cv { font-weight: 700; color: #ffd100; font-size: 1.05rem; }
 
   /* ===== ГДЕ ПОЕСТЬ ===== */
   .food-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 20px; }
@@ -385,7 +395,7 @@
 
   /* ===== АДАПТИВ ===== */
   @media (max-width: 800px) {
-    nav { min-height: 60px; padding: 8px 4%; position: sticky; top: 0; }
+    nav { min-height: 60px; padding: 8px 4%; }
     nav .logo { font-size: 1.1rem; }
     nav ul {
       display: none; position: absolute; top: 60px; left: 0; width: 100%;
@@ -407,8 +417,20 @@
     .day-card { padding: 24px; }
     .gallery { grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 12px; }
     .gallery-item { border-radius: 14px; }
+    #placesMap { height: 440px; }
+    .map-toolbar select { width: 100%; }
   }
   @media (min-width: 801px) { .menu-toggle { display: none; } }
+  @media (max-width: 600px) {
+    .audio-row select { min-width: 0; width: 100%; }
+    .audio-row { flex-direction: column; align-items: stretch; }
+    .audio-btn { width: 100%; text-align: center; }
+    .audio-status { flex-direction: column; gap: 4px; }
+  }
+  @media (max-width: 480px) {
+    .holiday-item { flex-direction: column; align-items: stretch; }
+    .holiday-type { align-self: flex-start; }
+  }
 
   /* Доступность */
   html { scroll-behavior: smooth; }
@@ -491,6 +513,11 @@
       <span id="audioDayName">День не выбран</span>
       <span id="audioStateText">Готово к воспроизведению</span>
     </div>
+  </div>
+
+  <!-- КНОПКА МАРШРУТА В ЯНДЕКС КАРТАХ (строится по выбранному дню) -->
+  <div class="route-actions">
+    <a href="#" id="yandexRouteBtn" class="yandex-route-btn" target="_blank" rel="noopener">🗺️ Маршрут в Яндекс.Картах</a>
   </div>
 
  <div class="days">
@@ -576,6 +603,7 @@
   <section id="places-map" class="fade-in" style="padding-left:0;padding-right:0;max-width:none;">
     <h2 class="section-title">Карта достопримечательностей</h2>
     <p class="section-sub">Отмеченные места из маршрута. Выберите день, чтобы оставить на карте нужные точки.</p>
+    <p class="map-legend">📍 — прогулочные места · 🗿 — памятники · 🏛️ — музеи · 🌳 — парки · ⛪ — храмы</p>
     <div class="map-toolbar" aria-label="Фильтр карты">
       <select id="mapDayFilter" aria-label="Фильтр по дню маршрута">
         <option value="all">Все дни маршрута</option>
@@ -813,7 +841,7 @@
   <h2 class="section-title">Мой город в цифрах</h2>
   <p class="section-sub">Несколько фактов, которые говорят сами за себя.</p>
   <div class="facts">
-    <div class="fact"><div class="num">556+</div><div class="txt">лет городу</div></div>
+    <div class="fact"><div class="num" id="cityYears">557+</div><div class="txt">лет городу (основан в 1469 году)</div></div>
     <div class="fact"><div class="num">507K</div><div class="txt">жителей — почти половина Чувашии</div></div>
     <div class="fact"><div class="num">320 м</div><div class="txt">самый длинный световой мост в России</div></div>
     <div class="fact"><div class="num">46 м</div><div class="txt">высота Монумента Матери-Покровительницы</div></div>
@@ -861,11 +889,34 @@
     <a href="#symbols">Символика</a>
   </div>
   <button class="share-btn" onclick="shareSite()">📤 Поделиться сайтом</button>
-  <p style="margin-top: 16px; font-size: 0.85rem; opacity: 0.7;">Сделано с любовью к городу на Волге · 2025</p>
+  <p style="margin-top: 16px; font-size: 0.85rem; opacity: 0.7;">Сделано с любовью к городу на Волге · 2026</p>
 </footer>
 
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
+  // ===== ДАННЫЕ КАРТЫ (с категориями для разных маркеров) =====
+  const PLACES = [
+    {name:'Монумент Матери-Покровительницы',lat:56.148692,lng:47.242115,day:1,category:'monument',address:'Историческая набережная, 14',description:'Главный монумент Чувашии: медная фигура Матери высотой 16 метров на 25-метровом постаменте.'},
+    {name:'Набережная Чебоксарского залива',lat:56.147267,lng:47.245928,day:1,category:'sights',address:'Исторический центр',description:'Прогулочная зона вдоль залива с мостами, кафе и площадками.'},
+    {name:'Бульвар купца Ефремова',lat:56.145791,lng:47.252119,day:1,category:'sights',address:'Бульвар купца Ефремова',description:'Пешеходный бульвар с купеческой застройкой XIX века.'},
+    {name:'Музей В. И. Чапаева',lat:56.116230,lng:47.257271,day:2,category:'museum',address:'проспект Ленина, 46А',description:'Филиал Чувашского национального музея, экспозиция о Чапаеве.'},
+    {name:'Памятник В. И. Чапаеву',lat:56.114964,lng:47.258665,day:2,category:'monument',address:'сквер им. В. И. Чапаева',description:'Монументальная скульптура Чапаева на вздыбленном коне.'},
+    {name:'Чувашский национальный музей',lat:56.145402,lng:47.252677,day:2,category:'museum',address:'Красная площадь, 5/2',description:'Главный музей республики.'},
+    {name:'Введенский собор',lat:56.151775,lng:47.246703,day:2,category:'church',address:'ул. Константина Иванова, 21',description:'Исторический кафедральный собор XVII века.'},
+    {name:'Красная площадь',lat:56.145734,lng:47.253292,day:2,category:'sights',address:'Красная площадь',description:'Центральное общественное пространство.'},
+    {name:'Московская набережная',lat:56.154949,lng:47.223881,day:3,category:'sights',address:'Московская набережная',description:'Протяжённая прогулочная зона вдоль Волги.'},
+    {name:'Лакреевский лес',lat:56.1168377,lng:47.2530138,day:4,category:'park',address:'ул. Лесная, 1',description:'Городской парк культуры и отдыха.'},
+    {name:'Парк «Амазония»',lat:56.1476411,lng:47.207798,day:4,category:'park',address:'проспект Максима Горького, 2',description:'Большой городской парк и этнокомплекс.'},
+    {name:'Мемориальный парк Победы',lat:56.146483,lng:47.269117,day:4,category:'park',address:'ул. Зои Яковлевой, 54В',description:'Мемориальная территория на возвышенности.'},
+    {name:'Чувашский художественный музей',lat:56.1411978,lng:47.2608983,day:5,category:'museum',address:'ул. Калинина, 60',description:'Художественный музей с коллекциями.'},
+    {name:'Музей чувашской вышивки',lat:56.141334,lng:47.249869,day:5,category:'museum',address:'ул. Карла Маркса, 32',description:'Музей традиционной чувашской вышивки.'},
+    {name:'Музей Михаила Сеспеля',lat:56.15128,lng:47.250775,day:5,category:'museum',address:'ул. Михаила Сеспеля, 8',description:'Мемориальный музей поэта.'},
+    {name:'Музей пива',lat:56.144968,lng:47.252693,day:6,category:'museum',address:'бульвар купца Ефремова, 6А',description:'Музей истории пивоварения.'},
+    {name:'Этнопарк «Сувар»',lat:56.188934,lng:47.219790,day:7,category:'park',address:'Заволжье, посёлок Сосновка',description:'Этнокультурный парк деревянной скульптуры.'}
+  ];
+
+  const CATEGORY_ICONS = { monument:'🗿', museum:'🏛️', park:'🌳', church:'⛪', sights:'📍' };
+
   // ===== МОБИЛЬНОЕ МЕНЮ =====
   const menuToggle = document.getElementById('menuToggle');
   const navMenu = document.getElementById('navMenu');
@@ -895,22 +946,21 @@
     });
   });
 
-  // ===== ТЁМНАЯ ТЕМА (по системе + сохранение) =====
+  // ===== ТЁМНАЯ ТЕМА =====
   const themeToggle = document.getElementById('themeToggle');
-  const body = document.body;
   const savedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-    body.classList.add('dark-theme');
+    document.body.classList.add('dark-theme');
     themeToggle.textContent = '☀️';
   } else if (savedTheme === 'light') {
     themeToggle.textContent = '🌙';
   }
 
   themeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark-theme');
-    if (body.classList.contains('dark-theme')) {
+    document.body.classList.toggle('dark-theme');
+    if (document.body.classList.contains('dark-theme')) {
       themeToggle.textContent = '☀️';
       localStorage.setItem('theme', 'dark');
     } else {
@@ -926,7 +976,6 @@
       text: 'Путеводитель по Чебоксарам: маршрут на 7 дней, карта, культура и где поесть.',
       url: window.location.href
     };
-
     if (navigator.share) {
       navigator.share(shareData).catch(() => {});
     } else {
@@ -938,7 +987,7 @@
     }
   }
 
-  // ===== КЭШ ПОГОДЫ (10 МИНУТ) =====
+  // ===== ПОГОДА (с кэшем на 10 минут) =====
   const WEATHER_CACHE_KEY = 'cheboksary_weather_v1';
   const WEATHER_CACHE_TTL = 10 * 60 * 1000;
 
@@ -980,11 +1029,11 @@
       if (!current || !Number.isFinite(current.temperature_2m) || !Number.isFinite(current.weather_code)) throw new Error('Invalid weather');
 
       const temperature = Math.round(current.temperature_2m);
-      const temperatureText = `${temperature > 0 ? '+' : ''}${temperature}°C`;
-      const [icon, description] = weatherDescriptions[current.weather_code] || ['🌡️', 'Погодные условия'];
-      const text = `${icon} Сейчас в Чебоксарах: ${temperatureText} · ${description}`;
+      const temperatureText = (temperature > 0 ? '+' : '') + temperature + '°C';
+      const info = weatherDescriptions[current.weather_code] || ['🌡️', 'Погодные условия'];
+      const text = info[0] + ' Сейчас в Чебоксарах: ' + temperatureText + ' · ' + info[1];
       weatherText.textContent = text;
-      localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ text, timestamp: Date.now() }));
+      localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ text: text, timestamp: Date.now() }));
     } catch (error) {
       weatherText.textContent = 'Погода временно недоступна';
     }
@@ -1007,6 +1056,20 @@
   let isPlaying = false;
   let isPaused = false;
 
+  // Убирает фрагменты в скобках и эмодзи — чтобы они не озвучивались
+  function stripForSpeech(text) {
+    return text
+      .replace(/$[^)]*$/g, '')      // круглые скобки с содержимым
+      .replace(/
+$$
+[^
+$$
+]*\]/g, '')     // квадратные скобки с содержимым
+      .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}\u{FE0F}]/gu, '') // эмодзи и значки
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
   function pickRussianVoice() {
     const voices = window.speechSynthesis.getVoices();
     const russianVoices = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('ru'));
@@ -1028,7 +1091,7 @@
   }
 
   function getDayCard(dayNumber) {
-    return document.querySelectorAll('.day-card')[dayNumber - 1] || null;
+    return document.getElementById('day-' + dayNumber) || null;
   }
 
   function buildDaySpeech(dayNumber) {
@@ -1036,10 +1099,12 @@
     if (!card) return null;
     const titleEl = card.querySelector('h3');
     if (!titleEl) return null;
-    const title = titleEl.textContent.replace(/^📅\s*/, '').trim();
-    const items = Array.from(card.querySelectorAll('li')).map(li => li.textContent.trim());
+    const title = stripForSpeech(titleEl.textContent.replace(/📅/g, '').trim());
+    const items = Array.from(card.querySelectorAll('li'))
+      .map(li => stripForSpeech(li.textContent.trim()))
+      .filter(Boolean);
     if (!items.length) return null;
-    return { title, sentences: [title + '.'].concat(items.map(i => i + '.')) };
+    return { title: title, sentences: [title + '.'].concat(items.map(i => i + '.')) };
   }
 
   function speakChunk(session) {
@@ -1141,26 +1206,6 @@
   // ===== КАРТА =====
   const mapElement = document.getElementById('placesMap');
   if (mapElement && window.maplibregl) {
-    const places = [
-      {name:'Монумент Матери-Покровительницы',lat:56.148692,lng:47.242115,day:1,address:'Историческая набережная, 14',description:'Главный монумент Чувашии: медная фигура Матери высотой 16 метров на 25-метровом постаменте.'},
-      {name:'Набережная Чебоксарского залива',lat:56.147267,lng:47.245928,day:1,address:'Исторический центр',description:'Прогулочная зона вдоль залива с мостами, кафе и площадками.'},
-      {name:'Бульвар купца Ефремова',lat:56.145791,lng:47.252119,day:1,address:'Бульвар купца Ефремова',description:'Пешеходный бульвар с купеческой застройкой XIX века.'},
-      {name:'Музей В. И. Чапаева',lat:56.116230,lng:47.257271,day:2,address:'проспект Ленина, 46А',description:'Филиал Чувашского национального музея, экспозиция о Чапаеве.'},
-      {name:'Памятник В. И. Чапаеву',lat:56.114964,lng:47.258665,day:2,address:'сквер им. В. И. Чапаева',description:'Монументальная скульптура Чапаева на вздыбленном коне.'},
-      {name:'Чувашский национальный музей',lat:56.145402,lng:47.252677,day:2,address:'Красная площадь, 5/2',description:'Главный музей республики.'},
-      {name:'Введенский собор',lat:56.151775,lng:47.246703,day:2,address:'ул. Константина Иванова, 21',description:'Исторический кафедральный собор XVII века.'},
-      {name:'Красная площадь',lat:56.145734,lng:47.253292,day:2,address:'Красная площадь',description:'Центральное общественное пространство.'},
-      {name:'Московская набережная',lat:56.154949,lng:47.223881,day:3,address:'Московская набережная',description:'Протяжённая прогулочная зона вдоль Волги.'},
-      {name:'Лакреевский лес',lat:56.1168377,lng:47.2530138,day:4,address:'ул. Лесная, 1',description:'Городской парк культуры и отдыха.'},
-      {name:'Парк «Амазония»',lat:56.1476411,lng:47.207798,day:4,address:'проспект Максима Горького, 2',description:'Большой городской парк и этнокомплекс.'},
-      {name:'Мемориальный парк Победы',lat:56.146483,lng:47.269117,day:4,address:'ул. Зои Яковлевой, 54В',description:'Мемориальная территория на возвышенности.'},
-      {name:'Чувашский художественный музей',lat:56.1411978,lng:47.2608983,day:5,address:'ул. Калинина, 60',description:'Художественный музей с коллекциями.'},
-      {name:'Музей чувашской вышивки',lat:56.141334,lng:47.249869,day:5,address:'ул. Карла Маркса, 32',description:'Музей традиционной чувашской вышивки.'},
-      {name:'Музей Михаила Сеспеля',lat:56.15128,lng:47.250775,day:5,address:'ул. Михаила Сеспеля, 8',description:'Мемориальный музей поэта.'},
-      {name:'Музей пива',lat:56.144968,lng:47.252693,day:6,address:'бульвар купца Ефремова, 6А',description:'Музей истории пивоварения.'},
-      {name:'Этнопарк «Сувар»',lat:56.188934,lng:47.219790,day:7,address:'Заволжье, посёлок Сосновка',description:'Этнокультурный парк деревянной скульптуры.'}
-    ];
-
     const map = new maplibregl.Map({
       container: 'placesMap',
       style: 'https://tiles.openfreemap.org/styles/liberty',
@@ -1169,7 +1214,6 @@
       attributionControl: false
     });
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
-    // Обязательная атрибуция по условиям OpenFreeMap — показывается мелкой плашкой в углу карты.
     map.addControl(new maplibregl.AttributionControl({
       compact: true,
       customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">© OpenFreeMap</a> · <a href="https://openmaptiles.org/" target="_blank" rel="noopener">© OpenMapTiles</a> · <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a>'
@@ -1181,13 +1225,13 @@
     function renderMapMarkers() {
       clearMarkers();
       const day = document.getElementById('mapDayFilter').value;
-      const visible = places.filter(p => day === 'all' || String(p.day) === day);
+      const visible = PLACES.filter(p => day === 'all' || String(p.day) === day);
       const bounds = new maplibregl.LngLatBounds();
 
       visible.forEach(place => {
         const el = document.createElement('div');
-        el.className = 'map-marker';
-        el.textContent = '📍';
+        el.className = 'map-marker cat-' + place.category;
+        el.textContent = CATEGORY_ICONS[place.category] || '📍';
         el.title = place.name;
         const popup = new maplibregl.Popup({ offset: 36 }).setHTML(
           '<div class="map-popup-title">' + place.name + '</div>' +
@@ -1227,6 +1271,22 @@
     mapElement.textContent = 'Не удалось загрузить карту.';
   }
 
+  // ===== КНОПКА «МАРШРУТ В ЯНДЕКС.КАРТАХ» =====
+  // Берёт точки выбранного дня из тех же данных, что и карта, и строит маршрут.
+  const yandexRouteBtn = document.getElementById('yandexRouteBtn');
+  if (yandexRouteBtn) {
+    function updateYandexRoute() {
+      const day = document.getElementById('mapDayFilter').value;
+      const points = PLACES.filter(p => day === 'all' || String(p.day) === day);
+      if (!points.length) return;
+      // Формат Яндекс Карт: rtext=lon1,lat1~lon2,lat2...&rtt=auto (на авто)
+      const rtext = points.map(p => p.lng + ',' + p.lat).join('~');
+      yandexRouteBtn.href = 'https://yandex.ru/maps/?mode=routes&rtext=' + rtext + '&rtt=auto';
+    }
+    document.getElementById('mapDayFilter').addEventListener('change', updateYandexRoute);
+    updateYandexRoute();
+  }
+
   // ===== ФИЛЬТР ГАЛЕРЕИ =====
   const filterBtns = document.querySelectorAll('.filters button');
   const items = document.querySelectorAll('.gallery-item');
@@ -1242,7 +1302,6 @@
   });
 
   // ===== МОДАЛЬНОЕ ОКНО ГАЛЕРЕИ =====
-  // Защита: если модалки нет в разметке, остальной JavaScript не падает.
   const modal = document.getElementById('modal');
   const modalTitle = document.getElementById('modalTitle');
   const modalDesc = document.getElementById('modalDesc');
@@ -1307,10 +1366,11 @@
   updateToTopButton();
   toTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
+  // ===== ЛЕТ ГОРОДУ (автоподсчёт) =====
+  const cityYears = document.getElementById('cityYears');
+  if (cityYears) cityYears.textContent = (new Date().getFullYear() - 1469) + '+';
+
   // ===== НАРОДНЫЙ КАЛЕНДАРЬ ЧУВАШИИ =====
-  // Даты считаются от Пасхи (церковные праздники) или фиксированно (сезонные).
-  // Сверху — ближайший праздник с отсчётом; в его день — «Сегодня — ...»;
-  // после прохождения автоматически показывается следующий.
   function getEasterDate(year) {
     const a = year % 4, b = year % 7, c = year % 19;
     const d = (19 * c + 15) % 30;
@@ -1336,37 +1396,43 @@
   }
 
   const FOLK_HOLIDAYS = [
-    { name: 'Сурхури', ru: 'Зимние гадания и колядование', approx: true,
+    { name: 'Сурхури', ru: 'Зимние гадания и колядование', kind: 'Зимний цикл', approx: true,
       date: y => new Date(y, 11, 22),
       desc: 'Старинный зимний праздник у солнцестояния: гадания о судьбе и урожае, обходы дворов с обрядовыми песнями и угощениями.' },
-    { name: 'Нартукан', ru: 'Зимние святки', approx: true,
+    { name: 'Нартукан', ru: 'Зимние святки', kind: 'Зимний праздник', approx: true,
       date: y => new Date(y, 0, 7),
       desc: 'Неделя ряженых и игрищ между Рождеством и Крещением: обходы дворов, гадания, зимние забавы.' },
-    { name: 'Ҫӑварни', ru: 'Масленица (проводы зимы)', approx: false,
+    { name: 'Ҫӑварни', ru: 'Масленица (проводы зимы)', kind: 'Праздник проводов зимы', approx: false,
       date: y => easterPlus(y, -56),
       desc: 'Проводы зимы: катание на санях и качелях, блины и обрядовая еда перед Великим постом.' },
-    { name: 'Мӑнкун', ru: 'Великий день (Пасха)', approx: false,
+    { name: 'Мӑнкун', ru: 'Великий день (Пасха)', kind: 'Главный весенний праздник', approx: false,
       date: y => getEasterDate(y),
       desc: 'Главный весенний праздник — обновление природы: обрядовая каша, крашеные яйца, обходы дворов.' },
-    { name: 'Калӑм', ru: 'Поминовение предков (Радоница)', approx: false,
+    { name: 'Калӑм', ru: 'Поминовение предков (Радоница)', kind: 'Поминальный обряд', approx: false,
       date: y => easterPlus(y, 9),
       desc: 'Поминальный обряд: почитание умерших предков, моления и угощения на месте захоронений.' },
-    { name: 'Акатуй', ru: 'Праздник плуга', approx: false,
+    { name: 'Акатуй', ru: 'Праздник плуга', kind: 'Праздник', approx: false,
       date: y => nearestSundayTo(y, 5, 24),
       desc: 'Праздник окончания посевных работ: борьба керӳ, скачки, песни и угощения. В Чебоксарах проводится в воскресенье около Дня Республики (24 июня).' },
-    { name: 'Ҫимӗк', ru: 'Семик (праздник предков)', approx: false,
+    { name: 'Ҫимӗк', ru: 'Семик (праздник предков)', kind: 'Праздник', approx: false,
       date: y => easterPlus(y, 49),
       desc: 'Праздник почитания предков и обновления жизни, совпадает по времени с Семиком и Троицей.' },
-    { name: 'Ҫинҫе', ru: 'Летний праздник солнцестояния', approx: true,
+    { name: 'Ҫинҫе', ru: 'Летний праздник солнцестояния', kind: 'Летний цикл', approx: true,
       date: y => new Date(y, 5, 24),
       desc: 'Дохристианский цикл у летнего солнцестояния: моления земле, сбор трав, время отдыха перед жатвой.' },
-    { name: 'Вырма', ru: 'Жатва', approx: true,
+    { name: 'Вырма', ru: 'Жатва', kind: 'Трудовой период', approx: true,
       date: y => new Date(y, 7, 15),
       desc: 'Уборочная страда: в старину хлеба жали серпами вручную — самый тяжёлый период крестьянского года.' },
-    { name: 'Чӳклеме', ru: 'Освящение нового урожая', approx: true,
+    { name: 'Чӳклеме', ru: 'Освящение нового урожая', kind: 'Осенний обряд', approx: true,
       date: y => new Date(y, 9, 1),
       desc: 'Осенний обряд: пекли хлеб из нового зерна, варили пиво и молились всем селом.' }
   ];
+
+  function pluralDays(n) {
+    if (n % 10 === 1 && n % 100 !== 11) return 'день';
+    if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return 'дня';
+    return 'дней';
+  }
 
   function renderFolkCalendar() {
     const nameEl = document.getElementById('nextHolidayName');
@@ -1384,13 +1450,13 @@
     [year, year + 1].forEach(y => {
       FOLK_HOLIDAYS.forEach(h => {
         const d = h.date(y);
-        if (d) events.push({ h, d });
+        if (d) events.push({ h: h, d: d });
       });
     });
     events.sort((a, b) => a.d - b.d);
     const next = events.find(ev => ev.d >= today);
 
-    if (next) {
+    if (next && nameEl && dateEl && descEl && countdownEl) {
       nameEl.textContent = next.h.name + ' — ' + next.h.ru;
       dateEl.textContent = next.h.d.toLocaleDateString('ru-RU', opts);
       descEl.textContent = next.h.desc;
@@ -1400,17 +1466,10 @@
         countdownEl.style.background = '#e7f1e9';
         countdownEl.style.color = '#1e665c';
       } else {
-        countdownEl.textContent = '⏳ До праздника: ' + days + ' ' +
-          (days % 10 === 1 && days % 100 !== 11 ? 'день' :
-           [2,3,4].includes(days % 10) && ![12,13,14].includes(days % 100) ? 'дня' : 'дней');
+        countdownEl.textContent = '⏳ До праздника: ' + days + ' ' + pluralDays(days);
         countdownEl.style.background = 'rgba(185,75,61,.1)';
         countdownEl.style.color = '#9c4035';
       }
-    } else {
-      nameEl.textContent = 'Народный календарь';
-      dateEl.textContent = '';
-      descEl.textContent = '';
-      countdownEl.textContent = '';
     }
 
     listEl.innerHTML = '';
@@ -1444,16 +1503,19 @@
     });
   }
 
-  renderFolkCalendar();
-  // Пересчёт после полуночи — отсчёт и «сегодняшний» праздник всегда актуальны.
-  (function scheduleCalendarRefresh() {
-    const now = new Date();
-    const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-    setTimeout(() => {
-      renderFolkCalendar();
-      scheduleCalendarRefresh();
-    }, Math.max(1000, nextMidnight - now + 1000));
-  })();
+  try {
+    renderFolkCalendar();
+    (function scheduleCalendarRefresh() {
+      const now = new Date();
+      const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      setTimeout(() => {
+        try { renderFolkCalendar(); } catch (e) { console.warn('Календарь:', e); }
+        scheduleCalendarRefresh();
+      }, Math.max(1000, nextMidnight - now + 1000));
+    })();
+  } catch (e) {
+    console.warn('Календарь:', e);
+  }
 </script>
 </body>
 </html>
