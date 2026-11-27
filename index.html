@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Чебоксары — жемчужина Поволжья | Путеводитель на 7 дней</title>
 <meta name="description" content="Путеводитель по Чебоксарам: маршрут на семь дней, достопримечательности, парки, музеи, чувашская кухня и традиции.">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <meta property="og:title" content="Чебоксары — жемчужина Поволжья">
 <meta property="og:description" content="Маршрут на семь дней, достопримечательности, фото и культура Чувашии.">
 <meta property="og:image" content="https://mgenya269.github.io/cheboksary/hero-bg.jpg">
@@ -548,6 +549,18 @@
   .day-card h3 { font-size: 1.18rem; letter-spacing: -.01em; }
   .day-card li { line-height: 1.65; padding-top: 10px; padding-bottom: 10px; }
   .map-container { border-radius: 20px; box-shadow: 0 12px 32px rgba(23,43,58,.12); }
+  #placesMap { height: 560px; width: 100%; border-radius: 20px; z-index: 1; background: #e7e5df; }
+  .map-toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:0 0 16px; }
+  .map-toolbar select, .map-toolbar button { border:1px solid var(--border); border-radius:999px; padding:10px 15px; background:var(--card-bg); color:var(--text); font:inherit; }
+  .map-toolbar button { cursor:pointer; }
+  .map-toolbar button.active, .map-toolbar button:hover { background:var(--dark); color:#fff; }
+  .map-note { font-size:.88rem; color:var(--gray); margin-top:12px; }
+  .leaflet-popup-content-wrapper { border-radius:14px; }
+  .leaflet-popup-content { line-height:1.5; min-width:190px; }
+  .map-popup-title { font-weight:700; font-size:1rem; margin-bottom:5px; }
+  .map-popup-meta { color:#667085; font-size:.82rem; margin-top:7px; }
+  .map-popup-link { display:inline-block; margin-top:8px; color:#176b58; font-weight:600; }
+  @media (max-width:800px) { #placesMap { height:440px; } .map-toolbar select { width:100%; } }
   .filters button { border: 1px solid var(--border); border-radius: 999px; padding: 9px 17px; }
   .filters button.active, .filters button:hover { background: var(--dark); border-color: var(--dark); color: #fff; }
   .gallery { gap: 18px; }
@@ -598,6 +611,7 @@
   <button class="menu-toggle" id="menuToggle" type="button" aria-label="Открыть меню" aria-controls="navMenu" aria-expanded="false">☰</button>
   <ul id="navMenu">
     <li><a href="#route" class="active">Маршрут</a></li>
+    <li><a href="#places-map">Карта</a></li>
     <li><a href="#gallery">Галерея</a></li>
     <li><a href="#parks">Парки</a></li>
     <li><a href="#culture">Культура</a></li>
@@ -700,9 +714,28 @@
   </div>
  </div>
   
-  <div class="map-container fade-in">
-    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ab847ff171bd33b6205227cb7865dd7ffa67b0780e6ac9b7e9c1d2a3b3d11d51a&amp;width=500&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
-  </div>
+  <section id="places-map" class="fade-in" style="padding-left:0;padding-right:0;max-width:none;">
+    <h2 class="section-title">Карта достопримечательностей</h2>
+    <p class="section-sub">Отмеченные места из маршрута на семь дней. Выберите категорию или день, чтобы оставить на карте нужные точки.</p>
+    <div class="map-toolbar" aria-label="Фильтры карты">
+      <select id="mapDayFilter" aria-label="Фильтр по дню маршрута">
+        <option value="all">Все дни маршрута</option>
+        <option value="1">День 1 — Знакомство с городом</option>
+        <option value="2">День 2 — История и музеи</option>
+        <option value="3">День 3 — Волга и набережная</option>
+        <option value="4">День 4 — Природа и парки</option>
+        <option value="5">День 5 — Культура и искусство</option>
+        <option value="6">День 6 — Гастрономия и отдых</option>
+        <option value="7">День 7 — Заволжье и природа</option>
+      </select>
+      <button type="button" class="active" data-map-category="all">Все места</button>
+      <button type="button" data-map-category="sights">Достопримечательности</button>
+      <button type="button" data-map-category="museums">Музеи</button>
+      <button type="button" data-map-category="parks">Парки и природа</button>
+    </div>
+    <div id="placesMap" role="application" aria-label="Интерактивная карта достопримечательностей Чебоксар"></div>
+    <p class="map-note">Координаты отмечают ориентир или вход в объект; перед поездкой уточняйте режим работы. Карта: © OpenStreetMap contributors · <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">лицензия ODbL</a>.</p>
+  </section>
 </section>
 
 <!-- ГАЛЕРЕЯ -->
@@ -930,6 +963,7 @@
   <p><a href="#route">Наверх ↑</a></p>
 </footer>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
   // ===== МОБИЛЬНОЕ МЕНЮ И НАВИГАЦИЯ =====
   const menuToggle = document.getElementById('menuToggle');
@@ -996,6 +1030,62 @@
       localStorage.setItem('theme', 'light');
     }
   });
+
+  // ===== ИНТЕРАКТИВНАЯ КАРТА OPENSTREETMAP =====
+  const mapElement = document.getElementById('placesMap');
+  if (mapElement && window.L) {
+    const places = [
+      {name:'Монумент Матери-Покровительницы',lat:56.14869,lng:47.24211,category:'sights',day:1,address:'ул. Нижегородская, 14А',description:'Один из главных символов Чебоксар. Монумент расположен на возвышенности у Чебоксарского залива; отсюда открывается вид на исторический центр и водную гладь.'},
+      {name:'Чебоксарский залив',lat:56.147267,lng:47.245928,category:'sights',day:1,address:'Исторический центр Чебоксар',description:'Водно-архитектурное пространство в центре города с прогулочными зонами, мостами и видами на главные городские достопримечательности.'},
+      {name:'Бульвар купца Ефремова',lat:56.145791,lng:47.252119,category:'sights',day:1,address:'Бульвар купца Ефремова',description:'Пешеходная улица исторического центра с городской скульптурой, кафе и зданиями старой купеческой застройки.'},
+      {name:'Музей В. И. Чапаева',lat:56.116230,lng:47.257271,category:'museums',day:2,address:'проспект Ленина, 46А',description:'Музейный комплекс, посвящённый жизни и историческому наследию Василия Ивановича Чапаева.'},
+      {name:'Чувашский национальный музей',lat:56.145402,lng:47.252677,category:'museums',day:2,address:'Красная площадь, 5/2',description:'Главный музей республики. Экспозиции знакомят с археологией, природой, историей и культурой Чувашского края.'},
+      {name:'Введенский собор',lat:56.151775,lng:47.246703,category:'sights',day:2,address:'ул. Константина Иванова, 21',description:'Исторический кафедральный собор XVII века — один из старейших сохранившихся каменных памятников Чувашии.'},
+      {name:'Красная площадь',lat:56.145734,lng:47.253292,category:'sights',day:2,address:'Красная площадь',description:'Центральное общественное пространство исторической части Чебоксар, рядом с музеями и городскими культурными объектами.'},
+      {name:'Московская набережная',lat:56.154949,lng:47.223881,category:'sights',day:3,address:'Московская набережная',description:'Протяжённая прогулочная зона вдоль Волги. Подходит для прогулок, велосипедных поездок и панорамных видов на реку.'},
+      {name:'Лакреевский лес',lat:56.1168377,lng:47.2530138,category:'parks',day:4,address:'ул. Лесная, 1',description:'Городской парк культуры и отдыха с лесными дорожками, зонами прогулок и аттракционами.'},
+      {name:'Парк «Амазония»',lat:56.1476411,lng:47.207798,category:'parks',day:4,address:'проспект Максима Горького, 2',description:'Большой городской парк и этнокомплекс с зонами отдыха и развлечений.'},
+      {name:'Мемориальный парк Победы',lat:56.146483,lng:47.269117,category:'parks',day:4,address:'ул. Зои Яковлевой, 54В',description:'Мемориальная территория на возвышенности с памятниками, военной техникой под открытым небом и панорамными видами на Волгу.'},
+      {name:'Чувашский художественный музей',lat:56.1411978,lng:47.2608983,category:'museums',day:5,address:'ул. Калинина, 60',description:'Художественный музей с коллекциями русского, зарубежного и чувашского искусства.'},
+      {name:'Музей чувашской вышивки',lat:56.141334,lng:47.249869,category:'museums',day:5,address:'ул. Карла Маркса, 32',description:'Музей, посвящённый традиционной чувашской вышивке, орнаментам, народному костюму и ремеслу.'},
+      {name:'Музей Михаила Сеспеля',lat:56.15128,lng:47.250775,category:'museums',day:5,address:'ул. Михаила Сеспеля, 8',description:'Мемориальный музей в доме, связанном с жизнью и работой чувашского поэта Михаила Сеспеля.'},
+      {name:'Музей пива',lat:56.144968,lng:47.252693,category:'museums',day:6,address:'бульвар купца Ефремова, 6А',description:'Музей, посвящённый истории пивоварения и его традициям в Чувашии.'},
+      {name:'Этнопарк «Сувар»',lat:56.188934,lng:47.219790,category:'parks',day:7,address:'Заволжье, посёлок Сосновка',description:'Этнокультурный парк деревянной обрядовой скульптуры на левом берегу Волги, напротив Чебоксар.'}
+    ];
+    const map = L.map('placesMap', {scrollWheelZoom:false}).setView([56.147,47.247],13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom:19,
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>'
+    }).addTo(map);
+    const markers = [];
+    function renderMapMarkers() {
+      markers.forEach(marker => map.removeLayer(marker));
+      markers.length = 0;
+      const day = document.getElementById('mapDayFilter').value;
+      const categoryButton = document.querySelector('[data-map-category].active');
+      const category = categoryButton ? categoryButton.dataset.mapCategory : 'all';
+      places.forEach(place => {
+        if (day !== 'all' && String(place.day) !== day) return;
+        if (category !== 'all' && place.category !== category) return;
+        const marker = L.marker([place.lat,place.lng]).addTo(map);
+        const categoryName = place.category === 'museums' ? 'Музей' : place.category === 'parks' ? 'Парк / природа' : 'Достопримечательность';
+        const popup = `<div class="map-popup-title">${place.name}</div><div>${place.description}</div><div class="map-popup-meta">${place.address}<br>${categoryName} · День ${place.day}</div><a class="map-popup-link" href="https://www.openstreetmap.org/?mlat=${place.lat}&mlon=${place.lng}#map=17/${place.lat}/${place.lng}" target="_blank" rel="noopener">Открыть точку на OpenStreetMap ↗</a>`;
+        marker.bindPopup(popup);
+        markers.push(marker);
+      });
+    }
+    document.getElementById('mapDayFilter').addEventListener('change', renderMapMarkers);
+    document.querySelectorAll('[data-map-category]').forEach(button => button.addEventListener('click', () => {
+      document.querySelectorAll('[data-map-category]').forEach(item => item.classList.remove('active'));
+      button.classList.add('active');
+      renderMapMarkers();
+    }));
+    renderMapMarkers();
+    if (markers.length) map.fitBounds(L.featureGroup(markers).getBounds().pad(0.08));
+    window.setTimeout(() => map.invalidateSize(), 250);
+  } else if (mapElement) {
+    mapElement.textContent = 'Не удалось загрузить карту. Проверьте подключение к интернету и обновите страницу.';
+  }
 
   // ===== ПОГОДА =====
   async function getWeather() {
