@@ -184,34 +184,21 @@
   /* ===== КАРТА МАРШРУТА ===== */
   #placesMap { height: 560px; width: 100%; border-radius: 20px; z-index: 1; background: #e7e5df; }
   .map-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 16px; }
-  .map-toolbar select, .map-toolbar button {
+  .map-toolbar select {
     border: 1px solid var(--border); border-radius: 999px;
     padding: 10px 15px; background: var(--card-bg); color: var(--text); font: inherit;
   }
-  .map-toolbar button { cursor: pointer; }
-  .map-toolbar button.active, .map-toolbar button:hover { background: var(--dark); color: #fff; }
-  .map-note { font-size: .88rem; color: var(--gray); margin-top: 12px; }
 
   /* Собственные маркеры MapLibre */
   .map-marker {
     width: 34px; height: 34px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 17px; line-height: 1;
-    background: #fff; border: 2px solid #fff;
+    font-size: 16px; line-height: 1;
+    background: #fff; border: 2px solid #287c70;
     box-shadow: 0 3px 10px rgba(0,0,0,.35);
     cursor: pointer; transition: transform .15s ease;
   }
   .map-marker:hover { transform: scale(1.12); }
-  .map-marker.cat-museums { background: #7b5ea7; }
-  .map-marker.cat-parks { background: #287c70; }
-  .map-marker.cat-monuments { background: #b94b3d; }
-  .map-marker.cat-temples { background: #8a6d3b; }
-  .map-marker.cat-embankments { background: #2c7fb8; }
-  .map-marker.cat-museums, .map-marker.cat-parks,
-  .map-marker.cat-monuments, .map-marker.cat-temples,
-  .map-marker.cat-embankments {
-    color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.4);
-  }
 
   /* Оформление всплывающих карточек MapLibre */
   .maplibregl-popup-content {
@@ -445,7 +432,9 @@
     transform: translateY(-2px);
   }
   .holiday-info h4 { margin-bottom: 4px; color: var(--text); font-size: 1rem; }
-  .holiday-info p { color: var(--gray); font-size: 0.85rem; }
+  .holiday-info .ru-name { color: var(--accent); font-size: .9rem; margin-bottom: 4px; }
+  .holiday-info .date { color: var(--text); font-size: 0.88rem; margin-bottom: 4px; font-weight: 600; }
+  .holiday-info .desc { color: var(--gray); font-size: 0.85rem; }
   .holiday-type {
     font-size: 0.75rem;
     padding: 4px 8px;
@@ -813,8 +802,8 @@
 
   <section id="places-map" class="fade-in" style="padding-left:0;padding-right:0;max-width:none;">
     <h2 class="section-title">Карта достопримечательностей</h2>
-    <p class="section-sub">Отмеченные места из маршрута на семь дней. Выберите категорию или день, чтобы оставить на карте нужные точки.</p>
-    <div class="map-toolbar" aria-label="Фильтры карты">
+    <p class="section-sub">Отмеченные места из маршрута на семь дней. Выберите день, чтобы оставить на карте нужные точки.</p>
+    <div class="map-toolbar" aria-label="Фильтр карты">
       <select id="mapDayFilter" aria-label="Фильтр по дню маршрута">
         <option value="all">Все дни маршрута</option>
         <option value="1">День 1 — Знакомство с городом</option>
@@ -825,15 +814,8 @@
         <option value="6">День 6 — Гастрономия и отдых</option>
         <option value="7">День 7 — Заволжье и природа</option>
       </select>
-      <button type="button" class="active" data-map-category="all">Все места</button>
-      <button type="button" data-map-category="museums">Музеи</button>
-      <button type="button" data-map-category="parks">Парки и природа</button>
-      <button type="button" data-map-category="monuments">Памятники и площади</button>
-      <button type="button" data-map-category="temples">Храмы</button>
-      <button type="button" data-map-category="embankments">Набережные</button>
     </div>
     <div id="placesMap" role="application" aria-label="Интерактивная карта достопримечательностей Чебоксар"></div>
-    <p class="map-note">Координаты отмечают ориентир или вход в объект; перед поездкой уточняйте режим работы. Карта работает без API-ключей: © <a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> · <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> · данные <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors (ODbL).</p>
   </section>
 </section>
 
@@ -1004,16 +986,16 @@
 <!-- НАРОДНЫЙ КАЛЕНДАРЬ ЧУВАШИИ -->
 <section id="events" class="fade-in">
   <h2 class="section-title">Народный календарь Чувашии</h2>
-  <p class="section-sub">Традиционные праздники и обряды чувашского народа. Даты большинства событий зависят от народного лунно-солнечного календаря и сезона, поэтому для них указываются периоды, а не фиксированные числа. Отсчёт до даты показывается только там, где её можно вычислить точно.</p>
+  <p class="section-sub">Традиционные праздники и обряды чувашского народа. Даты пересчитываются автоматически на каждый год: у событий, привязанных к церковному календарю (через Пасху), даты точные; у сезонных обрядов дата ориентировочная (помечена ≈), потому что в старину сроки определяла община по состоянию природы.</p>
 
-  <!-- Блок ближайшей определяемой даты -->
+  <!-- Блок ближайшей даты -->
   <div class="live-calendar-wrapper">
     <div class="next-holiday-title" id="next-holiday-name">Загрузка...</div>
     <div class="next-holiday-date" id="next-holiday-date"></div>
     <div class="countdown" id="next-holiday-countdown"></div>
   </div>
 
-  <!-- Список традиций по циклам года -->
+  <!-- Список традиций года -->
   <h3 style="margin-bottom: 20px; color: var(--text);">Все традиции года</h3>
   <div class="holiday-list" id="holiday-list"></div>
   <p class="calendar-sources">Составлено по этнографическим источникам: Национальная библиотека Чувашской Республики — <a href="https://nasledie.nbchr.ru/nasledie/obychai/obrjady/" target="_blank" rel="noopener">«Обряды, традиции и праздники»</a> и <a href="https://elbib.nbchr.ru/lib_files/0/kkst_0_0000871.pdf" target="_blank" rel="noopener">«Обрядовый календарь чуваш»</a>; <a href="https://chgign.ru/a/public/122-%D0%9E%D0%91%D0%A0%D0%AF%D0%94%D0%AB%20%D0%98%20%D0%9F%D0%A0%D0%90%D0%97%D0%94%D0%9D%D0%98%D0%9A%D0%98%20%D0%A7%D0%A3%D0%92%D0%90%D0%A8%D0%95%D0%99.html" target="_blank" rel="noopener">ЧГИГН «Обряды и праздники чувашей»</a>; портал органов власти Чувашии — <a href="https://cap.ru/chuvashia/nasledie/etnografiya/narodnie-prazdniki" target="_blank" rel="noopener">«Народные праздники»</a>.</p>
@@ -1134,43 +1116,27 @@
   // ===== ИНТЕРАКТИВНАЯ КАРТА: MAPLIBRE GL JS + OPENFREMAP =====
   const mapElement = document.getElementById('placesMap');
   if (mapElement && window.maplibregl) {
-    // Категории: музеи, парки, памятники и площади, храмы, набережные.
-    const CATEGORY_LABELS = {
-      museums: 'Музей',
-      parks: 'Парк / природа',
-      monuments: 'Памятник / площадь',
-      temples: 'Храм / обитель',
-      embankments: 'Набережная'
-    };
-    const CATEGORY_ICONS = {
-      museums: '🏛️',
-      parks: '🌳',
-      monuments: '🗿',
-      temples: '⛪',
-      embankments: '🌊'
-    };
-
     // Проверенные координаты и адреса (открытые справочные источники, OSM).
     const places = [
-      {name:'Монумент Матери-Покровительницы',lat:56.148692,lng:47.242115,category:'monuments',day:1,address:'Историческая набережная, 14',description:'Главный монумент Чувашии: медная фигура Матери высотой 16 метров на 25-метровом постаменте (общая высота от холма — 46 метров). Открыт 9 мая 2003 года на холме у Чебоксарского залива.'},
-      {name:'Набережная Чебоксарского залива',lat:56.147267,lng:47.245928,category:'embankments',day:1,address:'Исторический центр Чебоксар',description:'Прогулочная зона вдоль залива с мостами, кафе и площадками. Залив образовался в устье реки Чебоксарки при подпоре Чебоксарской ГЭС.'},
-      {name:'Бульвар купца Ефремова',lat:56.145791,lng:47.252119,category:'monuments',day:1,address:'Бульвар купца Ефремова',description:'Пешеходный бульвар исторического центра с купеческой застройкой XIX века и городскими скульптурами.'},
-      {name:'Свято-Троицкий мужской монастырь',lat:56.151736,lng:47.253182,category:'temples',day:1,address:'ул. Константина Иванова, 7',description:'Древнейшая обитель Чувашии: основана в 1566 году по указу Ивана Грозного на берегу Волги. В советские годы был закрыт, возвращён Церкви в 1992–1993 годах.'},
-      {name:'Успенская церковь',lat:56.149961,lng:47.252728,category:'temples',day:1,address:'ул. Константина Иванова, 1В',description:'Храм 1763 года постройки. Нижний ярус оказался на дне залива после строительства Чебоксарской ГЭС и был засыпан песком.'},
-      {name:'Музей В. И. Чапаева',lat:56.116230,lng:47.257271,category:'museums',day:2,address:'проспект Ленина, 46А',description:'Филиал Чувашского национального музея: экспозиция о Чапаеве и восстановленный дом семьи Чапаевых в бывшей деревне Будайка, где он родился.'},
-      {name:'Памятник В. И. Чапаеву',lat:56.114964,lng:47.258665,category:'monuments',day:2,address:'сквер им. В. И. Чапаева',description:'Монументальная скульптура Чапаева на вздыбленном коне, установлена 23 июня 1960 года. Скульптура отливалась в 1938–1939 годах для ВДНХ.'},
-      {name:'Чувашский национальный музей',lat:56.145402,lng:47.252677,category:'museums',day:2,address:'Красная площадь, 5/2',description:'Главный музей республики. Экспозиции знакомят с археологией, природой, историей и культурой Чувашского края.'},
-      {name:'Введенский собор',lat:56.151775,lng:47.246703,category:'temples',day:2,address:'ул. Константина Иванова, 21',description:'Исторический кафедральный собор XVII века — один из старейших сохранившихся каменных памятников Чувашии.'},
-      {name:'Красная площадь',lat:56.145734,lng:47.253292,category:'monuments',day:2,address:'Красная площадь',description:'Центральное общественное пространство исторической части Чебоксар, рядом с музеями и памятниками города.'},
-      {name:'Московская набережная',lat:56.154949,lng:47.223881,category:'embankments',day:3,address:'Московская набережная',description:'Протяжённая прогулочная зона вдоль Волги. Подходит для прогулок, велосипедных поездок и панорамных видов на реку.'},
-      {name:'Лакреевский лес',lat:56.1168377,lng:47.2530138,category:'parks',day:4,address:'ул. Лесная, 1',description:'Городской парк культуры и отдыха с лесными дорожками, зонами прогулок и аттракционами.'},
-      {name:'Парк «Амазония»',lat:56.1476411,lng:47.207798,category:'parks',day:4,address:'проспект Максима Горького, 2',description:'Большой городской парк и этнокомплекс с зонами отдыха и развлечений.'},
-      {name:'Мемориальный парк Победы',lat:56.146483,lng:47.269117,category:'parks',day:4,address:'ул. Зои Яковлевой, 54В',description:'Мемориальная территория на возвышенности с памятниками, военной техникой под открытым небом и панорамными видами на Волгу.'},
-      {name:'Чувашский художественный музей',lat:56.1411978,lng:47.2608983,category:'museums',day:5,address:'ул. Калинина, 60',description:'Художественный музей с коллекциями русского, зарубежного и чувашского искусства.'},
-      {name:'Музей чувашской вышивки',lat:56.141334,lng:47.249869,category:'museums',day:5,address:'ул. Карла Маркса, 32',description:'Музей, посвящённый традиционной чувашской вышивке, орнаментам, народному костюму и ремеслу.'},
-      {name:'Музей Михаила Сеспеля',lat:56.15128,lng:47.250775,category:'museums',day:5,address:'ул. Михаила Сеспеля, 8',description:'Мемориальный музей в доме, связанном с жизнью и работой чувашского поэта Михаила Сеспеля.'},
-      {name:'Музей пива',lat:56.144968,lng:47.252693,category:'museums',day:6,address:'бульвар купца Ефремова, 6А',description:'Музей, посвящённый истории пивоварения и его традициям в Чувашии.'},
-      {name:'Этнопарк «Сувар»',lat:56.188934,lng:47.219790,category:'parks',day:7,address:'Заволжье, посёлок Сосновка',description:'Этнокультурный парк деревянной обрядовой скульптуры на левом берегу Волги, напротив Чебоксар.'}
+      {name:'Монумент Матери-Покровительницы',lat:56.148692,lng:47.242115,day:1,address:'Историческая набережная, 14',description:'Главный монумент Чувашии: медная фигура Матери высотой 16 метров на 25-метровом постаменте (общая высота от холма — 46 метров). Открыт 9 мая 2003 года на холме у Чебоксарского залива.'},
+      {name:'Набережная Чебоксарского залива',lat:56.147267,lng:47.245928,day:1,address:'Исторический центр Чебоксар',description:'Прогулочная зона вдоль залива с мостами, кафе и площадками. Залив образовался в устье реки Чебоксарки при подпоре Чебоксарской ГЭС.'},
+      {name:'Бульвар купца Ефремова',lat:56.145791,lng:47.252119,day:1,address:'Бульвар купца Ефремова',description:'Пешеходный бульвар исторического центра с купеческой застройкой XIX века и городскими скульптурами.'},
+      {name:'Свято-Троицкий мужской монастырь',lat:56.151736,lng:47.253182,day:1,address:'ул. Константина Иванова, 7',description:'Древнейшая обитель Чувашии: основана в 1566 году по указу Ивана Грозного на берегу Волги. В советские годы был закрыт, возвращён Церкви в 1992–1993 годах.'},
+      {name:'Успенская церковь',lat:56.149961,lng:47.252728,day:1,address:'ул. Константина Иванова, 1В',description:'Храм 1763 года постройки. Нижний ярус оказался на дне залива после строительства Чебоксарской ГЭС и был засыпан песком.'},
+      {name:'Музей В. И. Чапаева',lat:56.116230,lng:47.257271,day:2,address:'проспект Ленина, 46А',description:'Филиал Чувашского национального музея: экспозиция о Чапаеве и восстановленный дом семьи Чапаевых в бывшей деревне Будайка, где он родился.'},
+      {name:'Памятник В. И. Чапаеву',lat:56.114964,lng:47.258665,day:2,address:'сквер им. В. И. Чапаева',description:'Монументальная скульптура Чапаева на вздыбленном коне, установлена 23 июня 1960 года. Скульптура отливалась в 1938–1939 годах для ВДНХ.'},
+      {name:'Чувашский национальный музей',lat:56.145402,lng:47.252677,day:2,address:'Красная площадь, 5/2',description:'Главный музей республики. Экспозиции знакомят с археологией, природой, историей и культурой Чувашского края.'},
+      {name:'Введенский собор',lat:56.151775,lng:47.246703,day:2,address:'ул. Константина Иванова, 21',description:'Исторический кафедральный собор XVII века — один из старейших сохранившихся каменных памятников Чувашии.'},
+      {name:'Красная площадь',lat:56.145734,lng:47.253292,day:2,address:'Красная площадь',description:'Центральное общественное пространство исторической части Чебоксар, рядом с музеями и памятниками города.'},
+      {name:'Московская набережная',lat:56.154949,lng:47.223881,day:3,address:'Московская набережная',description:'Протяжённая прогулочная зона вдоль Волги. Подходит для прогулок, велосипедных поездок и панорамных видов на реку.'},
+      {name:'Лакреевский лес',lat:56.1168377,lng:47.2530138,day:4,address:'ул. Лесная, 1',description:'Городской парк культуры и отдыха с лесными дорожками, зонами прогулок и аттракционами.'},
+      {name:'Парк «Амазония»',lat:56.1476411,lng:47.207798,day:4,address:'проспект Максима Горького, 2',description:'Большой городской парк и этнокомплекс с зонами отдыха и развлечений.'},
+      {name:'Мемориальный парк Победы',lat:56.146483,lng:47.269117,day:4,address:'ул. Зои Яковлевой, 54В',description:'Мемориальная территория на возвышенности с памятниками, военной техникой под открытым небом и панорамными видами на Волгу.'},
+      {name:'Чувашский художественный музей',lat:56.1411978,lng:47.2608983,day:5,address:'ул. Калинина, 60',description:'Художественный музей с коллекциями русского, зарубежного и чувашского искусства.'},
+      {name:'Музей чувашской вышивки',lat:56.141334,lng:47.249869,day:5,address:'ул. Карла Маркса, 32',description:'Музей, посвящённый традиционной чувашской вышивке, орнаментам, народному костюму и ремеслу.'},
+      {name:'Музей Михаила Сеспеля',lat:56.15128,lng:47.250775,day:5,address:'ул. Михаила Сеспеля, 8',description:'Мемориальный музей в доме, связанном с жизнью и работой чувашского поэта Михаила Сеспеля.'},
+      {name:'Музей пива',lat:56.144968,lng:47.252693,day:6,address:'бульвар купца Ефремова, 6А',description:'Музей, посвящённый истории пивоварения и его традициям в Чувашии.'},
+      {name:'Этнопарк «Сувар»',lat:56.188934,lng:47.219790,day:7,address:'Заволжье, посёлок Сосновка',description:'Этнокультурный парк деревянной обрядовой скульптуры на левом берегу Волги, напротив Чебоксар.'}
     ];
 
     const map = new maplibregl.Map({
@@ -1181,7 +1147,7 @@
       attributionControl: false
     });
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
-    // Обязательная атрибуция по условиям OpenFreeMap.
+    // Обязательная атрибуция по условиям OpenFreeMap — показывается на самой карте.
     map.addControl(new maplibregl.AttributionControl({
       compact: true,
       customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">© OpenFreeMap</a> · <a href="https://openmaptiles.org/" target="_blank" rel="noopener">© OpenMapTiles</a> · <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a>'
@@ -1196,25 +1162,19 @@
     function renderMapMarkers() {
       clearMarkers();
       const day = document.getElementById('mapDayFilter').value;
-      const categoryButton = document.querySelector('[data-map-category].active');
-      const category = categoryButton ? categoryButton.dataset.mapCategory : 'all';
 
-      const visible = places.filter(place =>
-        (day === 'all' || String(place.day) === day) &&
-        (category === 'all' || place.category === category)
-      );
+      const visible = places.filter(place => day === 'all' || String(place.day) === day);
 
       const bounds = new maplibregl.LngLatBounds();
       visible.forEach(place => {
         const el = document.createElement('div');
-        el.className = 'map-marker cat-' + place.category;
-        el.textContent = CATEGORY_ICONS[place.category];
+        el.className = 'map-marker';
+        el.textContent = '📍';
         el.title = place.name;
-        const categoryName = CATEGORY_LABELS[place.category];
         const popup = new maplibregl.Popup({ offset: 36 }).setHTML(
           '<div class="map-popup-title">' + place.name + '</div>' +
           '<div>' + place.description + '</div>' +
-          '<div class="map-popup-meta">' + place.address + '<br>' + categoryName + ' · День ' + place.day + '</div>' +
+          '<div class="map-popup-meta">' + place.address + '<br>День ' + place.day + '</div>' +
           '<a class="map-popup-link" href="https://www.openstreetmap.org/?mlat=' + place.lat + '&mlon=' + place.lng + '#map=17/' + place.lat + '/' + place.lng + '" target="_blank" rel="noopener">Открыть точку на OpenStreetMap ↗</a>'
         );
         const marker = new maplibregl.Marker({ element: el })
@@ -1235,11 +1195,6 @@
     }
 
     document.getElementById('mapDayFilter').addEventListener('change', renderMapMarkers);
-    document.querySelectorAll('[data-map-category]').forEach(button => button.addEventListener('click', () => {
-      document.querySelectorAll('[data-map-category]').forEach(item => item.classList.remove('active'));
-      button.classList.add('active');
-      renderMapMarkers();
-    }));
 
     map.on('load', renderMapMarkers);
     renderMapMarkers(); // на случай, если стиль уже готов до подписки
@@ -1292,6 +1247,9 @@
   getWeather();
 
   // ===== АУДИОГИД: ЕДИНАЯ ПАНЕЛЬ ПО ДНЯМ МАРШРУТА =====
+  // Текст проговаривается по предложениям: пауза запоминает позицию,
+  // «Продолжить» продолжает с места остановки. Такой подход стабилен
+  // во всех браузерах, включая те, где встроенный resume() глючит.
   const audioDaySelect = document.getElementById('audioDaySelect');
   const audioPlayBtn = document.getElementById('audioPlayBtn');
   const audioPauseBtn = document.getElementById('audioPauseBtn');
@@ -1301,16 +1259,15 @@
   const audioStateText = document.getElementById('audioStateText');
 
   const speechSupported = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
-  let currentUtterance = null;
+  let audioSession = null;
   let isPlaying = false;
   let isPaused = false;
-  let stopRequested = false;
 
   function pickRussianVoice() {
     const voices = window.speechSynthesis.getVoices();
     const russianVoices = voices.filter(voice => voice.lang && voice.lang.toLowerCase().startsWith('ru'));
     if (!russianVoices.length) return null;
-    // Сначала ищем известные качественные русские голоса, затем локальные.
+    // Сначала известные качественные русские голоса, затем локальные.
     return russianVoices.find(voice => /google/i.test(voice.name)) ||
            russianVoices.find(voice => /milena|elena|alyona|alena|yuri|aleksander|alexander|katya|tatyana/i.test(voice.name)) ||
            russianVoices.find(voice => voice.localService) ||
@@ -1325,20 +1282,8 @@
     const dayChosen = audioDaySelect.value !== '';
     audioPlayBtn.disabled = !speechSupported || !dayChosen || isPlaying;
     audioPauseBtn.disabled = !speechSupported || !isPlaying || isPaused;
-    audioResumeBtn.disabled = !speechSupported || !isPlaying || !isPaused;
-    audioStopBtn.disabled = !speechSupported || !isPlaying;
-  }
-
-  function stopSpeech() {
-    if (!speechSupported) return;
-    if (isPlaying || isPaused) {
-      stopRequested = true;
-      window.speechSynthesis.cancel();
-    }
-    isPlaying = false;
-    isPaused = false;
-    currentUtterance = null;
-    setAudioButtons();
+    audioResumeBtn.disabled = !speechSupported || !isPaused;
+    audioStopBtn.disabled = !speechSupported || (!isPlaying && !isPaused);
   }
 
   function getDayCard(dayNumber) {
@@ -1350,17 +1295,83 @@
   function buildDaySpeech(dayNumber) {
     const card = getDayCard(dayNumber);
     if (!card) return null;
-    const title = card.querySelector('h3').textContent.replace(/^📅\s*/, '').trim();
+    const titleEl = card.querySelector('h3');
+    if (!titleEl) return null;
+    const title = titleEl.textContent.replace(/^📅\s*/, '').trim();
     const items = Array.from(card.querySelectorAll('li')).map(li => li.textContent.trim());
     if (!items.length) return null;
     return {
       title: title,
-      text: title + '. ' + items.join('. ') + '.'
+      // Каждая строка маршрута — отдельное предложение: у паузы и
+      // продолжения появляются естественные точки возврата.
+      sentences: [title + '.'].concat(items.map(item => item + '.'))
     };
   }
 
+  // Проговаривает текущее предложение активной сессии (с запомненной позиции).
+  function speakChunk(session) {
+    const synth = window.speechSynthesis;
+    if (!session || audioSession !== session) return;
+
+    if (session.index >= session.sentences.length) {
+      audioSession = null;
+      isPlaying = false;
+      isPaused = false;
+      setAudioButtons();
+      setAudioState('Озвучка завершена');
+      return;
+    }
+
+    const voice = pickRussianVoice();
+    if (!voice) {
+      audioSession = null;
+      isPlaying = false;
+      isPaused = false;
+      setAudioButtons();
+      setAudioState('Русский голос недоступен в этом браузере — проверьте системные речевые голоса');
+      return;
+    }
+
+    const text = session.sentences[session.index].slice(session.charIndex);
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ru-RU';
+    utterance.voice = voice;
+    utterance.rate = 0.95; // комфортный темп речи
+    utterance.pitch = 1;
+
+    // Запоминаем позицию внутри предложения (если браузер поддерживает).
+    utterance.onboundary = event => {
+      if (typeof event.charIndex === 'number') {
+        session.charIndex = event.charIndex;
+      }
+    };
+
+    utterance.onend = () => {
+      // Если сессия заменена, остановлена или на паузе — не продолжаем.
+      if (audioSession !== session || session.paused) return;
+      session.index += 1;
+      session.charIndex = 0;
+      speakChunk(session);
+    };
+
+    utterance.onerror = () => {
+      if (audioSession !== session || session.paused) return;
+      audioSession = null;
+      isPlaying = false;
+      isPaused = false;
+      setAudioButtons();
+      setAudioState('Ошибка воспроизведения речи');
+    };
+
+    synth.speak(utterance);
+  }
+
   audioDaySelect.addEventListener('change', () => {
-    stopSpeech(); // при выборе другого дня предыдущая озвучка прекращается
+    // При выборе другого дня предыдущая озвучка прекращается полностью.
+    if (speechSupported) window.speechSynthesis.cancel();
+    audioSession = null;
+    isPlaying = false;
+    isPaused = false;
     const day = audioDaySelect.value;
     if (day) {
       const speech = buildDaySpeech(Number(day));
@@ -1384,73 +1395,52 @@
       setAudioState('Не удалось прочитать текст карточки этого дня');
       return;
     }
-    const russianVoice = pickRussianVoice();
-    if (!russianVoice) {
+    if (!pickRussianVoice()) {
       setAudioState('Русский голос недоступен в этом браузере — проверьте системные речевые голоса');
       return;
     }
-    stopSpeech();
-    stopRequested = false;
-    const utterance = new SpeechSynthesisUtterance(speech.text);
-    utterance.lang = 'ru-RU';
-    utterance.voice = russianVoice;
-    utterance.rate = 0.95; // комфортный темп речи
-    utterance.pitch = 1;
-    utterance.onstart = () => {
-      isPlaying = true;
-      isPaused = false;
-      setAudioButtons();
-      setAudioState('Озвучивается: ' + speech.title);
-    };
-    utterance.onend = () => {
-      if (stopRequested) return;
-      isPlaying = false;
-      isPaused = false;
-      setAudioButtons();
-      setAudioState('Озвучка завершена');
-    };
-    utterance.onerror = () => {
-      if (stopRequested) return;
-      isPlaying = false;
-      isPaused = false;
-      setAudioButtons();
-      setAudioState('Ошибка воспроизведения речи');
-    };
-    currentUtterance = utterance;
+    window.speechSynthesis.cancel();
+    audioSession = { title: speech.title, sentences: speech.sentences, index: 0, charIndex: 0, paused: false };
     isPlaying = true;
+    isPaused = false;
     setAudioButtons();
-    window.speechSynthesis.speak(utterance);
+    setAudioState('Озвучивается: ' + speech.title);
+    // Небольшая задержка после cancel нужна для стабильности в Chrome.
+    window.setTimeout(() => {
+      if (audioSession && !audioSession.paused) speakChunk(audioSession);
+    }, 60);
   });
 
   audioPauseBtn.addEventListener('click', () => {
-    if (!speechSupported || !isPlaying || isPaused) return;
-    window.speechSynthesis.pause();
+    if (!speechSupported || !isPlaying || isPaused || !audioSession) return;
+    audioSession.paused = true;
     isPaused = true;
+    // Останавливаем текущее предложение: позиция уже сохранена в сессии,
+    // поэтому «Продолжить» вернётся к месту остановки.
+    window.speechSynthesis.cancel();
     setAudioButtons();
     setAudioState('Пауза');
-    // На части мобильных браузеров (например, iOS Safari) пауза не поддерживается.
-    window.setTimeout(() => {
-      if (isPaused && !window.speechSynthesis.paused) {
-        isPaused = false;
-        setAudioButtons();
-        setAudioState('Браузер не поддерживает паузу — воспроизведение продолжается');
-      }
-    }, 150);
   });
 
   audioResumeBtn.addEventListener('click', () => {
-    if (!speechSupported || !isPlaying || !isPaused) return;
-    window.speechSynthesis.resume();
+    if (!speechSupported || !isPaused || !audioSession) return;
     isPaused = false;
+    audioSession.paused = false;
     setAudioButtons();
-    const day = audioDaySelect.value;
-    const speech = day ? buildDaySpeech(Number(day)) : null;
-    setAudioState('Озвучивается: ' + (speech ? speech.title : ''));
+    setAudioState('Озвучивается: ' + audioSession.title);
+    // Небольшая задержка после cancel нужна для стабильности в Chrome.
+    window.setTimeout(() => {
+      if (audioSession && !audioSession.paused) speakChunk(audioSession);
+    }, 60);
   });
 
   audioStopBtn.addEventListener('click', () => {
-    if (!speechSupported || !isPlaying) return;
-    stopSpeech();
+    if (!speechSupported) return;
+    window.speechSynthesis.cancel();
+    audioSession = null;
+    isPlaying = false;
+    isPaused = false;
+    setAudioButtons();
     setAudioState('Воспроизведение остановлено');
   });
 
@@ -1568,10 +1558,9 @@
   // ===== НАРОДНЫЙ КАЛЕНДАРЬ ЧУВАШИИ =====
   // Источники: Национальная библиотека Чувашской Республики
   // (nasledie.nbchr.ru, elbib.nbchr.ru), ЧГИГН, портал органов власти Чувашии.
-  // Точные даты показываем только там, где они достоверно вычисляются
-  // (события, привязанные к церковному календарю через Пасху).
-  // Сезонные и общинные обряды обозначаем периодами, а не числами.
-
+  // Даты пересчитываются каждый год: события, привязанные к церковному
+  // календарю, вычисляются от Пасхи точно; сезонным обрядам даётся
+  // ориентировочная дата внутри традиционного периода (помечена ≈).
   function getEasterDate(year) {
     const a = year % 4;
     const b = year % 7;
@@ -1585,149 +1574,208 @@
     return new Date(utc.getUTCFullYear(), utc.getUTCMonth(), utc.getUTCDate());
   }
 
-  function shiftDate(date, days) {
-    const copy = new Date(date);
-    copy.setDate(copy.getDate() + days);
-    return copy;
+  // Сдвиг уже вычисленной даты Пасхи на заданное число дней.
+  function easterShifted(easter, days) {
+    const date = new Date(easter);
+    date.setDate(date.getDate() + days);
+    return date;
   }
 
   const folkTraditions = [
     {
       name: 'Сурхури',
-      kind: 'Зимний обрядовый цикл',
+      ru: 'Зимние гадания и колядование',
+      kind: 'Зимний цикл',
+      approx: true,
       period: 'конец декабря — начало января',
+      fixedDate: (year) => new Date(year, 11, 22), // ≈ зимнее солнцестояние
       description: 'Старинный зимний праздник: отмечался в период зимнего солнцестояния, когда день начинал прибывать, и длился около недели. Гадания о судьбе и урожае, обходы дворов с обрядовыми песнями и угощения.'
     },
     {
       name: 'Нартукан',
+      ru: 'Зимние святки',
       kind: 'Зимний праздник',
+      approx: true,
       period: 'период между Рождеством и Крещением (7–19 января)',
+      fixedDate: (year) => new Date(year, 0, 7), // начало святочной недели
       description: 'Праздник зимнего солнцестояния и новогоднего цикла. Ряженые обходили дворы с песнями, дети и молодёжь устраивали игрища и гадания; сроки в разных деревнях определялись общиной.'
     },
     {
       name: 'Кӑшарни',
-      kind: 'Зимний обрядовый цикл',
-      period: 'зимняя праздничная неделя; в разных местностях сроки совпадали с Нартуканом или сдвигались',
-      description: '«Зимняя неделя» — праздник новогоднего цикла. У низовых чувашей проводился в неделю от Рождества до Крещения; по древней традиции — в период зимнего солнцестояния. Ряженые обходили дворы, гадали о будущем.'
+      ru: 'Зимняя праздничная неделя',
+      kind: 'Зимний цикл',
+      approx: true,
+      period: 'святочная неделя; в разных местностях сроки совпадали с Нартуканом или сдвигались',
+      fixedDate: (year) => new Date(year, 0, 19), // завершение святочной недели
+      description: '«Зимняя неделя» — праздник новогоднего цикла. У низовых чувашей проводилась в неделю от Рождества до Крещения; по древней традиции — в период зимнего солнцестояния. Ряженые обходили дворы, гадали о будущем.'
     },
     {
       name: 'Ҫӑварни',
+      ru: 'Масленица (проводы зимы)',
       kind: 'Праздник проводов зимы',
-      dateFn: easter => shiftDate(easter, -55),
+      approx: false,
       period: 'неделя перед Великим постом',
+      easterOffset: -56,
       description: 'Проводы зимы. В старину приурочивался к весеннему равноденствию, начинался в четверг и у большинства чувашей длился две недели; позже слился с масленичной неделей перед Великим постом. Катание на санях и качелях, обрядовая еда.'
     },
     {
       name: 'Сӗрен',
+      ru: 'Обряд изгнания злых духов (весна)',
       kind: 'Весенний обряд',
-      period: 'весна, до Мӑнкун',
+      approx: true,
+      period: 'весна, до Мӑнкуна',
+      easterOffset: -14,
       description: 'Весенний праздник низовых чувашей, посвящённый изгнанию из селения злых духов; само название означает «изгнание». Молодёжь с розгами обходила дворы, проводились обрядовые угощения; сроки определяла община.'
     },
     {
       name: 'Вирӗм',
+      ru: 'Изгнание злых духов (предпасхальный обряд)',
       kind: 'Весенний обряд',
-      dateFn: easter => shiftDate(easter, -1),
-      period: 'накануне Мӑнкун',
-      description: 'Весенний праздник верховых чувашей, посвящённый изгнанию злых духов старого года; проводился накануне Великого дня (Мӑнкун). Молодёжь обходила сёла с розгами и собирала угощения.'
+      approx: false,
+      period: 'накануне Мӑнкуна',
+      easterOffset: -1,
+      description: 'Весенний праздник верховых чувашей, посвящённый изгнанию злых духов старого года; проводился накануне Великого дня (Мӑнкуна). Молодёжь обходила сёла с розгами и собирала угощения.'
     },
     {
       name: 'Мӑнкун',
+      ru: 'Великий день (Пасха)',
       kind: 'Главный весенний праздник',
-      dateFn: easter => easter,
+      approx: false,
       period: 'весна',
+      easterOffset: 0,
       description: '«Великий день» — праздник обновления природы и жизни, совпадающий с Пасхой. Моления, обрядовая каша, крашеные яйца, обходы дворов и молитвы о потомстве и урожае.'
     },
     {
       name: 'Калӑм',
+      ru: 'Поминовение предков (Радоница)',
       kind: 'Поминальный обряд',
-      dateFn: easter => shiftDate(easter, 9),
+      approx: false,
       period: 'весна',
+      easterOffset: 9,
       description: 'Весенний поминальный обряд: почитание умерших предков, моления и угощения на месте захоронений. По времени совпадал с Радоницей.'
     },
     {
       name: 'Ака пӑтти',
+      ru: 'Посевная каша',
       kind: 'Семейный обряд',
+      approx: true,
       period: 'после завершения весеннего сева (май — начало июня)',
-      description: '«Посевная каша»: обряд по случаю завершения ярового сева. Вся семья выходила в поле с кашей, хлебцами, яйцами и пивом и молилась о хорошем урожае.'
+      easterOffset: 40,
+      description: 'Обряд по случаю завершения ярового сева. Вся семья выходила в поле с кашей, хлебцами, яйцами и пивом и молилась о хорошем урожае.'
     },
     {
       name: 'Акатуй',
+      ru: 'Праздник плуга («свадьба плуга и земли»)',
       kind: 'Праздник',
+      approx: true,
       period: 'после завершения весенне-полевых работ (конец весны — лето)',
-      description: 'Праздник окончания посевных работ — «свадьба плуга и земли». В старинном быту цикл начинался перед выходом в поле и завершался после сева яровых; борьба керӳ, скачки, песни и угощения. Современный праздник обычно проводится в июне.'
-    },
-    {
-      name: 'Ниме',
-      kind: 'Обряд взаимопомощи',
-      period: 'лето — осень, по необходимости',
-      description: 'Обряд коллективной взаимопомощи: односельчане бесплатно помогали в тяжёлых работах — строительстве дома, вывозе навоза, уборке урожая. Завершался общим угощением с пивом.'
+      easterOffset: 45,
+      description: 'Праздник окончания посевных работ. В старинном быту цикл начинался перед выходом в поле и завершался после сева яровых; борьба керӳ, скачки, песни и угощения. Современный праздник обычно проводится в июне.'
     },
     {
       name: 'Уяв',
-      kind: 'Период хороводов и игрищ',
-      period: 'раннее лето, после сева; длился 3, 5 или 7 недель (нечётное число)',
+      ru: 'Время хороводов и игрищ',
+      kind: 'Летний период',
+      approx: true,
+      period: 'раннее лето, после сева; длилось 3, 5 или 7 недель (нечётное число)',
+      easterOffset: 56,
       description: 'Весенне-летние хороводы и игрища молодёжи, наступавшие после завершения посевных работ. Сроки и запретные дни устанавливали старейшие члены сельского общества.'
     },
     {
       name: 'Ҫимӗк',
+      ru: 'Семик (праздник предков)',
       kind: 'Праздник',
-      dateFn: easter => shiftDate(easter, 46),
+      approx: false,
       period: 'весна — начало лета',
-      description: 'Праздник почитания предков и обновления жизни; совпадал по времени с Семиком (четверг перед Троицей) и Троицей. В некоторых местностях с Ҫимӗк начинался период Уява.'
+      easterOffset: 49,
+      description: 'Праздник почитания предков и обновления жизни; совпадал по времени с Семиком и Троицей. В некоторых местностях с Ҫимӗка начинался период Уява.'
     },
     {
       name: 'Ҫинҫе',
-      kind: 'Летний обрядовый цикл',
+      ru: 'Летний праздник (дни солнцестояния)',
+      kind: 'Летний цикл',
+      approx: true,
       period: 'летнее солнцестояние (конец июня — начало июля); длился 7–12 дней',
+      fixedDate: (year) => new Date(year, 5, 24), // ≈ летнее солнцестояние
       description: 'Дохристианский обрядовый цикл, приуроченный к летнему солнцестоянию. Сроки зависели от созревания ржи и погоды. Время отдыха перед жатвой: моления земле, сбор трав, застолья.'
     },
     {
       name: 'Вырма',
+      ru: 'Жатва',
       kind: 'Трудовой период',
+      approx: true,
       period: 'август — сентябрь',
-      description: 'Жатва, уборочная страда. В старину хлеба жали серпами вручную — изнурительный и очень ответственный период годичного трудового цикла крестьянина.'
+      fixedDate: (year) => new Date(year, 7, 15), // ≈ начало жатвы
+      description: 'Уборочная страда. В старину хлеба жали серпами вручную — изнурительный и очень ответственный период годичного трудового цикла крестьянина.'
     },
     {
       name: 'Авӑн',
+      ru: 'Осенний праздник урожая',
       kind: 'Осенний праздник',
+      approx: true,
       period: 'конец августа — сентябрь',
-      description: 'Праздник завершения уборки урожая — вторая ступень осеннего цикла (после Вырма, перед Чӳклеме). С обрядовыми угощениями из нового зерна благодарили за урожай.'
+      fixedDate: (year) => new Date(year, 8, 1), // ≈ завершение уборки
+      description: 'Праздник завершения уборки урожая — вторая ступень осеннего цикла (после Вырмы, перед Чӳклеме). С обрядовыми угощениями из нового зерна благодарили за урожай.'
     },
     {
       name: 'Чӳклеме',
+      ru: 'Освящение нового урожая',
       kind: 'Осенний обряд',
+      approx: true,
       period: 'сентябрь — октябрь',
-      description: 'Обряд освящения нового урожая — завершающий праздник осеннего сельскохозяйственного цикла. До него запрещалось есть хлеб нового урожая; пекли хлеб из нового зерна, варили пиво и молились всем селом.'
+      fixedDate: (year) => new Date(year, 9, 1), // ≈ окончание осенних работ
+      description: 'Завершающий праздник осеннего сельскохозяйственного цикла. До него запрещалось есть хлеб нового урожая; пекли хлеб из нового зерна, варили пиво и молились всем селом.'
     },
     {
       name: 'Чӳк',
+      ru: 'Дароприношение',
       kind: 'Обряд дароприношения',
       period: 'проводился в разные сезоны года',
       description: 'Обряд жертвоприношения: семейные и общинные моления духам и предкам с обрядовой кашей, пивом и жертвенной едой. Крупные осенние чӳк совершались после сбора урожая; к одной фиксированной дате не привязан.'
     },
     {
+      name: 'Ниме',
+      ru: 'Взаимопомощь',
+      kind: 'Обряд взаимопомощи',
+      period: 'лето — осень, по необходимости',
+      description: 'Обряд коллективной взаимопомощи: односельчане бесплатно помогали в тяжёлых работах — строительстве дома, вывозе навоза, уборке урожая. Завершался общим угощением с пивом.'
+    },
+    {
       name: 'Киремет карти',
+      ru: 'Священная роща',
       kind: 'Священное место',
       period: 'вне дат',
-      description: 'Священная роща — обрядовое место общинных молений и жертвоприношений верховным богам и духу Киремет. Не праздник с датой, а постоянное святилище чувашской традиционной веры.'
+      description: 'Обрядовое место общинных молений и жертвоприношений верховным богам и духу Киремет. Не праздник с датой, а постоянное святилище чувашской традиционной веры.'
     }
   ];
 
   const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+
+  function getTraditionDate(tradition, year) {
+    const easter = getEasterDate(year);
+    if (typeof tradition.easterOffset === 'number') {
+      return easterShifted(easter, tradition.easterOffset);
+    }
+    if (typeof tradition.fixedDate === 'function') {
+      return tradition.fixedDate(year);
+    }
+    return null; // у Чӳк, Ниме и Киремет карти даты нет
+  }
 
   function renderFolkCalendar() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const year = today.getFullYear();
 
-    // Ближайшее событие ищем только среди традиций с вычисляемой датой.
-    const datedEvents = folkTraditions
-      .filter(tradition => tradition.dateFn)
-      .map(tradition => Object.assign({}, tradition, { date: tradition.dateFn(getEasterDate(year)) }))
-      .concat(folkTraditions
-        .filter(tradition => tradition.dateFn)
-        .map(tradition => Object.assign({}, tradition, { date: tradition.dateFn(getEasterDate(year + 1)) })))
-      .sort((a, b) => a.date - b.date);
+    // Ближайшее событие ищем среди традиций с датой текущего и следующего года.
+    let datedEvents = [];
+    [year, year + 1].forEach(eventYear => {
+      folkTraditions.forEach(tradition => {
+        const date = getTraditionDate(tradition, eventYear);
+        if (date) datedEvents.push({ tradition: tradition, date: date });
+      });
+    });
+    datedEvents.sort((a, b) => a.date - b.date);
     const nextEvent = datedEvents.find(event => event.date >= today);
 
     const nameEl = document.getElementById('next-holiday-name');
@@ -1735,11 +1783,12 @@
     const countdownEl = document.getElementById('next-holiday-countdown');
 
     if (nextEvent) {
-      nameEl.textContent = nextEvent.name;
-      dateEl.textContent = 'Ближайшая традиция с вычисляемой датой: ' + nextEvent.date.toLocaleDateString('ru-RU', dateOptions);
+      nameEl.textContent = nextEvent.tradition.name + ' (' + nextEvent.tradition.ru + ')';
+      const prefix = nextEvent.tradition.approx ? 'Ближайшая дата (≈): ' : 'Ближайшая дата: ';
+      dateEl.textContent = prefix + nextEvent.date.toLocaleDateString('ru-RU', dateOptions);
       const diffDays = Math.round((nextEvent.date - today) / 86400000);
       if (diffDays === 0) {
-        countdownEl.textContent = '🎉 Сегодня — ' + nextEvent.name + '!';
+        countdownEl.textContent = '🎉 Сегодня — ' + nextEvent.tradition.name + '!';
         countdownEl.style.background = '#e7f1e9';
         countdownEl.style.color = '#1e665c';
       } else {
@@ -1762,15 +1811,28 @@
 
       const info = document.createElement('div');
       info.className = 'holiday-info';
+
       const title = document.createElement('h4');
       title.textContent = tradition.name;
+
+      const ruName = document.createElement('p');
+      ruName.className = 'ru-name';
+      ruName.textContent = tradition.ru;
+
       const when = document.createElement('p');
-      when.textContent = tradition.dateFn
-        ? tradition.dateFn(getEasterDate(year)).toLocaleDateString('ru-RU', dateOptions) + ' · ' + tradition.period
-        : tradition.period;
+      when.className = 'date';
+      const date = getTraditionDate(tradition, year);
+      if (date) {
+        when.textContent = (tradition.approx ? '≈ ' : '') + date.toLocaleDateString('ru-RU', dateOptions) + ' · ' + tradition.period;
+      } else {
+        when.textContent = tradition.period;
+      }
+
       const desc = document.createElement('p');
+      desc.className = 'desc';
       desc.textContent = tradition.description;
-      info.append(title, when, desc);
+
+      info.append(title, ruName, when, desc);
 
       const kind = document.createElement('div');
       kind.className = 'holiday-type';
@@ -1781,6 +1843,7 @@
   }
 
   renderFolkCalendar();
+  // Пересчёт дат после смены суток — календарь всегда актуален.
   function scheduleCalendarRefresh() {
     const now = new Date();
     const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
