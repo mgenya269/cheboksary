@@ -772,20 +772,39 @@
   }
   getWeather();
 
-  // ===== АУДИОГИД =====
-  function speakRoute() {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const text = "День первый: Бульвар купца Ефремова, Введенский собор, Чебоксарский залив, Монумент Матери-Покровительницы и световой мост. День второй: Московская набережная, Музей истории трактора, Музей пива и Чувашский национальный музей.";
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'ru-RU';
-      utterance.rate = 0.9;
-      window.speechSynthesis.speak(utterance);
-    } else {
-      alert('Ваш браузер не поддерживает озвучку.');
-    }
+  // ===== АУДИОГИД (ОБНОВЛЕННЫЙ) =====
+function speakRoute() {
+  if (!('speechSynthesis' in window)) {
+    alert('Ваш браузер не поддерживает озвучку. Попробуйте Chrome или Safari.');
+    return;
   }
 
+  // Останавливаем предыдущую озвучку, если она была
+  window.speechSynthesis.cancel();
+
+  const text = "День первый: Бульвар купца Ефремова, Введенский собор, Чебоксарский залив, Монумент Матери-Покровительницы и световой мост. День второй: Московская набережная, Музей истории трактора, Музей пива и Чувашский национальный музей.";
+  
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'ru-RU';
+  utterance.rate = 0.9; // Чуть медленнее для лучшего восприятия
+  utterance.pitch = 1;
+
+  // Ищем русский голос в системе
+  const voices = window.speechSynthesis.getVoices();
+  const ruVoice = voices.find(voice => voice.lang.includes('ru'));
+  if (ruVoice) {
+    utterance.voice = ruVoice;
+  }
+
+  // Запускаем
+  window.speechSynthesis.speak(utterance);
+  
+  // Небольшая визуальная реакция на кнопке
+  const btn = event.target;
+  const originalText = btn.textContent;
+  btn.textContent = '🔊 Говорю...';
+  setTimeout(() => { btn.textContent = originalText; }, 3000); // Вернем текст через 3 сек
+}
   // ===== ФИЛЬТР ГАЛЕРЕИ =====
   const filterBtns = document.querySelectorAll('.filters button');
   const items = document.querySelectorAll('.gallery-item');
