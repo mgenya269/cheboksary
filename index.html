@@ -181,7 +181,7 @@
   .g4 { background-image: url('g4-akatuy.jpg'); }
   .g5 { background-image: url('g5-embankment.jpg'); }
   .g6 { background-image: url('g6-sobor.jpg'); }
-  /* Новые места (заглушки, потом заменишь на свои фото) */
+  /* Новые места (заглушки) */
   .g7 { background-image: url('g7-chapaev.jpg'); background-color: #333; }
   .g8 { background-image: url('g8-artmuseum.jpg'); background-color: #444; }
   .g9 { background-image: url('g9-embroidery.jpg'); background-color: #555; }
@@ -209,6 +209,24 @@
     font-size: 1.8rem; cursor: pointer; color: var(--gray); line-height: 1;
   }
 
+  /* ===== ПАРКИ (НОВАЯ СЕКЦИЯ) ===== */
+  .parks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .park-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    border-left: 4px solid var(--accent); /* Зелёная полоска */
+    transition: 0.3s;
+  }
+  .park-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+  .park-card h4 { margin-bottom: 10px; color: var(--text); font-size: 1.15rem; }
+  .park-card p { color: var(--gray); font-size: 0.95rem; }
+
   /* ===== КУЛЬТУРА ===== */
   .culture-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
   .culture-card {
@@ -218,7 +236,7 @@
   .culture-card h3 { margin-bottom: 12px; color: var(--text); }
   .culture-card p { color: var(--gray); font-size: 0.95rem; }
   
-  /* ФИКС: Блок фраз всегда тёмный, текст всегда светлый */
+  /* Блок фраз всегда тёмный */
   .phrase-box {
     margin-top: 40px; 
     background: #1a1a2e !important; 
@@ -252,16 +270,16 @@
   .quiz .opt.wrong { background: #f8d7da; border-color: #dc3545; color: #1a1a2e; }
   .quiz-result { margin-top: 16px; font-weight: 700; font-size: 1.1rem; color: var(--text); }
 
-  /* ===== ФАКТЫ (ФИКС ЦВЕТОВ) ===== */
+  /* ===== ФАКТЫ ===== */
   .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px; }
   .fact {
-    background: var(--card-bg); /* Теперь карточки подстраиваются под тему */
+    background: var(--card-bg);
     border: 1px solid var(--border);
     color: var(--text); 
     border-radius: 16px; padding: 28px; text-align: center;
     transition: 0.3s;
   }
-  .fact .num { font-size: 2.4rem; font-weight: 800; color: #ffb703; line-height: 1; margin-bottom: 8px; } /* Желтый цвет сделали чуть более оранжевым для контраста */
+  .fact .num { font-size: 2.4rem; font-weight: 800; color: #ffb703; line-height: 1; margin-bottom: 8px; }
   .fact .txt { font-size: 0.9rem; color: var(--gray); }
 
   /* ===== СИМВОЛИКА ===== */
@@ -343,9 +361,9 @@
   .to-top.visible { opacity: 1; visibility: visible; }
   .to-top:hover { background: #a00d25; transform: translateY(-3px); }
 
-  /* ===== ПОДВАЛ (ФИКС ЦВЕТОВ) ===== */
+  /* ===== ПОДВАЛ ===== */
   footer {
-    background: var(--card-bg); /* Теперь подстраивается под тему */
+    background: var(--card-bg);
     color: var(--gray); 
     padding: 48px 5%; text-align: center;
     border-top: 1px solid var(--border);
@@ -359,7 +377,6 @@
     nav { height: 60px; padding: 0 4%; position: relative; }
     nav .logo { font-size: 1.1rem; }
     
-    /* Прячем обычное меню */
     nav ul { 
       display: none; 
       position: absolute; 
@@ -373,12 +390,10 @@
       z-index: 200;
     }
     
-    /* Показываем меню, когда добавлен класс .show */
     nav ul.show { display: flex; }
     nav ul li { width: 100%; text-align: center; }
     nav a { display: block; padding: 12px; border-radius: 0; font-size: 1rem; }
     
-    /* Стили для кнопки-бургера */
     .menu-toggle {
       display: block; background: none; border: none; color: var(--yellow);
       font-size: 1.8rem; cursor: pointer; margin-left: auto; margin-right: 15px;
@@ -388,7 +403,6 @@
     section { padding: 60px 5%; }
   }
   
-  /* По умолчанию на компьютере бургер скрыт */
   @media (min-width: 801px) {
     .menu-toggle { display: none; }
   }
@@ -403,6 +417,7 @@
   <ul id="navMenu">
     <li><a href="#route" class="active">Маршрут</a></li>
     <li><a href="#gallery">Галерея</a></li>
+    <li><a href="#parks">Парки</a></li> <!-- НОВЫЙ ПУНКТ -->
     <li><a href="#culture">Культура</a></li>
     <li><a href="#events">События</a></li>
     <li><a href="#about">О городе</a></li>
@@ -455,11 +470,11 @@
   
   <!-- Карта (Яндекс.Конструктор) -->
   <div class="map-container fade-in">
-    <script type="text/javascript" charset="utf-8" async src="https://yandex.ru/maps/?um=constructor%3Ab847ff171bd33b6205227cb7865dd7ffa67b0780e6ac9b7e9c1d2a3b3d11d51a&source=constructorLink;width=500&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ab847ff171bd33b6205227cb7865dd7ffa67b0780e6ac9b7e9c1d2a3b3d11d51a&amp;width=500&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
   </div>
 </section>
 
-<!-- ГАЛЕРЕЯ (Сюда добавлены новые места) -->
+<!-- ГАЛЕРЕЯ -->
 <section id="gallery" class="fade-in">
   <h2 class="section-title">Чебоксары в деталях</h2>
   <p class="section-sub">Нажми на карточку, чтобы узнать подробнее.</p>
@@ -468,10 +483,9 @@
     <button data-filter="arch">Архитектура</button>
     <button data-filter="nature">Природа</button>
     <button data-filter="people">Люди</button>
-    <button data-filter="museums">Музеи</button> <!-- Добавили фильтр -->
+    <button data-filter="museums">Музеи</button>
   </div>
   <div class="gallery" id="galleryGrid">
-    <!-- Старые -->
     <div class="gallery-item g1" data-cat="arch" data-title="Монумент Матери-Покровительницы" data-desc="46-метровая статуя на берегу залива — символ города. Местные шутят, что это «наш Рио-де-Жанейро».">
       <span class="label">Мать-Покровительница</span>
     </div>
@@ -490,8 +504,7 @@
     <div class="gallery-item g6" data-cat="arch" data-title="Введенский собор" data-desc="Старейшее здание Чебоксар, построенное в XVII веке. Находится в историческом центре города.">
       <span class="label">Введенский собор</span>
     </div>
-    
-    <!-- Новые музеи -->
+    <!-- Музеи -->
     <div class="gallery-item g7" data-cat="museums" data-title="Музей В. И. Чапаева" data-desc="Экспозиция о жизни и деятельности легендарного начдива. Здание в форме знамени, рядом — мемориальный дом.">
       <span class="label">Музей Чапаева</span>
     </div>
@@ -503,6 +516,30 @@
     </div>
     <div class="gallery-item g10" data-cat="museums" data-title="Музей Михаила Сеспеля" data-desc="Жизнь и творчество основоположника чувашской поэзии. Здесь хранятся уникальные фотографии старого города.">
       <span class="label">Музей Сеспеля</span>
+    </div>
+  </div>
+</section>
+
+<!-- ПАРКИ (НОВАЯ СЕКЦИЯ) -->
+<section id="parks" class="fade-in">
+  <h2 class="section-title">Парки и места отдыха</h2>
+  <p class="section-sub">Где погулять, отдохнуть и насладиться природой.</p>
+  <div class="parks-grid">
+    <div class="park-card">
+      <h4>🌳 Парк «Лакреевский лес»</h4>
+      <p>Центральный парк с аттракционами, верёвочным городком и ручными белками. Отличное место для семейного отдыха и прогулок в тени деревьев.</p>
+    </div>
+    <div class="park-card">
+      <h4>🎡 Парк «Амазония»</h4>
+      <p>Большой этнокомплекс с колесом обозрения, аквазоной и множеством развлечений. Находится рядом с набережной, идеально для активного отдыха.</p>
+    </div>
+    <div class="park-card">
+      <h4>🕊️ Мемориальный парк Победы</h4>
+      <p>Самая высокая точка города с панорамным видом на Волгу. Здесь находится музей военной техники под открытым небом и Вечный огонь.</p>
+    </div>
+    <div class="park-card">
+      <h4>🗿 Этнопарк «Сувар»</h4>
+      <p>Музей под открытым небом в Заволжье. Более 100 деревянных скульптур, рассказывающих о чувашской мифологии и культуре.</p>
     </div>
   </div>
 </section>
@@ -536,7 +573,6 @@
     </div>
   </div>
 
-  <!-- Блок фраз (теперь всегда темный) -->
   <div class="phrase-box">
     <h3>🗣️ Полезные фразы на чувашском</h3>
     <div class="phrase"><span class="cv">Ыра кун!</span><span class="ru">Добрый день!</span></div>
@@ -545,7 +581,6 @@
     <div class="phrase"><span class="cv">Сывă пул!</span><span class="ru">До свидания!</span></div>
   </div>
 
-  <!-- ПАЛИТРА ЦВЕТОВ -->
   <div style="margin-top: 40px;">
     <h3 style="margin-bottom: 20px;">🎨 Цвета чувашской вышивки</h3>
     <div style="display: flex; gap: 15px; flex-wrap: wrap;">
@@ -567,7 +602,6 @@
     </div>
   </div>
 
-  <!-- КВИЗ -->
   <div class="quiz">
     <h3>🧠 Мини-квиз: знаете ли вы Чувашию?</h3>
     <div class="quiz-progress"><div class="quiz-progress-fill" id="quizProgress"></div></div>
@@ -674,7 +708,7 @@
 <footer>
   <div class="logo">🌊 ЧЕБОКСАРЫ</div>
   <p>Сайт-путеводитель по столице Чувашской Республики</p>
-  <p>Сделано с любовью к городу на Волге · 2026</p>
+  <p>Сделано с любовью к городу на Волге · 2025</p>
   <p><a href="#route">Наверх ↑</a></p>
 </footer>
 
